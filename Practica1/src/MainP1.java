@@ -1,7 +1,10 @@
+import model.IndividuoFuncion1;
+
 public class MainP1 {
 
     public static void main(String args[]) {
-        System.out.println("Hola mundo!");
+        IndividuoFuncion1 ind = new IndividuoFuncion1();
+        System.out.println(ind);
     }
     
 }
