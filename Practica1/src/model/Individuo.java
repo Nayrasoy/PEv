@@ -15,9 +15,22 @@ public abstract class Individuo<T> {
 
     public Individuo() {}
 
+    public Individuo(List<T> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
+        this.cromosomas = cromosomas;
+        this.tamGenes = tamGenes;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+    }
+
     public abstract double getFitness();
 
     public abstract double getFenotipo(int gen);
+
+    public abstract Individuo create();
+
+    public abstract Individuo copy();
+
+    public abstract int getType();
 
     public List<T> getGenotipo(){
         return this.cromosomas;
