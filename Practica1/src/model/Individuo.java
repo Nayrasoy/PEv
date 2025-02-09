@@ -17,10 +17,14 @@ public abstract class Individuo<T> {
 
     public abstract double getFitness();
 
-    public abstract double getFenotipo();
+    public abstract double getFenotipo(int gen);
+
+    public List<T> getGenotipo(){
+        return this.cromosomas;
+    }
 
     protected int tamGen(double min, double max) {
-        return (int) (Math.log10(((max - min) / Parameters.PRECISION) + 1) / Math.log10(2));
+        return (int) (Math.log10(((max - min) /Math.pow(10, -Parameters.PRECISION)) + 1) / Math.log10(2));
     }
 
     @Override

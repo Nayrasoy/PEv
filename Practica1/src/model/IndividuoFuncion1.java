@@ -23,23 +23,27 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
             cromosomas.add(Individuo.random.nextBoolean());
         }
     }
-
-    public double getValor() {
-        // double x1 = this.getFenotipo(0), x2 = this.getFenotipo(1);
-        return 0;//(21.5 + x1 * Math.sin(4 * Math.PI * x1) + x2 * Math.sin(20 * Math.PI * x2));
-    }
-
+    
     @Override
     public double getFitness() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFitness'");
+        double x1 = this.getFenotipo(0), x2 = this.getFenotipo(1);
+        return (21.5 + x1 * Math.sin(4 * Math.PI * x1) + x2 * Math.sin(20 * Math.PI * x2));
     }
 
     @Override
-    public double getFenotipo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFenotipo'");
+    public double getFenotipo(int gen) {
+        int n = tamGenes.get(gen);
+        int intValue = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (this.cromosomas.get(i)) {
+                intValue += 1 << (n - 1 - i);
+            }
+        }
+
+        return this.minValue.get(gen) + (intValue * (this.maxValue.get(gen) - this.minValue.get(gen)) / (Math.pow(2, n) - 1));
     }
+    
     @Override
     public String toString() {
         String s = super.toString();
