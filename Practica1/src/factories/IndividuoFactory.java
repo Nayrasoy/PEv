@@ -1,18 +1,18 @@
-package model;
+package factories;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import exceptions.IndividuoException;
+import model.Individuo;
+import model.IndividuoFuncion1;
 
 public class IndividuoFactory {
 
-    private static List<Individuo> individuos;
-
-    public IndividuoFactory() {
-        this.individuos = new ArrayList<>();
-        this.individuos.add(new IndividuoFuncion1());
-    }
+    private static final List<Individuo> individuos = Arrays.asList(
+		new IndividuoFuncion1()
+	);
     
     public static Individuo getIndividuo(int type) throws IndividuoException {
         for (Individuo individuo : individuos) {

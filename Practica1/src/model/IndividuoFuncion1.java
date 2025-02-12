@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import utils.Utils;
+
 public class IndividuoFuncion1 extends Individuo<Boolean> {
 
     public IndividuoFuncion1() {
@@ -21,7 +23,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
         }
         this.cromosomas = new ArrayList<>();
         for (int i = 0; i < tamTotal; i++) {
-            cromosomas.add(Individuo.random.nextBoolean());
+            cromosomas.add(Utils.random.nextBoolean());
         }
     }
     
@@ -53,7 +55,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
         public String toString() {
             String s = super.toString();
     
-            s += "Cromosoma: ";
+            s += "  Cromosoma: ";
             for (int i = 0; i < this.cromosomas.size(); i++) {
                 s += cromosomas.get(i) ? "1 " : "0 ";
             }
@@ -75,6 +77,11 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
         @Override
         public int getType() {
             return 1;
+        }
+
+        @Override
+        protected void mutate(int i) {
+            this.cromosomas.set(i, !this.cromosomas.get(i));
         }
     
 }
