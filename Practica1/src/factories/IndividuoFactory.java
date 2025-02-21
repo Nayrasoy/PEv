@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import exceptions.IndividuoException;
+import model.IndividualType;
 import model.Individuo;
 import model.IndividuoFuncion1;
 
@@ -14,7 +15,7 @@ public class IndividuoFactory {
 		new IndividuoFuncion1()
 	);
     
-    public static Individuo getIndividuo(int type) throws IndividuoException {
+    public static Individuo getIndividuo(IndividualType type) throws IndividuoException {
         for (Individuo individuo : individuos) {
             if (individuo.getType() == type) {
                 return individuo.create();

@@ -75,8 +75,8 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
     }
 
         @Override
-        public int getType() {
-            return 1;
+        public IndividualType getType() {
+            return IndividualType.INDIVIDUAL_FUNCTION1;
         }
 
         @Override

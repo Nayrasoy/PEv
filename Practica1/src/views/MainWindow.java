@@ -2,15 +2,27 @@ package views;
 
 import java.awt.BorderLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.math.plot.Plot2DPanel;
 
+import controller.Controller;
+
 public class MainWindow extends JFrame {
 
-    public MainWindow() {
+    private Controller controller;
+    private ControlPanel controlPanel;
+    private ConfigPanel configPanel;
+    private PlotPanel plot;
+
+    public MainWindow(Controller controller) {
 		super("Evolucion");
+        this.controller = controller;
+        this.controlPanel = new ControlPanel(controller);
+        this.configPanel = new ConfigPanel(controller);
+        this.plot = new PlotPanel(controller);
 		initGUI();
 	}
 
@@ -18,35 +30,21 @@ public class MainWindow extends JFrame {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		this.setContentPane(mainPanel);
 
-        mainPanel.add(new ControlPanel(), BorderLayout.NORTH);
-        mainPanel.add(new ConfigPanel(), BorderLayout.WEST);
-        mainPanel.add(createPlot(), BorderLayout.CENTER); // TODO
+        mainPanel.add(this.controlPanel, BorderLayout.NORTH);
+        mainPanel.add(this.configPanel, BorderLayout.WEST);
+        mainPanel.add(this.plot, BorderLayout.CENTER);
 
 		this.pack();
 		this.setVisible(true);
         this.setSize(800, 500);
+        ImageIcon imgIcon = new ImageIcon("img/icons/app_icon.png");
+        this.setIconImage(imgIcon.getImage());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-    private Plot2DPanel createPlot(){
-        Plot2DPanel plot = new Plot2DPanel();
-
-        plot.setAxisLabel(0, "Generacion");
-        plot.setAxisLabel(1, "Evaluacion");
-
-        // define your data
-        double[] x = { 1, 2, 3, 4, 5, 6 };
-        double[] y = { 45, 89, 6, 32, 63, 12 };
-        
-        // create your PlotPanel (you can use it as a JPanel)
-    
-        // define the legend position
-        plot.addLegend("SOUTH");
-
-        // add a line plot to the PlotPanel
-        plot.addLinePlot("my plot", x, y);
-        // put the PlotPanel in a JFrame like a JPanel
-        return plot;
+    public void refreshPlot(double[][] averageFitness, double[][] actualBest, double[][] overallBest) {
+        this.plot.refreshPlot(averageFitness, actualBest, overallBest);
+        this.repaint();
     }
 
 }

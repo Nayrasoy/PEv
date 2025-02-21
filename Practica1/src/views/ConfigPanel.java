@@ -10,8 +10,11 @@ import javax.swing.JTextField;
 
 import algorithm.cross.CrossType;
 import algorithm.selection.SelectionType;
+import controller.Controller;
 
 public class ConfigPanel extends JPanel {
+
+    private Controller controller;
     private JTextField populationSizeField;
     private JTextField generationsField;
     private JSlider crossPercentageSlider;
@@ -23,9 +26,13 @@ public class ConfigPanel extends JPanel {
     private JSlider elitismPercentageSlider;
     private JComboBox<String> functionDimensionComboBox;
 
-    public ConfigPanel() {
-        // Configuración básica del JPanel
-        setLayout(new GridLayout(10, 2));
+    public ConfigPanel(Controller controller) {
+        this.controller = controller;
+        this.initGUI();
+    }
+
+    private void initGUI() {
+        this.setLayout(new GridLayout(10, 2));
 
         // Tamaño de la población
         add(new JLabel("Tamaño de la población:"));

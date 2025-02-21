@@ -30,7 +30,7 @@ public abstract class Individuo<T> {
 
     public abstract Individuo copy();
 
-    public abstract int getType();
+    public abstract IndividualType getType();
 
     protected abstract void mutate(int i);
 
