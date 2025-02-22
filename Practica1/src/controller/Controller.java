@@ -35,5 +35,13 @@ public class Controller {
     public void setAG(AlgoritmoGenetico ag) {
         this.ag = ag;
     }
+
+    public void setPopulationSize(int populationSize) {
+        this.ag.setPopulationSize(populationSize);
+    }
+
+    public void setGenerations(int generations) {
+        this.ag.setGenerations(generations);
+    }
     
 }

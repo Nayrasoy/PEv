@@ -1,15 +1,23 @@
 package views;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import algorithm.cross.CrossType;
 import algorithm.selection.SelectionType;
+import config.Parameters;
 import controller.Controller;
 
 public class ConfigPanel extends JPanel {
@@ -36,12 +44,72 @@ public class ConfigPanel extends JPanel {
 
         // Tamaño de la población
         add(new JLabel("Tamaño de la población:"));
-        populationSizeField = new JTextField("100");
+        populationSizeField = new JTextField(String.valueOf(Parameters.DEFAULT_TAM_POBLATION));
+       this.populationSizeField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    validateTextField(populationSizeField.getText());
+                } catch (Exception ex) {
+                    System.out.println("El tamanyo de la poblacion debe ser un entero superior a 0");
+                    populationSizeField.setText(String.valueOf(Parameters.DEFAULT_TAM_POBLATION));
+                } finally {
+                    controller.setPopulationSize(Integer.getInteger(populationSizeField.getText()));
+                }
+            }
+            
+        });
+        this.populationSizeField.addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    validateTextField(populationSizeField.getText());
+                } catch (Exception ex) {
+                    System.out.println("El tamanyo de la poblacion debe ser un entero superior a 0");
+                    populationSizeField.setText(String.valueOf(Parameters.DEFAULT_TAM_POBLATION));
+                } finally {
+                    controller.setPopulationSize(Integer.getInteger(populationSizeField.getText()));
+                }
+            }
+            
+        });
         add(populationSizeField);
 
         // Número de generaciones
         add(new JLabel("Número de generaciones:"));
-        generationsField = new JTextField("100");
+        generationsField = new JTextField(String.valueOf(Parameters.DEFAULT_GENERATIONS_NUMBER));
+        /*this.generationsField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    validateTextField(generationsField.getText());
+                } catch (Exception ex) {
+                    System.out.println("El numero de generaciones debe ser un entero superior a 0");
+                    generationsField.setText(String.valueOf(Parameters.DEFAULT_GENERATIONS_NUMBER));
+                } finally {
+                    controller.setGenerations(Integer.getInteger(generationsField.getText()));
+                }
+            }
+            
+        })*/
+        this.generationsField.addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    validateTextField(generationsField.getText());
+                } catch (Exception ex) {
+                    System.out.println("El numero de generaciones debe ser un entero superior a 0");
+                    generationsField.setText(String.valueOf(Parameters.DEFAULT_GENERATIONS_NUMBER));
+                } finally {
+                    controller.setGenerations(Integer.getInteger(generationsField.getText()));
+                }
+            }
+            
+        });
         add(generationsField);
 
         // Porcentaje de cruces
@@ -102,6 +170,10 @@ public class ConfigPanel extends JPanel {
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
         return slider;
+    }
+
+    private boolean validateTextField(String text) {
+        return text != null && !text.isEmpty() && Integer.parseInt(text) > 0;
     }
 
 }

@@ -162,4 +162,12 @@ public class AlgoritmoGenetico {
             "- Fitness del mejor individuo: " + this.overallBest[this.iteration][1]);
     }
 
+    public void setPopulationSize(int populationSize) {
+        this.tamPoblation = populationSize;
+    }
+
+    public void setGenerations(int generations) {
+        this.maxGeneraciones = generations;
+    }
+
 }
