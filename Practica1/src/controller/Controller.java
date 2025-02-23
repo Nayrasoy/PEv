@@ -43,5 +43,13 @@ public class Controller {
     public void setGenerations(int generations) {
         this.ag.setGenerations(generations);
     }
+
+    public void setPrecision(double precision) {
+        this.ag.setPrecision(precision);
+    }
+
+    public double getPrecision() {
+        return this.ag.getPrecision();
+    }
     
 }

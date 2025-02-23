@@ -40,8 +40,9 @@ public class AlgoritmoGenetico {
     private double[][] actualBest;
     private double[][] averageFitness;
     private int iteration;
+    private double precision;
 
-    public AlgoritmoGenetico(Controller controller, int tamPoblation, IndividualType individualType, int maxGeneraciones, double crossProbability, double mutationProbability, int tamTorneo) {
+    public AlgoritmoGenetico(Controller controller, int tamPoblation, IndividualType individualType, int maxGeneraciones, double crossProbability, double mutationProbability, int tamTorneo, double precision) {
         this.controller = controller;
         this.tamPoblation = tamPoblation;
         this.individualType = individualType;
@@ -51,6 +52,7 @@ public class AlgoritmoGenetico {
         this.crossProbability = crossProbability;
         this.mutationProbability = mutationProbability;
         this.tamTorneo = tamTorneo;
+        this.precision = precision;
         this.poblation = new ArrayList<>();
         this.fitness = new ArrayList<>();
         for (int i = 0; i < this.tamPoblation; i++) {
@@ -79,7 +81,7 @@ public class AlgoritmoGenetico {
     private void init() throws IndividuoException {
         this.poblation.clear();
         for (int i = 0; i < this.tamPoblation; i++) {
-            poblation.add(IndividuoFactory.getIndividuo(individualType));
+            poblation.add(IndividuoFactory.getIndividuo(individualType, this.controller));
         }
         
         this.overallBest = new double[this.maxGeneraciones + 1][2];
@@ -109,8 +111,7 @@ public class AlgoritmoGenetico {
         for (int i = 0; i < this.poblation.size(); i++) {
             individuo = this.poblation.get(i);
             fitness = individuo.getFitness();
-            double scale = Math.pow(10, Parameters.PRECISION);
-            fitness = Math.round(fitness * scale) / scale;
+            fitness = Math.round(fitness * this.precision) / this.precision;
             this.fitness.set(i, fitness);
             this.fitnessSum += fitness;
             if (first || fitness > bestFitness) {
@@ -168,6 +169,14 @@ public class AlgoritmoGenetico {
 
     public void setGenerations(int generations) {
         this.maxGeneraciones = generations;
+    }
+
+    public void setPrecision(double precision) {
+        this.precision = precision;
+    }
+
+    public double getPrecision() {
+        return this.precision;
     }
 
 }

@@ -4,14 +4,20 @@ import java.util.List;
 import java.util.Random;
 
 import config.Parameters;
+import controller.Controller;
 import utils.Utils;
 
 public abstract class Individuo<T> {
 
+    protected Controller controller;
     protected List<T> cromosomas;
     protected List<Integer> tamGenes;
     protected List<Double> minValue;
     protected List<Double> maxValue;
+
+    public Individuo(Controller controller) {
+        this.controller = controller;
+    }
 
     public Individuo() {}
 
@@ -26,7 +32,7 @@ public abstract class Individuo<T> {
 
     public abstract double getFenotipo(int gen);
 
-    public abstract Individuo create();
+    public abstract Individuo create(Controller controller);
 
     public abstract Individuo copy();
 
@@ -39,7 +45,7 @@ public abstract class Individuo<T> {
     }
 
     protected int tamGen(double min, double max) {
-        return (int) (Math.log10(((max - min) / Math.pow(10, -Parameters.PRECISION)) + 1) / Math.log10(2));
+        return (int) (Math.log10(((max - min) / this.controller.getPrecision()) + 1) / Math.log10(2));
     }
 
     @Override

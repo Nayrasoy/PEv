@@ -50,12 +50,12 @@ public class ConfigPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    validateTextField(populationSizeField.getText());
+                    validateIntTextField(populationSizeField.getText());
                 } catch (Exception ex) {
                     System.out.println("El tamanyo de la poblacion debe ser un entero superior a 0");
                     populationSizeField.setText(String.valueOf(Parameters.DEFAULT_TAM_POBLATION));
                 } finally {
-                    controller.setPopulationSize(Integer.getInteger(populationSizeField.getText()));
+                    controller.setPopulationSize(Integer.parseInt(populationSizeField.getText()));
                 }
             }
             
@@ -65,12 +65,12 @@ public class ConfigPanel extends JPanel {
             @Override
             public void focusLost(FocusEvent e) {
                 try {
-                    validateTextField(populationSizeField.getText());
+                    validateIntTextField(populationSizeField.getText());
                 } catch (Exception ex) {
                     System.out.println("El tamanyo de la poblacion debe ser un entero superior a 0");
-                    populationSizeField.setText(String.valueOf(Parameters.DEFAULT_TAM_POBLATION));
+                    populationSizeField.setText(String.valueOf(Parameters.DEFAULT_TAM_POBLATION)); 
                 } finally {
-                    controller.setPopulationSize(Integer.getInteger(populationSizeField.getText()));
+                    controller.setPopulationSize(Integer.parseInt(populationSizeField.getText()));
                 }
             }
             
@@ -80,32 +80,32 @@ public class ConfigPanel extends JPanel {
         // Número de generaciones
         add(new JLabel("Número de generaciones:"));
         generationsField = new JTextField(String.valueOf(Parameters.DEFAULT_GENERATIONS_NUMBER));
-        /*this.generationsField.addActionListener(new ActionListener() {
+        this.generationsField.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    validateTextField(generationsField.getText());
+                    validateIntTextField(generationsField.getText());
                 } catch (Exception ex) {
                     System.out.println("El numero de generaciones debe ser un entero superior a 0");
                     generationsField.setText(String.valueOf(Parameters.DEFAULT_GENERATIONS_NUMBER));
                 } finally {
-                    controller.setGenerations(Integer.getInteger(generationsField.getText()));
+                    controller.setGenerations(Integer.parseInt(generationsField.getText()));
                 }
             }
             
-        })*/
+        });
         this.generationsField.addFocusListener(new FocusAdapter() {
 
             @Override
             public void focusLost(FocusEvent e) {
                 try {
-                    validateTextField(generationsField.getText());
+                    validateIntTextField(generationsField.getText());
                 } catch (Exception ex) {
                     System.out.println("El numero de generaciones debe ser un entero superior a 0");
                     generationsField.setText(String.valueOf(Parameters.DEFAULT_GENERATIONS_NUMBER));
                 } finally {
-                    controller.setGenerations(Integer.getInteger(generationsField.getText()));
+                    controller.setGenerations(Integer.parseInt(generationsField.getText()));
                 }
             }
             
@@ -124,7 +124,37 @@ public class ConfigPanel extends JPanel {
 
         // Precisión de la representación
         add(new JLabel("Precisión de la representación:"));
-        precisionField = new JTextField("0.001");
+        precisionField = new JTextField(Parameters.DEFAULT_PRECISION);
+        this.precisionField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    validateDoubleTextField(precisionField.getText());
+                } catch (Exception ex) {
+                    System.out.println("El numero de generaciones debe ser un entero superior a 0");
+                    precisionField.setText(String.valueOf(Parameters.DEFAULT_PRECISION));
+                } finally {
+                    controller.setPrecision(Double.parseDouble(precisionField.getText()));
+                }
+            }
+            
+        });
+        this.precisionField.addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    validateDoubleTextField(precisionField.getText());
+                } catch (Exception ex) {
+                    System.out.println("El numero de generaciones debe ser un entero superior a 0");
+                    precisionField.setText(String.valueOf(Parameters.DEFAULT_PRECISION));
+                } finally {
+                    controller.setPrecision(Double.parseDouble(precisionField.getText()));
+                }
+            }
+            
+        });
         add(precisionField);
 
         // Método de Selección
@@ -172,8 +202,12 @@ public class ConfigPanel extends JPanel {
         return slider;
     }
 
-    private boolean validateTextField(String text) {
+    private boolean validateIntTextField(String text) {
         return text != null && !text.isEmpty() && Integer.parseInt(text) > 0;
+    }
+
+    private boolean validateDoubleTextField(String text) {
+        return text != null && !text.isEmpty() && Double.parseDouble(text) > 0;
     }
 
 }
