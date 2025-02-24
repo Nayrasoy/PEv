@@ -7,10 +7,13 @@ import controller.Controller;
 
 public class IndividuoFuncion4 extends IndividuoBooleano {
 
+    private int d;
+
     public IndividuoFuncion4() {}
 
-    public IndividuoFuncion4(Controller controller) {
+    public IndividuoFuncion4(Controller controller, int d) {
         super(controller);
+        this.d = d;
         this.minValue = new ArrayList<Double>();
         this.minValue.add(0.000);
         this.minValue.add(0.000);
@@ -32,7 +35,7 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
 
     @Override
     public Individuo create(Controller controller) {
-        return new IndividuoFuncion4(controller);
+        return new IndividuoFuncion4(controller, controller.getDimension());
     }
 
     @Override

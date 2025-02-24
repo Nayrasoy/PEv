@@ -1,6 +1,12 @@
 package controller;
 
+import java.lang.reflect.Parameter;
+
 import algorithm.AlgoritmoGenetico;
+import algorithm.cross.CrossType;
+import algorithm.mutation.MutationType;
+import algorithm.selection.SelectionType;
+import config.Parameters;
 import exceptions.CrossException;
 import exceptions.IndividuoException;
 import exceptions.SelectionException;
@@ -11,6 +17,7 @@ public class Controller {
 
     AlgoritmoGenetico ag;
     MainWindow mainWindow;
+    int dimension = Parameters.DEFAULT_DIMENSION;
 
     public void run() {
         try {
@@ -55,6 +62,38 @@ public class Controller {
 
     public void setIndividual(IndividualType individual) {
         this.ag.setIndividual(individual);
+    }
+
+    public void setCrossProbability(int crossProbability) {
+        this.ag.setCrossProbability(crossProbability);
+    }
+
+    public void setMutationProbability(int mutationProbability) {
+        this.ag.setMutationProbability(mutationProbability);
+    }
+
+    public void setSelectionMethod(SelectionType selectionMethod) {
+        this.ag.setSelectionMethod(selectionMethod);
+    }
+
+    public void setCrossMethod(CrossType crossMethod) {
+        this.ag.setCrossMethod(crossMethod);
+    }
+
+    public void setMutationMethod(MutationType mutationMethod) {
+        this.ag.setMutationMethod(mutationMethod);
+    }
+
+    public void setElitismPercentage(int elitismPercentage) {
+        this.ag.setElitismPercentage(elitismPercentage);
+    }
+
+    public void setDimension(int dimension) {
+        this.dimension = dimension;
+    }
+
+    public int getDimension() {
+        return dimension;
     }
     
 }

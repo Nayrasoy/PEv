@@ -14,5 +14,6 @@ public class Parameters {
     public static double DEFAULT_PRECISION = 0.001;
     public static double DEFAULT_MUTATION_PROBABILITY = 0.05;
     public static int DEFAULT_TAM_TOURNAMENT = 3;
+    public static int DEFAULT_DIMENSION = 5;
 
 }
