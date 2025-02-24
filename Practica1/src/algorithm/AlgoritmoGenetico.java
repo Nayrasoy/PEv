@@ -111,8 +111,8 @@ public class AlgoritmoGenetico {
         for (int i = 0; i < this.poblation.size(); i++) {
             individuo = this.poblation.get(i);
             fitness = individuo.getFitness();
-            fitness = Math.round(fitness * 1000);
-            fitness /= 1000;
+            fitness = Math.round(fitness / this.precision);
+            fitness *= this.precision;
             this.fitness.set(i, fitness);
             this.fitnessSum += fitness;
             if (first || fitness > bestFitness) {
@@ -158,10 +158,11 @@ public class AlgoritmoGenetico {
     }
     
     private void printIteration() {
+        String formato = "%." + Math.round(- Math.log10(this.precision)) + "f";
         System.out.println("Iteracion " + this.iteration + ":\n" +
-            "- Fitness promedio: " + this.averageFitness[this.iteration][1] + "\n" +
-            "- Fitness del mejor individuo de la iteracion: " + this.actualBest[this.iteration][1] + "\n" +
-            "- Fitness del mejor individuo: " + this.overallBest[this.iteration][1]);
+            "- Fitness promedio: " + String.format(formato, this.averageFitness[this.iteration][1]) + "\n" +
+            "- Fitness del mejor individuo de la iteracion: " + String.format(formato, this.actualBest[this.iteration][1]) + "\n" +
+            "- Fitness del mejor individuo: " + String.format(formato, this.overallBest[this.iteration][1]));
     }
 
     public void setPopulationSize(int populationSize) {
