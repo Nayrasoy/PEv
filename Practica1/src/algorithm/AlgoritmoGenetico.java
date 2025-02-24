@@ -74,7 +74,7 @@ public class AlgoritmoGenetico {
 
         this.controller.setSolution(this.bestIndividual.toString());
         String formato = "%." + Math.round(- Math.log10(this.precision)) + "f";
-        System.out.println("FINAL\n\nMejor individuo: \n" + String.format(formato, this.overallBest[this.iteration - 1][1]));
+        System.out.println("FINAL\n\nMejor individuo: \n" + this.bestIndividual);
         
         this.controller.refreshPlot(this.averageFitness, this.actualBest, this.overallBest);
     }
@@ -125,7 +125,7 @@ public class AlgoritmoGenetico {
                 bestFitness = fitness;
                 this.actualBest[this.iteration][1] = bestFitness;
                 if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.overallBest[this.iteration][1])) {
-                    this.bestIndividual = individuo;
+                    this.bestIndividual = individuo.copy();
                     this.overallBest[this.iteration][1] = fitness;
                 }
             }

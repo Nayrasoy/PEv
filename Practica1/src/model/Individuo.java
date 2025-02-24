@@ -56,7 +56,7 @@ public abstract class Individuo<T> {
         String s = "";
         String formato = "%." + Math.round(- Math.log10(this.controller.getPrecision())) + "f";
         
-        for (int i = 0; i < this.tamGenes.size(); i++) {
+        for (int i = 0; i < this.minValue.size(); i++) {
             s += "Variable X" + (i + 1) + " = " + String.format(formato, this.getFenotipo(i)) + ", ";
         }
         s += "Valor de la funcion = " + String.format(formato, this.getFitness());
