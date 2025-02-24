@@ -95,5 +95,9 @@ public class Controller {
     public int getDimension() {
         return dimension;
     }
+
+    public void setSolution(String solution) {
+        this.mainWindow.setSolution(solution);
+    }
     
 }

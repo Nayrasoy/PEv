@@ -31,6 +31,11 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
         this.d = d;
     }
 
+    public IndividuoFuncion4(Controller controller, int d2, ArrayList arrayList, ArrayList arrayList2,
+            ArrayList arrayList3) {
+        //TODO Auto-generated constructor stub
+    }
+
     @Override
     public double getFitness() {
         double suma = 0.0;

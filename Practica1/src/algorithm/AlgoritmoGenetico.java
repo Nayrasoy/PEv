@@ -42,6 +42,7 @@ public class AlgoritmoGenetico {
     private double[][] averageFitness;
     private int iteration;
     private double precision;
+    private Individuo bestIndividual;
 
     public AlgoritmoGenetico(Controller controller, int tamPoblation, IndividualType individualType, int maxGeneraciones, double crossProbability, double mutationProbability, int tamTorneo, double precision) {
         this.controller = controller;
@@ -56,9 +57,6 @@ public class AlgoritmoGenetico {
         this.precision = precision;
         this.poblation = new ArrayList<>();
         this.fitness = new ArrayList<>();
-        for (int i = 0; i < this.tamPoblation; i++) {
-            this.fitness.add(null);
-        }
     }
 
     public void run() throws IndividuoException, SelectionException, CrossException {
@@ -74,8 +72,9 @@ public class AlgoritmoGenetico {
             this.iteration++;
         }
 
+        this.controller.setSolution(this.bestIndividual.toString());
         String formato = "%." + Math.round(- Math.log10(this.precision)) + "f";
-        System.out.println("FINAL\n\nMejor individuo: \n" + String.format(formato, this.overallBest[this.iteration - 1][1]));
+        System.out.println("FINAL\n\nMejor individuo: \n" + this.bestIndividual);
         
         this.controller.refreshPlot(this.averageFitness, this.actualBest, this.overallBest);
     }
@@ -84,6 +83,11 @@ public class AlgoritmoGenetico {
         this.poblation.clear();
         for (int i = 0; i < this.tamPoblation; i++) {
             poblation.add(IndividuoFactory.getIndividuo(individualType, this.controller));
+        }
+
+        this.fitness.clear();
+        for (int i = 0; i < this.tamPoblation; i++) {
+            this.fitness.add(null);
         }
         
         this.overallBest = new double[this.maxGeneraciones + 1][2];
@@ -121,6 +125,7 @@ public class AlgoritmoGenetico {
                 bestFitness = fitness;
                 this.actualBest[this.iteration][1] = bestFitness;
                 if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.overallBest[this.iteration][1])) {
+                    this.bestIndividual = individuo.copy();
                     this.overallBest[this.iteration][1] = fitness;
                 }
             }

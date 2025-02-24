@@ -54,12 +54,12 @@ public abstract class Individuo<T> {
     @Override
     public String toString() {
         String s = "";
+        String formato = "%." + Math.round(- Math.log10(this.controller.getPrecision())) + "f";
         
-        s += "Numero de genes: " + this.tamGenes.size() + "\n";
-        for (int i = 0; i < this.tamGenes.size(); i++) {
-            s += "  - Gen " + (i + 1) + " tiene tamanyo " + this.tamGenes.get(i) + "\n";
+        for (int i = 0; i < this.minValue.size(); i++) {
+            s += "Variable X" + (i + 1) + " = " + String.format(formato, this.getFenotipo(i)) + ", ";
         }
-        s += "  Fitness: " + this.getFitness() + "\n";
+        s += "Valor de la funcion = " + String.format(formato, this.getFitness());
 
         return s;
     }
