@@ -3,16 +3,18 @@ package algorithm.selection;
 import java.util.ArrayList;
 import java.util.List;
 
+import config.Parameters;
+import exceptions.SelectionException;
+import factories.SelectionMethodFactory;
 import model.Individuo;
-import utils.Utils;
 
 public class Restos extends SelectionMethod {
 
-    // TODO: hay dos torneos??
-
     @Override
-    public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum) {
-        List<Individuo> newPoblation = new ArrayList<>(); 
+    public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum, int n) {
+        List<Individuo> newPoblation = new ArrayList<>(), extraPoblation = new ArrayList<>(); 
+        List<Double> newFitness = new ArrayList<>();
+        double newFitnessSum = 0;
         int k = poblation.size();
         double probability, random;
         double minValue = poblation.get(0).getMinValue();
@@ -27,22 +29,26 @@ public class Restos extends SelectionMethod {
                 probability += minValue;
             }
             probability /= fitnessSum;
-            if (Math.floor(probability*k)){
-
+            if (Math.floor(probability*k) >= 1){
+                for (int j = 0; j < Math.floor(probability*k); j++){
+                    newPoblation.add(poblation.get(i));
+                }
             }
             else {
-                lista ordenada
-            }
-            for (int j = 0; j < ; j++){
-                newPoblation.add(poblation.get(i));
+                extraPoblation.add(poblation.get(i));
+                newFitness.add(fitness.get(i));
+                newFitnessSum += fitness.get(i);
             }
         }
 
-        for (int i = newPoblation.size(); i < k, i++){
-            seleccionamos
+        try {
+            SelectionMethod sm = SelectionMethodFactory.getSelectionMethod(Parameters.DEFAULT_SELECTION_METHOD);
+            newPoblation.addAll(sm.selection(extraPoblation, newFitness, newFitnessSum, n - newPoblation.size()));
+        } catch (SelectionException e) {
+            System.out.println(e);
         }
 
-        return newPoblation;
+        return poblation;
     }
 
     @Override

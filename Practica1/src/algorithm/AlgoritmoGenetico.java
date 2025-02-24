@@ -1,10 +1,7 @@
 package algorithm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.lang.model.type.NullType;
 
 import algorithm.cross.CrossMethod;
 import algorithm.cross.CrossType;
@@ -48,7 +45,7 @@ public class AlgoritmoGenetico {
         this.controller = controller;
         this.tamPoblation = tamPoblation;
         this.individualType = individualType;
-        this.selectionType = SelectionType.RULETA;
+        this.selectionType = Parameters.DEFAULT_SELECTION_METHOD;
         this.crossType = CrossType.MONO_PUNTO;
         this.maxGeneraciones = maxGeneraciones;
         this.crossProbability = crossProbability;
@@ -137,7 +134,7 @@ public class AlgoritmoGenetico {
 
     private void selection() throws SelectionException {
         SelectionMethod selectionMethod = SelectionMethodFactory.getSelectionMethod(this.selectionType);
-        this.poblation = selectionMethod.selection(poblation, fitness, fitnessSum);
+        this.poblation = selectionMethod.selection(poblation, fitness, fitnessSum, this.poblation.size());
     }
 
     private void cross() throws CrossException {

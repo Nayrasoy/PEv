@@ -9,7 +9,7 @@ import utils.Utils;
 public class Ruleta extends SelectionMethod {
 
     @Override
-    public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum) {
+    public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum, int n) {
         List<Double> probabilities = new ArrayList<>();
         List<Individuo> newPoblation = new ArrayList<>(); 
         double actual = 0, probability, random;
