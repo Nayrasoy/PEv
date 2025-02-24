@@ -2,18 +2,12 @@ package model;
 
 import controller.Controller;
 
-public class IndividuoFuncion4 extends Individuo<Boolean> {
+public class IndividuoFuncion4 extends IndividuoBooleano {
 
     @Override
     public double getFitness() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getFitness'");
-    }
-
-    @Override
-    public double getFenotipo(int gen) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFenotipo'");
     }
 
     @Override

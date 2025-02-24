@@ -111,7 +111,8 @@ public class AlgoritmoGenetico {
         for (int i = 0; i < this.poblation.size(); i++) {
             individuo = this.poblation.get(i);
             fitness = individuo.getFitness();
-            fitness = Math.round(fitness * this.precision) / this.precision;
+            fitness = Math.round(fitness * 1000);
+            fitness /= 1000;
             this.fitness.set(i, fitness);
             this.fitnessSum += fitness;
             if (first || fitness > bestFitness) {

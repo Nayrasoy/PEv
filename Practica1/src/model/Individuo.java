@@ -21,7 +21,8 @@ public abstract class Individuo<T> {
 
     public Individuo() {}
 
-    public Individuo(List<T> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
+    public Individuo(Controller controller, List<T> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
+        this.controller = controller;
         this.cromosomas = cromosomas;
         this.tamGenes = tamGenes;
         this.minValue = minValue;

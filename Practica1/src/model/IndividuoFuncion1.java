@@ -6,13 +6,12 @@ import java.util.List;
 import controller.Controller;
 import utils.Utils;
 
-public class IndividuoFuncion1 extends Individuo<Boolean> {
+public class IndividuoFuncion1 extends IndividuoBooleano {
+
+    public IndividuoFuncion1() {}
 
     public IndividuoFuncion1(Controller controller) {
         super(controller);
-    }
-
-    public IndividuoFuncion1() {
         this.minValue = new ArrayList<Double>();
         this.minValue.add(-3.000);
         this.minValue.add(4.100);
@@ -32,8 +31,8 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
         }
     }
     
-    public IndividuoFuncion1(List<Boolean> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
-        super(cromosomas, tamGenes, minValue, maxValue);
+    public IndividuoFuncion1(Controller controller, List<Boolean> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
+        super(controller, cromosomas, tamGenes, minValue, maxValue);
     }
 
     @Override
@@ -43,40 +42,13 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
     }
 
     @Override
-    public double getFenotipo(int gen) {
-        int n = tamGenes.get(gen);
-        int intValue = 0;
-
-        for (int i = 0; i < n; i++) {
-            if (this.cromosomas.get(i)) {
-                intValue += 1 << (n - 1 - i);
-            }
-        }
-
-        return this.minValue.get(gen) + (intValue * (this.maxValue.get(gen) - this.minValue.get(gen)) / (Math.pow(2, n) - 1));
-    }
-    
-    @Override
-    public String toString() {
-        String s = super.toString();
-
-        s += "  Cromosoma: ";
-        for (int i = 0; i < this.cromosomas.size(); i++) {
-            s += cromosomas.get(i) ? "1 " : "0 ";
-        }
-        s += "\n";
-
-        return s;
-    }
-
-    @Override
     public Individuo create(Controller controller) {
         return new IndividuoFuncion1(controller);
     }
 
     @Override
     public Individuo copy() {
-        return new IndividuoFuncion1(new ArrayList<>(this.cromosomas), new ArrayList<>(this.tamGenes), new ArrayList<>(this.minValue), new ArrayList<>(this.maxValue));
+        return new IndividuoFuncion1(this.controller, new ArrayList<>(this.cromosomas), new ArrayList<>(this.tamGenes), new ArrayList<>(this.minValue), new ArrayList<>(this.maxValue));
     }
 
     @Override

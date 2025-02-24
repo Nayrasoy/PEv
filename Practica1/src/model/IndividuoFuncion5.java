@@ -2,7 +2,7 @@ package model;
 
 import controller.Controller;
 
-public class IndividuoFuncion5 extends Individuo<Boolean> {
+public class IndividuoFuncion5 extends Individuo<Double> {
 
     @Override
     public double getFitness() {

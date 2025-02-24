@@ -124,7 +124,7 @@ public class ConfigPanel extends JPanel {
 
         // Precisión de la representación
         add(new JLabel("Precisión de la representación:"));
-        precisionField = new JTextField(Parameters.DEFAULT_PRECISION);
+        precisionField = new JTextField(String.valueOf(Parameters.DEFAULT_PRECISION));
         this.precisionField.addActionListener(new ActionListener() {
 
             @Override
