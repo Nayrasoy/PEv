@@ -57,18 +57,5 @@ public abstract class IndividuoBooleano extends Individuo<Boolean> {
     protected void mutate(int i) {
         this.cromosomas.set(i, !this.cromosomas.get(i));
     }
-    
-    @Override
-    public String toString() {
-        String s = super.toString();
-
-        s += "  Cromosoma: ";
-        for (int i = 0; i < this.cromosomas.size(); i++) {
-            s += cromosomas.get(i) ? "1 " : "0 ";
-        }
-        s += "\n";
-
-        return s;
-    }
 
 }
