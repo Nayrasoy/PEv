@@ -180,4 +180,8 @@ public class AlgoritmoGenetico {
         return this.precision;
     }
 
+    public void setIndividual(IndividualType individual) {
+        this.individualType = individual;
+    }
+
 }

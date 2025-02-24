@@ -18,17 +18,7 @@ public class IndividuoFuncion1 extends IndividuoBooleano {
         this.maxValue = new ArrayList<Double>();
         this.maxValue.add(12.100);
         this.maxValue.add(5.800);
-
-        this.tamGenes = new ArrayList<>();
-        int tamTotal = 0;
-        for (int i = 0; i < minValue.size(); i++) {
-            tamGenes.add(this.tamGen(minValue.get(i), maxValue.get(i)));
-            tamTotal += tamGenes.get(i);
-        }
-        this.cromosomas = new ArrayList<>();
-        for (int i = 0; i < tamTotal; i++) {
-            cromosomas.add(Utils.random.nextBoolean());
-        }
+        this.init();
     }
     
     public IndividuoFuncion1(Controller controller, List<Boolean> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
@@ -54,11 +44,6 @@ public class IndividuoFuncion1 extends IndividuoBooleano {
     @Override
     public IndividualType getType() {
         return IndividualType.INDIVIDUAL_FUNCTION1;
-    }
-
-    @Override
-    protected void mutate(int i) {
-        this.cromosomas.set(i, !this.cromosomas.get(i));
     }
     
 }

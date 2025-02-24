@@ -4,6 +4,13 @@ import controller.Controller;
 
 public class IndividuoFuncion5 extends Individuo<Double> {
 
+    public IndividuoFuncion5() {}
+
+    public IndividuoFuncion5(Controller controller) {
+        super(controller);
+        // TODO
+    }
+
     @Override
     public double getFitness() {
         // TODO Auto-generated method stub

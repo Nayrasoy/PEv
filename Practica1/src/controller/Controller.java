@@ -4,6 +4,7 @@ import algorithm.AlgoritmoGenetico;
 import exceptions.CrossException;
 import exceptions.IndividuoException;
 import exceptions.SelectionException;
+import model.IndividualType;
 import views.MainWindow;
 
 public class Controller {
@@ -50,6 +51,10 @@ public class Controller {
 
     public double getPrecision() {
         return this.ag.getPrecision();
+    }
+
+    public void setIndividual(IndividualType individual) {
+        this.ag.setIndividual(individual);
     }
     
 }

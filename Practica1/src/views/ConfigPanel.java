@@ -5,20 +5,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import algorithm.cross.CrossType;
 import algorithm.selection.SelectionType;
 import config.Parameters;
 import controller.Controller;
+import model.IndividualType;
 
 public class ConfigPanel extends JPanel {
 
@@ -29,6 +27,7 @@ public class ConfigPanel extends JPanel {
     private JSlider mutationPercentageSlider;
     private JTextField precisionField;
     private JComboBox<String> selectionMethodComboBox;
+    private JComboBox<String> selectionFunctionComboBox;
     private JComboBox<String> crossMethodComboBox;
     private JComboBox<String> mutationMethodComboBox;
     private JSlider elitismPercentageSlider;
@@ -41,6 +40,22 @@ public class ConfigPanel extends JPanel {
 
     private void initGUI() {
         this.setLayout(new GridLayout(10, 2));
+
+        // Seleccion de la funcion
+        add(new JLabel("Seleccionar funcion:"));
+        String s = "";
+        for (IndividualType st : IndividualType.values()) {
+            s += st.toString() + " ";
+        }
+        selectionFunctionComboBox = new JComboBox<>(s.split(" "));
+        add(selectionFunctionComboBox);
+
+        selectionFunctionComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setIndividual(IndividualType.valueOf((String) selectionFunctionComboBox.getSelectedItem()));
+            }
+        });
 
         // Tamaño de la población
         add(new JLabel("Tamaño de la población:"));
@@ -159,7 +174,7 @@ public class ConfigPanel extends JPanel {
 
         // Método de Selección
         add(new JLabel("Método de Selección:"));
-        String s = "";
+        s = "";
         for (SelectionType st : SelectionType.values()) {
             s += st.toString() + " ";
         }

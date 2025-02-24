@@ -1,9 +1,7 @@
 package model;
 
 import java.util.List;
-import java.util.Random;
 
-import config.Parameters;
 import controller.Controller;
 import utils.Utils;
 

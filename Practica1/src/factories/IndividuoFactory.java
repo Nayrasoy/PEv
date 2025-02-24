@@ -9,11 +9,19 @@ import exceptions.IndividuoException;
 import model.IndividualType;
 import model.Individuo;
 import model.IndividuoFuncion1;
+import model.IndividuoFuncion2;
+import model.IndividuoFuncion3;
+import model.IndividuoFuncion4;
+import model.IndividuoFuncion5;
 
 public class IndividuoFactory {
 
     private static final List<Individuo> individuos = Arrays.asList(
-		new IndividuoFuncion1()
+		new IndividuoFuncion1(),
+        new IndividuoFuncion2(),
+        new IndividuoFuncion3(),
+        new IndividuoFuncion4(),
+        new IndividuoFuncion5()
 	);
     
     public static Individuo getIndividuo(IndividualType type, Controller controller) throws IndividuoException {
