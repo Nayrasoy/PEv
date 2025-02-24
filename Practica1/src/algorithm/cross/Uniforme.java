@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Individuo;
+import utils.Utils;
 
-public class MonoPunto extends CrossMethod {
+public class Uniforme extends CrossMethod {
 
     @Override
     public <T> List<Individuo> cross(Individuo individuo1, Individuo individuo2) {
@@ -18,12 +19,12 @@ public class MonoPunto extends CrossMethod {
 
     @Override
     public CrossType getType() {
-        return CrossType.MONO_PUNTO;
+        return CrossType.UNIFORME;
     }
 
     @Override
     public CrossMethod create() {
-        return new MonoPunto();
+        return new Uniforme();
     }
     
 }
