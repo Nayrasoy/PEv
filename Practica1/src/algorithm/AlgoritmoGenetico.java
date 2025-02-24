@@ -56,9 +56,6 @@ public class AlgoritmoGenetico {
         this.precision = precision;
         this.poblation = new ArrayList<>();
         this.fitness = new ArrayList<>();
-        for (int i = 0; i < this.tamPoblation; i++) {
-            this.fitness.add(null);
-        }
     }
 
     public void run() throws IndividuoException, SelectionException, CrossException {
@@ -84,6 +81,11 @@ public class AlgoritmoGenetico {
         this.poblation.clear();
         for (int i = 0; i < this.tamPoblation; i++) {
             poblation.add(IndividuoFactory.getIndividuo(individualType, this.controller));
+        }
+
+        this.fitness.clear();
+        for (int i = 0; i < this.tamPoblation; i++) {
+            this.fitness.add(null);
         }
         
         this.overallBest = new double[this.maxGeneraciones + 1][2];
