@@ -16,14 +16,12 @@ public class Restos extends SelectionMethod {
 
     @Override
     public SelectionType getType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getType'");
+        return SelectionType.RESTOS;
     }
 
     @Override
     public SelectionMethod create() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return new Restos();
     }
     
 }

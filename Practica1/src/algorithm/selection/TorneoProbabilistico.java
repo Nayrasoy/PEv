@@ -4,9 +4,7 @@ import java.util.List;
 
 import model.Individuo;
 
-public class Torneo extends SelectionMethod {
-
-    // TODO: hay dos torneos??
+public class TorneoProbabilistico extends SelectionMethod {
 
     @Override
     public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum) {
@@ -16,14 +14,12 @@ public class Torneo extends SelectionMethod {
 
     @Override
     public SelectionType getType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getType'");
+        return SelectionType.TORNEO_PROBABILISTICO;
     }
 
     @Override
     public SelectionMethod create() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return new TorneoProbabilistico();
     }
     
 }
