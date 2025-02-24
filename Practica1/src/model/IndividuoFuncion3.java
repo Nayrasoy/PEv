@@ -52,5 +52,10 @@ public class IndividuoFuncion3 extends IndividuoBooleano {
     public IndividualType getType() {
         return IndividualType.INDIVIDUAL_FUNCTION3;
     }
+
+    @Override
+    public boolean betterThan(double myFitness, double fitness) {
+        return myFitness < fitness;
+    }
     
 }

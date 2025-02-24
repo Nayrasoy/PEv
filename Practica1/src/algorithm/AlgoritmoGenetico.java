@@ -115,10 +115,10 @@ public class AlgoritmoGenetico {
             fitness *= this.precision;
             this.fitness.set(i, fitness);
             this.fitnessSum += fitness;
-            if (first || fitness > bestFitness) {
+            if (first || individuo.betterThan(fitness, bestFitness)) {
                 bestFitness = fitness;
                 this.actualBest[this.iteration][1] = bestFitness;
-                if ((first && this.iteration == 0) || this.overallBest[this.iteration][1] < fitness) {
+                if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.overallBest[this.iteration][1])) {
                     this.overallBest[this.iteration][1] = fitness;
                 }
             }

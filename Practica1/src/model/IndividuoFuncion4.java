@@ -44,5 +44,10 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
     public IndividualType getType() {
         return IndividualType.INDIVIDUAL_FUNCTION4;
     }
+
+    @Override
+    public boolean betterThan(double myFitness, double fitness) {
+        return myFitness < fitness;
+    }
     
 }

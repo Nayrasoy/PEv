@@ -33,16 +33,23 @@ public abstract class IndividuoBooleano extends Individuo<Boolean> {
 
     @Override
     public double getFenotipo(int gen) {
-        int n = tamGenes.get(gen);
+        int pos = 0;
         int intValue = 0;
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < gen; i++) {
+            pos += this.tamGenes.get(i);
+        }
+
+        
+        int n = pos + this.tamGenes.get(gen);
+
+        for (int i = pos; i < n; i++) {
             if (this.cromosomas.get(i)) {
                 intValue += 1 << (n - 1 - i);
             }
         }
 
-        return this.minValue.get(gen) + (intValue * (this.maxValue.get(gen) - this.minValue.get(gen)) / (Math.pow(2, n) - 1));
+        return this.minValue.get(gen) + (intValue * (this.maxValue.get(gen) - this.minValue.get(gen)) / (Math.pow(2, this.tamGenes.get(gen)) - 1));
     }
 
     

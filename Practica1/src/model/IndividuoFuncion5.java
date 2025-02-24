@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import controller.Controller;
 
 public class IndividuoFuncion5 extends Individuo<Double> {
@@ -25,20 +28,23 @@ public class IndividuoFuncion5 extends Individuo<Double> {
 
     @Override
     public Individuo create(Controller controller) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return new IndividuoFuncion5(controller);
     }
 
     @Override
     public Individuo copy() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'copy'");
+        return null;
+        // return new IndividuoFuncion5(this.controller, new ArrayList<>(this.cromosomas), new ArrayList<>(this.tamGenes), new ArrayList<>(this.minValue), new ArrayList<>(this.maxValue));
     }
 
     @Override
     public IndividualType getType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getType'");
+        return IndividualType.INDIVIDUAL_FUNCTION5;
+    }
+
+    @Override
+    public boolean betterThan(double myFitness, double fitness) {
+        return true;
     }
 
     @Override
