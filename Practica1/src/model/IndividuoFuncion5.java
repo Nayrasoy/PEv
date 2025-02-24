@@ -52,5 +52,10 @@ public class IndividuoFuncion5 extends Individuo<Double> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'mutate'");
     }
+
+    @Override
+    public int getMinValue() {
+        return 0;
+    }
     
 }

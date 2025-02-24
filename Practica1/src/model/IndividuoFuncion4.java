@@ -9,6 +9,7 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
 
     private int d;
     private int m = 10;
+    private double minFitness = 0;
 
     public IndividuoFuncion4() {}
 
@@ -39,6 +40,10 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
             suma += Math.sin(xi) * Math.pow(Math.sin((i * xi * xi) / Math.PI), 2 * this.m);
         }
 
+        if (-suma < this.minFitness) {
+            this.minFitness = -suma;
+        }
+
         return -suma;
     }
 
@@ -60,6 +65,11 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
     @Override
     public boolean betterThan(double myFitness, double fitness) {
         return myFitness < fitness;
+    }
+
+    @Override
+    public int getMinValue() {
+        return (int) Math.round(this.minFitness);
     }
     
 }

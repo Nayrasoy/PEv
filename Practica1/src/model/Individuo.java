@@ -39,6 +39,8 @@ public abstract class Individuo<T> {
 
     public abstract boolean betterThan(double myFitness, double fitness);
 
+    public abstract int getMinValue();
+
     protected abstract void mutate(int i);
 
     public List<T> getGenotipo(){

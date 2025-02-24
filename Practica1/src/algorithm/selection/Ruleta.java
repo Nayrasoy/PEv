@@ -13,9 +13,18 @@ public class Ruleta extends SelectionMethod {
         List<Double> probabilities = new ArrayList<>();
         List<Individuo> newPoblation = new ArrayList<>(); 
         double actual = 0, probability, random;
+        double minValue = poblation.get(0).getMinValue();
+
+        if (minValue < 0) {
+            fitnessSum += minValue * poblation.size();
+        }
     
         for (int i = 0; i < fitness.size(); i++) {
-            probability = fitness.get(i) / fitnessSum;
+            probability = fitness.get(i);
+            if (minValue < 0) {
+                probability += minValue;
+            }
+            probability /= fitnessSum;
             actual += probability;
             probabilities.add(actual);
         }

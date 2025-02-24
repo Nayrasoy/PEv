@@ -52,5 +52,10 @@ public class IndividuoFuncion2 extends IndividuoBooleano {
     public boolean betterThan(double myFitness, double fitness) {
         return myFitness < fitness;
     }
+
+    @Override
+    public int getMinValue() {
+        return -107;
+    }
     
 }
