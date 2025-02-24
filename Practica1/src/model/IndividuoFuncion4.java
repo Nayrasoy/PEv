@@ -8,6 +8,7 @@ import controller.Controller;
 public class IndividuoFuncion4 extends IndividuoBooleano {
 
     private int d;
+    private int m = 10;
 
     public IndividuoFuncion4() {}
 
@@ -15,22 +16,30 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
         super(controller);
         this.d = d;
         this.minValue = new ArrayList<Double>();
-        this.minValue.add(0.000);
-        this.minValue.add(0.000);
         this.maxValue = new ArrayList<Double>();
-        this.maxValue.add(Math.PI);
-        this.maxValue.add(Math.PI);
+        for (int i = 0; i < d; i++) {
+            this.minValue.add(0.000);
+            this.maxValue.add(Math.PI);
+        }
 
         this.init();
     }
 
-    public IndividuoFuncion4(Controller controller, List<Boolean> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
+    public IndividuoFuncion4(Controller controller, int d, List<Boolean> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
         super(controller, cromosomas, tamGenes, minValue, maxValue);
+        this.d = d;
     }
 
     @Override
     public double getFitness() {
-        return 0.0;
+        double suma = 0.0;
+
+        for (int i = 1; i <= this.d; i++) {
+            double xi = this.getFenotipo(i - 1);
+            suma += Math.sin(xi) * Math.pow(Math.sin((i * xi * xi) / Math.PI), 2 * this.m);
+        }
+
+        return -suma;
     }
 
     @Override
@@ -40,7 +49,7 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
 
     @Override
     public Individuo copy() {
-        return new IndividuoFuncion4(this.controller, new ArrayList<>(this.cromosomas), new ArrayList<>(this.tamGenes), new ArrayList<>(this.minValue), new ArrayList<>(this.maxValue));
+        return new IndividuoFuncion4(this.controller, this.d, new ArrayList<>(this.cromosomas), new ArrayList<>(this.tamGenes), new ArrayList<>(this.minValue), new ArrayList<>(this.maxValue));
     }
 
     @Override

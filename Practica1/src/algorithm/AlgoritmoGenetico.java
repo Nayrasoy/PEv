@@ -126,6 +126,9 @@ public class AlgoritmoGenetico {
             }
             first = false;
         }
+        if (this.actualBest[this.iteration][1] == 0) {
+            System.out.print("");
+        }
         this.averageFitness[this.iteration][1] = this.fitnessSum / this.poblation.size();
         this.printIteration();
     }

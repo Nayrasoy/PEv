@@ -6,8 +6,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.math.plot.Plot2DPanel;
-
 import controller.Controller;
 
 public class MainWindow extends JFrame {
@@ -16,6 +14,7 @@ public class MainWindow extends JFrame {
     private ControlPanel controlPanel;
     private ConfigPanel configPanel;
     private PlotPanel plot;
+    private SolutionPanel solutionPanel;
 
     public MainWindow(Controller controller) {
 		super("Evolucion");
@@ -23,6 +22,7 @@ public class MainWindow extends JFrame {
         this.controlPanel = new ControlPanel(controller);
         this.configPanel = new ConfigPanel(controller);
         this.plot = new PlotPanel(controller);
+        this.solutionPanel = new SolutionPanel(controller);
 		initGUI();
 	}
 
@@ -33,6 +33,7 @@ public class MainWindow extends JFrame {
         mainPanel.add(this.controlPanel, BorderLayout.NORTH);
         mainPanel.add(this.configPanel, BorderLayout.WEST);
         mainPanel.add(this.plot, BorderLayout.CENTER);
+        mainPanel.add(this.solutionPanel, BorderLayout.SOUTH);
 
 		this.pack();
 		this.setVisible(true);
@@ -45,6 +46,10 @@ public class MainWindow extends JFrame {
     public void refreshPlot(double[][] averageFitness, double[][] actualBest, double[][] overallBest) {
         this.plot.refreshPlot(averageFitness, actualBest, overallBest);
         this.repaint();
+    }
+
+    public void setSolution(String solution) {
+        this.solutionPanel.setSolution(solution);;
     }
 
 }
