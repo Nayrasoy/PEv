@@ -8,6 +8,7 @@ import javax.lang.model.type.NullType;
 
 import algorithm.cross.CrossMethod;
 import algorithm.cross.CrossType;
+import algorithm.mutation.MutationType;
 import algorithm.selection.SelectionMethod;
 import algorithm.selection.SelectionType;
 import config.Parameters;
@@ -184,6 +185,31 @@ public class AlgoritmoGenetico {
 
     public void setIndividual(IndividualType individual) {
         this.individualType = individual;
+    }
+
+    public void setCrossProbability(int crossProbability) {
+        this.crossProbability = (double) crossProbability / 100;
+    }
+
+    public void setMutationProbability(int mutationProbability) {
+        this.mutationProbability = (double) mutationProbability / 100;
+        System.out.println(this.mutationProbability);
+    }
+
+    public void setSelectionMethod(SelectionType selectionMethod) {
+        this.selectionType = selectionMethod;
+    }
+
+    public void setCrossMethod(CrossType crossMethod) {
+        this.crossType = crossMethod;
+    }
+
+    public void setMutationMethod(MutationType mutationMethod) {
+        // TODO
+    }
+
+    public void setElitismPercentage(int elitismPercentage) {
+        // TODO
     }
 
 }

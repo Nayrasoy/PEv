@@ -13,6 +13,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 import algorithm.cross.CrossType;
+import algorithm.mutation.MutationType;
 import algorithm.selection.SelectionType;
 import config.Parameters;
 import controller.Controller;
@@ -31,7 +32,7 @@ public class ConfigPanel extends JPanel {
     private JComboBox<String> crossMethodComboBox;
     private JComboBox<String> mutationMethodComboBox;
     private JSlider elitismPercentageSlider;
-    private JComboBox<String> functionDimensionComboBox;
+    private JTextField functionDimensionComboBox;
 
     public ConfigPanel(Controller controller) {
         this.controller = controller;
@@ -39,28 +40,31 @@ public class ConfigPanel extends JPanel {
     }
 
     private void initGUI() {
-        this.setLayout(new GridLayout(10, 2));
+        this.setLayout(new GridLayout(11, 1));
+        JPanel p;
 
         // Seleccion de la funcion
-        add(new JLabel("Seleccionar funcion:"));
+        p = new JPanel();
+        p.add(new JLabel("Seleccionar funcion:"));
         String s = "";
         for (IndividualType st : IndividualType.values()) {
             s += st.toString() + " ";
         }
         selectionFunctionComboBox = new JComboBox<>(s.split(" "));
-        add(selectionFunctionComboBox);
-
         selectionFunctionComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.setIndividual(IndividualType.valueOf((String) selectionFunctionComboBox.getSelectedItem()));
             }
         });
+        p.add(selectionFunctionComboBox);
+        this.add(p);
 
         // Tamaño de la población
-        add(new JLabel("Tamaño de la población:"));
+        p = new JPanel();
+        p.add(new JLabel("Tamaño de la población:"));
         populationSizeField = new JTextField(String.valueOf(Parameters.DEFAULT_TAM_POBLATION));
-       this.populationSizeField.addActionListener(new ActionListener() {
+        this.populationSizeField.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,10 +94,12 @@ public class ConfigPanel extends JPanel {
             }
             
         });
-        add(populationSizeField);
+        p.add(populationSizeField);
+        this.add(p);
 
         // Número de generaciones
-        add(new JLabel("Número de generaciones:"));
+        p = new JPanel();
+        p.add(new JLabel("Número de generaciones:"));
         generationsField = new JTextField(String.valueOf(Parameters.DEFAULT_GENERATIONS_NUMBER));
         this.generationsField.addActionListener(new ActionListener() {
 
@@ -125,20 +131,42 @@ public class ConfigPanel extends JPanel {
             }
             
         });
-        add(generationsField);
+        p.add(generationsField);
+        this.add(p);
 
         // Porcentaje de cruces
-        add(new JLabel("Porcentaje de cruces:"));
+        p = new JPanel();
+        p.add(new JLabel("Porcentaje de cruces:"));
         crossPercentageSlider = createPercentageSlider();
-        add(crossPercentageSlider);
+        this.crossPercentageSlider.addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                controller.setCrossProbability(crossPercentageSlider.getValue());
+            }
+
+        });
+        p.add(crossPercentageSlider);
+        this.add(p);
 
         // Porcentaje de mutaciones
-        add(new JLabel("Porcentaje de mutaciones:"));
+        p = new JPanel();
+        p.add(new JLabel("Porcentaje de mutaciones:"));
         mutationPercentageSlider = createPercentageSlider();
-        add(mutationPercentageSlider);
+        this.mutationPercentageSlider.addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                controller.setMutationProbability(mutationPercentageSlider.getValue());
+            }
+
+        });
+        p.add(mutationPercentageSlider);
+        this.add(p);
 
         // Precisión de la representación
-        add(new JLabel("Precisión de la representación:"));
+        p = new JPanel();
+        p.add(new JLabel("Precisión de la representación:"));
         precisionField = new JTextField(String.valueOf(Parameters.DEFAULT_PRECISION));
         this.precisionField.addActionListener(new ActionListener() {
 
@@ -170,42 +198,111 @@ public class ConfigPanel extends JPanel {
             }
             
         });
-        add(precisionField);
+        p.add(precisionField);
+        this.add(p);
 
         // Método de Selección
-        add(new JLabel("Método de Selección:"));
+        p = new JPanel();
+        p.add(new JLabel("Método de Selección:"));
         s = "";
         for (SelectionType st : SelectionType.values()) {
             s += st.toString() + " ";
         }
         selectionMethodComboBox = new JComboBox<>(s.split(" "));
-        add(selectionMethodComboBox);
+        selectionMethodComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setSelectionMethod(SelectionType.valueOf((String) selectionMethodComboBox.getSelectedItem()));
+            }
+        });
+        p.add(selectionMethodComboBox);
+        this.add(p);
 
         // Método de Cruce
-        add(new JLabel("Método de Cruce:"));
+        p = new JPanel();
+        p.add(new JLabel("Método de Cruce:"));
         s = "";
-        for (CrossType st : CrossType.values()) {
-            s += st.toString() + " ";
+        for (CrossType ct : CrossType.values()) {
+            s += ct.toString() + " ";
         }
         crossMethodComboBox = new JComboBox<>(s.split(" "));
-        add(crossMethodComboBox);
+        crossMethodComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setCrossMethod(CrossType.valueOf((String) crossMethodComboBox.getSelectedItem()));
+            }
+        });
+        p.add(crossMethodComboBox);
+        this.add(p);
 
-        /* TODO: Metodo de Mutación
-        add(new JLabel("Método de Mutación:"));
-        mutationMethodComboBox = new JComboBox<>(new String[] { "Aleatoria", "Intercambio", "Inversión" });
-        add(mutationMethodComboBox);
-        */
+        // Método de Mutación
+        p = new JPanel();
+        p.add(new JLabel("Método de Mutación:"));
+        s = "";
+        for (MutationType mt : MutationType.values()) {
+            s += mt.toString() + " ";
+        }
+        mutationMethodComboBox = new JComboBox<>(s.split(" "));
+        mutationMethodComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setMutationMethod(MutationType.valueOf((String) mutationMethodComboBox.getSelectedItem()));
+            }
+        });
+        p.add(mutationMethodComboBox);
+        this.add(p);
 
         // Porcentaje de elitismo
-        add(new JLabel("Porcentaje de elitismo:"));
+        p = new JPanel();
+        p.add(new JLabel("Porcentaje de elitismo:"));
         elitismPercentageSlider = createPercentageSlider();
-        add(elitismPercentageSlider);
+        this.elitismPercentageSlider.addFocusListener(new FocusAdapter() {
 
-        /* TODO: Selección de la dimensión de las funciones 4 y 5
-        add(new JLabel("Dimensión de funciones 4 y 5:"));
-        functionDimensionComboBox = new JComboBox<>(new String[] { "2D", "3D", "4D" });
-        add(functionDimensionComboBox);
-        */
+            @Override
+            public void focusLost(FocusEvent e) {
+                controller.setElitismPercentage(elitismPercentageSlider.getValue());
+            }
+
+        });
+        p.add(elitismPercentageSlider);
+        this.add(p);
+
+        // Selección de la dimensión de las funciones 4 y 5
+        p = new JPanel();
+        p.add(new JLabel("Dimensión de funciones 4 y 5:"));
+        functionDimensionComboBox = new JTextField(String.valueOf(Parameters.DEFAULT_DIMENSION));
+        this.functionDimensionComboBox.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    validateIntTextField(functionDimensionComboBox.getText());
+                } catch (Exception ex) {
+                    System.out.println("El tamanyo de la poblacion debe ser un entero superior a 0");
+                    functionDimensionComboBox.setText(String.valueOf(Parameters.DEFAULT_DIMENSION));
+                } finally {
+                    controller.setDimension(Integer.parseInt(functionDimensionComboBox.getText()));
+                }
+            }
+            
+        });
+        this.functionDimensionComboBox.addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    validateIntTextField(functionDimensionComboBox.getText());
+                } catch (Exception ex) {
+                    System.out.println("El tamanyo de la poblacion debe ser un entero superior a 0");
+                    functionDimensionComboBox.setText(String.valueOf(Parameters.DEFAULT_DIMENSION)); 
+                } finally {
+                    controller.setDimension(Integer.parseInt(functionDimensionComboBox.getText()));
+                }
+            }
+            
+        });
+        p.add(this.functionDimensionComboBox);
+        this.add(p);
     }
 
     private JSlider createPercentageSlider() {
