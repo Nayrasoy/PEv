@@ -73,7 +73,8 @@ public class AlgoritmoGenetico {
             this.iteration++;
         }
 
-        System.out.println("FINAL\n\nMejor individuo: \n" + this.overallBest[this.iteration - 1][1]);
+        String formato = "%." + Math.round(- Math.log10(this.precision)) + "f";
+        System.out.println("FINAL\n\nMejor individuo: \n" + String.format(formato, this.overallBest[this.iteration - 1][1]));
         
         this.controller.refreshPlot(this.averageFitness, this.actualBest, this.overallBest);
     }
