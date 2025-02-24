@@ -6,7 +6,7 @@ import model.Individuo;
 
 public abstract class SelectionMethod {
 
-    public abstract List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum);
+    public abstract List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum, int n);
 
     public abstract SelectionType getType();
 

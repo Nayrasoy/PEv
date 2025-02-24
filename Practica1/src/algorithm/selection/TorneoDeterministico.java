@@ -8,7 +8,7 @@ import model.Individuo;
 public class TorneoDeterministico extends SelectionMethod {
 
     @Override
-    public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum) {
+    public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum, int n) {
         List<Individuo> newPoblation = new ArrayList<>();
         
         

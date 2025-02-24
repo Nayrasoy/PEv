@@ -9,7 +9,7 @@ import model.Individuo;
 public class Truncamiento extends SelectionMethod {
 
     @Override
-    public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum) {
+    public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum, int n) {
         List<Individuo> newPoblation = new ArrayList<>();
         int selectionCont = (int) (poblation.size() * 0.5); // TODO: cambiar el 0.5
         
