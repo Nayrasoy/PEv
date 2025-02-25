@@ -77,11 +77,6 @@ public class IndividuoFuncion5 extends Individuo<Double> {
     }
 
     @Override
-    protected void mutate(int i) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public int getMinValue() {
         return (int) Math.round(this.minFitness);
     }

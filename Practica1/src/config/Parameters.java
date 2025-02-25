@@ -1,5 +1,7 @@
 package config;
 
+import algorithm.cross.CrossType;
+import algorithm.mutation.MutationType;
 import algorithm.selection.SelectionType;
 import model.IndividualType;
 
@@ -12,6 +14,8 @@ public class Parameters {
     public static int DEFAULT_GENERATIONS_NUMBER = 100;
     public static IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_FUNCTION1;
     public static SelectionType DEFAULT_SELECTION_METHOD = SelectionType.RULETA;
+    public static CrossType DEFAULT_CROSS_METHOD = CrossType.MONO_PUNTO;
+    public static MutationType DEFAULT_MUTATION_METHOD = MutationType.SOBRE_BOOLEANOS;
     public static double DEFAULT_CROSS_PROBABILITY = 0.6;
     public static double DEFAULT_PRECISION = 0.001;
     public static double DEFAULT_MUTATION_PROBABILITY = 0.05;

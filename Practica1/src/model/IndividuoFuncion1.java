@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controller.Controller;
-import utils.Utils;
 
 public class IndividuoFuncion1 extends IndividuoBooleano {
 

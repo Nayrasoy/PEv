@@ -41,8 +41,6 @@ public abstract class Individuo<T> {
 
     public abstract int getMinValue();
 
-    protected abstract void mutate(int i);
-
     public List<T> getGenotipo(){
         return this.cromosomas;
     }
@@ -68,12 +66,12 @@ public abstract class Individuo<T> {
         return cromosomas;
     }
 
-    public void checkForMutations(double mutationProbability) {
-        for (int i = 0; i < this.cromosomas.size(); i++) {
-            if (Utils.random.nextDouble() < mutationProbability) {
-                mutate(i);
-            }
-        }
+    public double getMinValueForGen(int gen) {
+        return this.minValue.get(gen);
+    }
+
+    public double getMaxValueForGen(int gen) {
+        return this.maxValue.get(gen);
     }
 
 }

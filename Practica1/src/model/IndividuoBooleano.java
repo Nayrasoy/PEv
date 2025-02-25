@@ -52,10 +52,4 @@ public abstract class IndividuoBooleano extends Individuo<Boolean> {
         return this.minValue.get(gen) + (intValue * (this.maxValue.get(gen) - this.minValue.get(gen)) / (Math.pow(2, this.tamGenes.get(gen)) - 1));
     }
 
-    
-    @Override
-    protected void mutate(int i) {
-        this.cromosomas.set(i, !this.cromosomas.get(i));
-    }
-
 }

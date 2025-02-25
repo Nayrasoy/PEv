@@ -5,6 +5,7 @@ import java.util.List;
 
 import algorithm.cross.CrossMethod;
 import algorithm.cross.CrossType;
+import algorithm.mutation.MutationMethod;
 import algorithm.mutation.MutationType;
 import algorithm.selection.SelectionMethod;
 import algorithm.selection.SelectionType;
@@ -15,6 +16,7 @@ import exceptions.IndividuoException;
 import exceptions.SelectionException;
 import factories.CrossMethodFactory;
 import factories.IndividuoFactory;
+import factories.MutationMethodFactory;
 import factories.SelectionMethodFactory;
 import model.IndividualType;
 import model.Individuo;
@@ -30,10 +32,10 @@ public class AlgoritmoGenetico {
     private double fitnessSum;
     private SelectionType selectionType;
     private CrossType crossType;
+    private MutationType mutationMethod;
     private int maxGeneraciones;
     private double crossProbability;
     private double mutationProbability;
-    private int tamTorneo;
     private double[][] overallBest;
     private double[][] actualBest;
     private double[][] averageFitness;
@@ -41,16 +43,16 @@ public class AlgoritmoGenetico {
     private double precision;
     private Individuo bestIndividual;
 
-    public AlgoritmoGenetico(Controller controller, int tamPoblation, IndividualType individualType, int maxGeneraciones, double crossProbability, double mutationProbability, int tamTorneo, double precision) {
+    public AlgoritmoGenetico(Controller controller, int tamPoblation, IndividualType individualType, int maxGeneraciones, double crossProbability, double mutationProbability, double precision) {
         this.controller = controller;
         this.tamPoblation = tamPoblation;
         this.individualType = individualType;
         this.selectionType = Parameters.DEFAULT_SELECTION_METHOD;
-        this.crossType = CrossType.MONO_PUNTO;
+        this.crossType = Parameters.DEFAULT_CROSS_METHOD;
+        this.mutationMethod = Parameters.DEFAULT_MUTATION_METHOD;
         this.maxGeneraciones = maxGeneraciones;
         this.crossProbability = crossProbability;
         this.mutationProbability = mutationProbability;
-        this.tamTorneo = tamTorneo;
         this.precision = precision;
         this.poblation = new ArrayList<>();
         this.fitness = new ArrayList<>();
@@ -155,9 +157,10 @@ public class AlgoritmoGenetico {
         }
     }
 
-    private void mutation() {
+    private void mutation() throws SelectionException {
+        MutationMethod mutationMethod = MutationMethodFactory.getSelectionMethod(this.mutationMethod);
         for (Individuo i: this.poblation) {
-            i.checkForMutations(this.mutationProbability);
+            i = mutationMethod.mutate(i, this.mutationProbability);
         }
     }
     
@@ -207,7 +210,7 @@ public class AlgoritmoGenetico {
     }
 
     public void setMutationMethod(MutationType mutationMethod) {
-        // TODO
+        this.mutationMethod = mutationMethod;
     }
 
     public void setElitismPercentage(int elitismPercentage) {
