@@ -256,6 +256,8 @@ public class ConfigPanel extends JPanel {
         p = new JPanel();
         p.add(new JLabel("Porcentaje de elitismo:"));
         elitismPercentageSlider = createPercentageSlider();
+        elitismPercentageSlider.setMaximum(10);
+        elitismPercentageSlider.setValue(Parameters.DEFAULT_ELITISM);
         this.elitismPercentageSlider.addFocusListener(new FocusAdapter() {
 
             @Override

@@ -37,7 +37,7 @@ public class MainWindow extends JFrame {
 
 		this.pack();
 		this.setVisible(true);
-        this.setSize(800, 800);
+        this.setSize(1200, 800);
         ImageIcon imgIcon = new ImageIcon("img/icons/app_icon.png");
         this.setIconImage(imgIcon.getImage());
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

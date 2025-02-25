@@ -22,7 +22,7 @@ public class Parameters {
     public static int DEFAULT_TAM_TOURNAMENT = 3;
     public static int DEFAULT_DIMENSION = 5;
     public static double DEFAULT_UNIFORM_CROSS_PROBABILITY = 0.5;
-
+    public static int DEFAULT_ELITISM = 3;
     public static double PROPORSION_TRUNCAMIENTO = 0.5;
     public static int TOURNAMENT_K = 3;
     public static double TOURNAMENT_P = 0.5;

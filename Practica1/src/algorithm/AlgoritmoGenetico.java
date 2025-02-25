@@ -1,6 +1,7 @@
 package algorithm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import algorithm.cross.CrossMethod;
@@ -27,6 +28,7 @@ public class AlgoritmoGenetico {
     private Controller controller;
     private int tamPoblation;
     private List<Individuo> poblation;
+    private List<Individuo> elitePoblation;
     private IndividualType individualType;
     private List<Double> fitness;
     private double fitnessSum;
@@ -42,6 +44,7 @@ public class AlgoritmoGenetico {
     private int iteration;
     private double precision;
     private Individuo bestIndividual;
+    private int elitism;
 
     public AlgoritmoGenetico(Controller controller, int tamPoblation, IndividualType individualType, int maxGeneraciones, double crossProbability, double mutationProbability, double precision) {
         this.controller = controller;
@@ -54,8 +57,10 @@ public class AlgoritmoGenetico {
         this.crossProbability = crossProbability;
         this.mutationProbability = mutationProbability;
         this.precision = precision;
+        this.elitism = Parameters.DEFAULT_ELITISM;
         this.poblation = new ArrayList<>();
         this.fitness = new ArrayList<>();
+        this.elitePoblation = new ArrayList<>();
     }
 
     public void run() throws IndividuoException, SelectionException, CrossException {
@@ -63,16 +68,17 @@ public class AlgoritmoGenetico {
         this.evalue();
         this.iteration++;
         while (this.iteration <= this.maxGeneraciones) {
+            this.generateElite();
             this.selection();
             this.cross();
             this.mutation();
+            this.introduceElite();
             this.evalue();
             
             this.iteration++;
         }
 
         this.controller.setSolution(this.bestIndividual.toString());
-        String formato = "%." + Math.round(- Math.log10(this.precision)) + "f";
         System.out.println("FINAL\n\nMejor individuo: \n" + this.bestIndividual);
         
         this.controller.refreshPlot(this.averageFitness, this.actualBest, this.overallBest);
@@ -82,6 +88,11 @@ public class AlgoritmoGenetico {
         this.poblation.clear();
         for (int i = 0; i < this.tamPoblation; i++) {
             poblation.add(IndividuoFactory.getIndividuo(individualType, this.controller));
+        }
+
+        this.elitePoblation.clear();
+        for (int i = 0; i < this.tamPoblation; i++) {
+            elitePoblation.add(IndividuoFactory.getIndividuo(individualType, this.controller));
         }
 
         this.fitness.clear();
@@ -134,6 +145,16 @@ public class AlgoritmoGenetico {
         this.printIteration();
     }
 
+    private void generateElite() {
+        if (this.elitism > 0) {
+            List<Individuo> poblation = new ArrayList<>(this.poblation);
+            Collections.sort(poblation, (a, b) -> Double.compare(b.getFitness(), a.getFitness()));
+            for (int i = 0; i < this.elitism; i++) {
+                this.elitePoblation.set(i, poblation.get(i).copy());
+            }
+        }
+    }
+
     private void selection() throws SelectionException {
         SelectionMethod selectionMethod = SelectionMethodFactory.getSelectionMethod(this.selectionType);
         this.poblation = selectionMethod.selection(poblation, fitness, fitnessSum, this.poblation.size());
@@ -161,6 +182,25 @@ public class AlgoritmoGenetico {
         MutationMethod mutationMethod = MutationMethodFactory.getSelectionMethod(this.mutationMethod);
         for (Individuo i: this.poblation) {
             i = mutationMethod.mutate(i, this.mutationProbability);
+        }
+    }
+
+    private void introduceElite() {
+        if (this.elitism > 0) {
+            for (int i = 0; i < this.elitism; i++) {
+                int worstIndex = 0;
+                double worstFitness = this.poblation.get(0).getFitness();
+                for (int j = 1; j < this.poblation.size(); j++) {
+                    double currentFitness = this.poblation.get(j).getFitness();
+                    if (currentFitness < worstFitness) {
+                        worstFitness = currentFitness;
+                        worstIndex = j;
+                    }
+                }
+                if (this.elitePoblation.get(i).getFitness() > worstFitness) {
+                    this.poblation.set(worstIndex, this.elitePoblation.get(i));
+                }
+            }
         }
     }
     
@@ -214,7 +254,7 @@ public class AlgoritmoGenetico {
     }
 
     public void setElitismPercentage(int elitismPercentage) {
-        // TODO
+        this.elitism = elitismPercentage > 0 ? Math.round((this.tamPoblation / 100) * elitismPercentage) : 0;
     }
 
 }

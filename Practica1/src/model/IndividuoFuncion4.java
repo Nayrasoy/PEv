@@ -31,9 +31,8 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
         this.d = d;
     }
 
-    public IndividuoFuncion4(Controller controller, int d2, ArrayList arrayList, ArrayList arrayList2,
-            ArrayList arrayList3) {
-        //TODO Auto-generated constructor stub
+    public IndividuoFuncion4(Controller controller, int d2, ArrayList arrayList, ArrayList arrayList2, ArrayList arrayList3) {
+        super(controller, arrayList3, arrayList, arrayList2, arrayList3);
     }
 
     @Override
