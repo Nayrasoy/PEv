@@ -73,7 +73,7 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
 
     @Override
     public int getMinValue() {
-        return (int) Math.round(this.minFitness);
+        return (int) Math.floor(this.minFitness);
     }
     
 }
