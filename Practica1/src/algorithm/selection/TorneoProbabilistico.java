@@ -24,10 +24,10 @@ public class TorneoProbabilistico extends SelectionMethod {
 
             int best = 0, worst = 0;
             for (int i = 1; i < k; i++) {
-                if (tournament.get(i).getFitness() > tournament.get(best).getFitness()) {
+                if (tournament.get(i).betterThan(tournament.get(i).getFitness(), tournament.get(best).getFitness()) == 1) {
                     best = i;
                 }
-                if (tournament.get(i).getFitness() < tournament.get(worst).getFitness()) {
+                if (tournament.get(i).betterThan(tournament.get(i).getFitness(), tournament.get(worst).getFitness()) == 0) {
                     worst= i;
                 }
             }

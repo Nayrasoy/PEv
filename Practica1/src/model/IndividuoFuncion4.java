@@ -67,8 +67,8 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
     }
 
     @Override
-    public boolean betterThan(double myFitness, double fitness) {
-        return myFitness < fitness;
+    public int betterThan(double myFitness, double fitness) {
+        return myFitness < fitness ? 1 : myFitness == fitness ? 0 : -1;
     }
 
     @Override

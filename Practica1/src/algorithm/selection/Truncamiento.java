@@ -15,7 +15,7 @@ public class Truncamiento extends SelectionMethod {
         int selectionCont = (int) (n * Parameters.PROPORSION_TRUNCAMIENTO);
         
         // Ordenar el array
-        Collections.sort(poblation, (a, b) -> Double.compare(b.getFitness(), a.getFitness()));
+        Collections.sort(poblation, (a, b) -> poblation.get(0).betterThan(a.getFitness(), b.getFitness()));
 
         // Seleccionamos los mejores individuos
         List<Individuo> selectedIndividuals = new ArrayList<>();
