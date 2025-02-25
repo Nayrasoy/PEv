@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import config.Parameters;
 import model.Individuo;
 
 public class Truncamiento extends SelectionMethod {
@@ -11,7 +12,7 @@ public class Truncamiento extends SelectionMethod {
     @Override
     public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum, int n) {
         List<Individuo> newPoblation = new ArrayList<>();
-        int selectionCont = (int) (poblation.size() * 0.5); // TODO: cambiar el 0.5
+        int selectionCont = (int) (n * Parameters.PROPORSION_TRUNCAMIENTO);
         
         // Ordenar el array
         Collections.sort(poblation, (a, b) -> Double.compare(b.getFitness(), a.getFitness()));
@@ -22,7 +23,7 @@ public class Truncamiento extends SelectionMethod {
             selectedIndividuals.add(poblation.get(i));
         }
         // Rellenar con los mismo individuos
-        int selectionNum = (int) (1 / 0.5); // TODO: cambiar el 0.5
+        int selectionNum = (int) (1 / Parameters.PROPORSION_TRUNCAMIENTO);
         for (Individuo ind : selectedIndividuals) {
             for (int j = 0; j < selectionNum; j++) {
                 newPoblation.add(ind);
