@@ -9,7 +9,7 @@ public class IndividuoFuncion4 extends IndividuoBooleano {
 
     private int d;
     private int m = 10;
-    private double minFitness = 0;
+    private static double minFitness = 0;
 
     public IndividuoFuncion4() {}
 

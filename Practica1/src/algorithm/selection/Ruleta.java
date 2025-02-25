@@ -29,7 +29,7 @@ public class Ruleta extends SelectionMethod {
             probabilities.add(actual);
         }
 
-        for (int i = 0; i < fitness.size(); i++) {
+        for (int i = 0; i < n; i++) {
             random = Utils.random.nextDouble();
             for (int j = 0; j < probabilities.size(); j++) {
                 Double p = probabilities.get(j);
