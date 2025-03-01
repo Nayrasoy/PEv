@@ -1,30 +1,39 @@
 package views;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import controller.Controller;
 
 public class SolutionPanel extends JPanel {
 
     private Controller controller;
-    private JTextField solution; 
+    private JTextArea solution; 
 
     public SolutionPanel(Controller controller) {
         this.controller = controller;
-        this.solution = new JTextField();
+        this.solution = new JTextArea();
         this.initGUI();
     }
 
     private void initGUI() {
-        this.add(new JLabel("Solucion:"));
+        this.setLayout(new BorderLayout());
+
+        JLabel label = new JLabel("Solución:");
+        this.add(label, BorderLayout.NORTH);
+
         this.solution.setEditable(false);
-        this.add(solution);
+        this.solution.setLineWrap(true);
+        this.solution.setWrapStyleWord(true);
+
+        this.add(solution, BorderLayout.CENTER);
     }
 
     public void setSolution(String solution) {
         this.solution.setText(solution);
     }
-    
 }

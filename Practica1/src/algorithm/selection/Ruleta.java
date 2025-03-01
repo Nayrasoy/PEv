@@ -34,7 +34,7 @@ public class Ruleta extends SelectionMethod {
             for (int j = 0; j < probabilities.size(); j++) {
                 Double p = probabilities.get(j);
                 if (random < p) {
-                    newPoblation.add(poblation.get(j));
+                    newPoblation.add(poblation.get(j).copy());
                     break;
                 }
             }

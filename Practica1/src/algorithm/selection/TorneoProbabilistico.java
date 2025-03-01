@@ -34,7 +34,7 @@ public class TorneoProbabilistico extends SelectionMethod {
 
             int winner = (Utils.random.nextDouble() < Parameters.TOURNAMENT_P) ? best : worst;
 
-            newPoblation.add(tournament.get(winner));
+            newPoblation.add(tournament.get(winner).copy());
 
         }
 

@@ -31,11 +31,11 @@ public class Restos extends SelectionMethod {
             probability /= fitnessSum;
             if (Math.floor(probability*k) >= 1){
                 for (int j = 0; j < Math.floor(probability*k); j++){
-                    newPoblation.add(poblation.get(i));
+                    newPoblation.add(poblation.get(i).copy());
                 }
             }
             else {
-                extraPoblation.add(poblation.get(i));
+                extraPoblation.add(poblation.get(i).copy());
                 newFitness.add(fitness.get(i));
                 newFitnessSum += fitness.get(i);
             }

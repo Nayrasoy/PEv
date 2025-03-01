@@ -30,7 +30,7 @@ public class TorneoDeterministico extends SelectionMethod {
                 }
             }
 
-            newPoblation.add(tournament.get(bestIndex));
+            newPoblation.add(tournament.get(bestIndex).copy());
         }
 
         return newPoblation;

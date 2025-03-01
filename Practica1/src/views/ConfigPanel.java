@@ -152,7 +152,8 @@ public class ConfigPanel extends JPanel {
         // Porcentaje de mutaciones
         p = new JPanel();
         p.add(new JLabel("Porcentaje de mutaciones:"));
-        mutationPercentageSlider = createPercentageSlider();
+        this.mutationPercentageSlider = createPercentageSlider();
+        this.mutationPercentageSlider.setValue(Parameters.DEFAULT_MUTATION_PROBABILITY);
         this.mutationPercentageSlider.addFocusListener(new FocusAdapter() {
 
             @Override

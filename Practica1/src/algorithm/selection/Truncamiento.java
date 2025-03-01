@@ -26,7 +26,7 @@ public class Truncamiento extends SelectionMethod {
         int selectionNum = (int) (1 / Parameters.PROPORSION_TRUNCAMIENTO);
         for (Individuo ind : selectedIndividuals) {
             for (int j = 0; j < selectionNum; j++) {
-                newPoblation.add(ind);
+                newPoblation.add(ind.copy());
             }
         }
 

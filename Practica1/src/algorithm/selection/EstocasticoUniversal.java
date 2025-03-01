@@ -34,12 +34,12 @@ public class EstocasticoUniversal extends SelectionMethod {
             for (int j = 0; j < probabilities.size(); j++) {
                 Double p = probabilities.get(j);
                 if (random < p) {
-                    newPoblation.add(poblation.get(j));
+                    newPoblation.add(poblation.get(j).copy());
                     break;
                 }
             }
             random += sumValue;
-            if (random > fitnessSum) {
+            if (random > 1) {
                 random -= fitnessSum;
             }
         }

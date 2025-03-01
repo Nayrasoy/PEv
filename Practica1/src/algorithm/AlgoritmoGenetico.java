@@ -31,6 +31,7 @@ public class AlgoritmoGenetico {
     private List<Individuo> elitePoblation;
     private IndividualType individualType;
     private List<Double> fitness;
+    private List<Double> fenotipo;
     private double fitnessSum;
     private SelectionType selectionType;
     private CrossType crossType;
@@ -55,11 +56,12 @@ public class AlgoritmoGenetico {
         this.mutationMethod = Parameters.DEFAULT_MUTATION_METHOD;
         this.maxGeneraciones = maxGeneraciones;
         this.crossProbability = crossProbability;
-        this.mutationProbability = mutationProbability;
+        this.mutationProbability = mutationProbability / 100;
         this.precision = precision;
         this.elitism = Parameters.DEFAULT_ELITISM;
         this.poblation = new ArrayList<>();
         this.fitness = new ArrayList<>();
+        this.fenotipo = new ArrayList<>();
         this.elitePoblation = new ArrayList<>();
     }
 
@@ -98,6 +100,11 @@ public class AlgoritmoGenetico {
         this.fitness.clear();
         for (int i = 0; i < this.tamPoblation; i++) {
             this.fitness.add(null);
+        }
+
+        this.fenotipo.clear();
+        for (int i = 0; i < this.tamPoblation * 2; i++) {
+            this.fenotipo.add(null);
         }
         
         this.overallBest = new double[this.maxGeneraciones + 1][2];
@@ -210,6 +217,19 @@ public class AlgoritmoGenetico {
             "- Fitness promedio: " + String.format(formato, this.averageFitness[this.iteration][1]) + "\n" +
             "- Fitness del mejor individuo de la iteracion: " + String.format(formato, this.actualBest[this.iteration][1]) + "\n" +
             "- Fitness del mejor individuo: " + String.format(formato, this.overallBest[this.iteration][1]));
+    }
+
+    private void refreshFitness() {
+        for (int i = 0; i < this.tamPoblation; i++) {
+            this.fitness.set(i, this.poblation.get(i).getFitness());
+        }
+    }
+
+    private void refreshFenotipo() {
+        for (int i = 0; i < this.tamPoblation; i++) {
+            this.fenotipo.set(i * 2, this.poblation.get(i).getFenotipo(0));
+            this.fenotipo.set(i * 2 + 1, this.poblation.get(i).getFenotipo(1));
+        }
     }
 
     public void setPopulationSize(int populationSize) {
