@@ -23,14 +23,18 @@ public class TorneoDeterministico extends SelectionMethod {
                 tournament.add(poblation.get(random));
             }
 
-            int bestIndex = 0;
+            int best = 0;
             for (int i = 1; i < k; i++) {
-                if (tournament.get(i).getFitness() > tournament.get(bestIndex).getFitness()) {
-                    bestIndex = i;
+                if (tournament.get(i).betterThan(tournament.get(i).getFitness(), tournament.get(best).getFitness()) == 1) {
+                    best = i;
                 }
             }
 
+<<<<<<< HEAD
             newPoblation.add(tournament.get(bestIndex).copy());
+=======
+            newPoblation.add(tournament.get(best));
+>>>>>>> c3d8484b8d314c3f08006e99414841d0d3051176
         }
 
         return newPoblation;

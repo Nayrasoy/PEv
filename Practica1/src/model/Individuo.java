@@ -37,7 +37,7 @@ public abstract class Individuo<T> {
 
     public abstract IndividualType getType();
 
-    public abstract boolean betterThan(double myFitness, double fitness);
+    public abstract int betterThan(double myFitness, double fitness);
 
     public abstract int getMinValue();
 

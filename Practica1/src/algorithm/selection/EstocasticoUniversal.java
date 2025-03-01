@@ -16,13 +16,13 @@ public class EstocasticoUniversal extends SelectionMethod {
         double minValue = poblation.get(0).getMinValue();
 
         if (minValue < 0) {
-            fitnessSum += minValue * poblation.size();
+            fitnessSum += -minValue * poblation.size();
         }
     
         for (int i = 0; i < fitness.size(); i++) {
             probability = fitness.get(i);
             if (minValue < 0) {
-                probability += minValue;
+                probability += -minValue;
             }
             probability /= fitnessSum;
             actual += probability;

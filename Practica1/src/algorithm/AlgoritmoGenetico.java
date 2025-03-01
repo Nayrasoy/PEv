@@ -138,10 +138,10 @@ public class AlgoritmoGenetico {
             fitness *= this.precision;
             this.fitness.set(i, fitness);
             this.fitnessSum += fitness;
-            if (first || individuo.betterThan(fitness, bestFitness)) {
+            if (first || individuo.betterThan(fitness, bestFitness) == 1) {
                 bestFitness = fitness;
                 this.actualBest[this.iteration][1] = bestFitness;
-                if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.overallBest[this.iteration][1])) {
+                if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.overallBest[this.iteration][1]) == 1) {
                     this.bestIndividual = individuo.copy();
                     this.overallBest[this.iteration][1] = fitness;
                 }
@@ -155,7 +155,7 @@ public class AlgoritmoGenetico {
     private void generateElite() {
         if (this.elitism > 0) {
             List<Individuo> poblation = new ArrayList<>(this.poblation);
-            Collections.sort(poblation, (a, b) -> Double.compare(b.getFitness(), a.getFitness()));
+            Collections.sort(poblation, (a, b) -> this.poblation.get(0).betterThan(b.getFitness(), a.getFitness()));
             for (int i = 0; i < this.elitism; i++) {
                 this.elitePoblation.set(i, poblation.get(i).copy());
             }
@@ -199,12 +199,12 @@ public class AlgoritmoGenetico {
                 double worstFitness = this.poblation.get(0).getFitness();
                 for (int j = 1; j < this.poblation.size(); j++) {
                     double currentFitness = this.poblation.get(j).getFitness();
-                    if (currentFitness < worstFitness) {
+                    if (this.elitePoblation.get(i).betterThan(worstFitness, currentFitness) == 1) {
                         worstFitness = currentFitness;
                         worstIndex = j;
                     }
                 }
-                if (this.elitePoblation.get(i).getFitness() > worstFitness) {
+                if (this.elitePoblation.get(i).betterThan(this.elitePoblation.get(i).getFitness(), worstFitness) == 1) {
                     this.poblation.set(worstIndex, this.elitePoblation.get(i));
                 }
             }
