@@ -13,9 +13,18 @@ public class Truncamiento extends SelectionMethod {
     public List<Individuo> selection(List<Individuo> poblation, List<Double> fitness, double fitnessSum, int n) {
         List<Individuo> newPoblation = new ArrayList<>();
         int selectionCont = (int) (n * Parameters.PROPORSION_TRUNCAMIENTO);
+        double minValue = poblation.get(0).getMinValue();
+
+        if (minValue < 0) {
+            fitnessSum = 0;
+            for (int i = 0; i < fitness.size(); i++) {
+                fitness.set(i, -minValue - fitness.get(i));
+                fitnessSum += fitness.get(i);
+            }
+        }
         
         // Ordenar el array
-        Collections.sort(poblation, (a, b) -> poblation.get(0).betterThan(a.getFitness(), b.getFitness()));
+        Collections.sort(poblation, (a, b) -> poblation.get(0).betterThan(b.getFitness(), a.getFitness()));
 
         // Seleccionamos los mejores individuos
         List<Individuo> selectedIndividuals = new ArrayList<>();
