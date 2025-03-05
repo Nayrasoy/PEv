@@ -5,7 +5,7 @@
             "type": "java",
             "name": "Ejecucion del proyecto en java",
             "request": "launch",
-            "mainClass": "MainP1",
+            "mainClass": "MainP2",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopOnEntry": false

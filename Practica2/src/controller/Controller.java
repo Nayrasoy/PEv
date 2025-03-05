@@ -99,5 +99,13 @@ public class Controller {
     public void setSolution(String solution) {
         this.mainWindow.setSolution(solution);
     }
+
+    public void showPlot() {
+        this.mainWindow.showPlot();
+    }
+
+    public void showMap() {
+        this.mainWindow.showMap();
+    }
     
 }

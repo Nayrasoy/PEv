@@ -13,7 +13,7 @@ public class MainWindow extends JFrame {
     private Controller controller;
     private ControlPanel controlPanel;
     private ConfigPanel configPanel;
-    private PlotPanel plot;
+    private CenterPanel centerPanel;
     private SolutionPanel solutionPanel;
 
     public MainWindow(Controller controller) {
@@ -21,7 +21,7 @@ public class MainWindow extends JFrame {
         this.controller = controller;
         this.controlPanel = new ControlPanel(controller);
         this.configPanel = new ConfigPanel(controller);
-        this.plot = new PlotPanel(controller);
+        this.centerPanel = new CenterPanel(controller);
         this.solutionPanel = new SolutionPanel(controller);
 		initGUI();
 	}
@@ -32,7 +32,7 @@ public class MainWindow extends JFrame {
 
         mainPanel.add(this.controlPanel, BorderLayout.NORTH);
         mainPanel.add(this.configPanel, BorderLayout.WEST);
-        mainPanel.add(this.plot, BorderLayout.CENTER);
+        mainPanel.add(this.centerPanel, BorderLayout.CENTER);
         mainPanel.add(this.solutionPanel, BorderLayout.SOUTH);
 
 		this.pack();
@@ -44,12 +44,19 @@ public class MainWindow extends JFrame {
 	}
 
     public void refreshPlot(double[][] averageFitness, double[][] actualBest, double[][] overallBest) {
-        this.plot.refreshPlot(averageFitness, actualBest, overallBest);
-        this.repaint();
+        this.centerPanel.refreshPlot(averageFitness, actualBest, overallBest);
     }
 
     public void setSolution(String solution) {
         this.solutionPanel.setSolution(solution);;
+    }
+
+    public void showPlot() {
+        this.centerPanel.showPlot();
+    }
+
+    public void showMap() {
+        this.centerPanel.showMap();
     }
 
 }

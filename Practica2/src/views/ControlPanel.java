@@ -38,6 +38,32 @@ public class ControlPanel extends JPanel {
 		});
         runButton.setFocusPainted(false);
 		toolBar.add(runButton);
+
+        JButton graphButton = new JButton("Show graph");
+		graphButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                System.out.println("Se ha pulsado el boton de grafo");
+				controller.showPlot();
+			}
+			
+		});
+        graphButton.setFocusPainted(false);
+		toolBar.add(graphButton);
+
+        JButton mapButton = new JButton("Show map");
+		mapButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                System.out.println("Se ha pulsado el boton de mapa");
+				controller.showMap();
+			}
+			
+		});
+        mapButton.setFocusPainted(false);
+		toolBar.add(mapButton);
 	}
 
 }
