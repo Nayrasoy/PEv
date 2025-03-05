@@ -1,0 +1,5 @@
+package algorithm.selection;
+
+public enum SelectionType {
+    RULETA, TORNEO_DETERMINISTICO, TORNEO_PROBABILISTICO, ESTOCASTICO_UNIVERSAL, TRUNCAMIENTO, RESTOS
+}
