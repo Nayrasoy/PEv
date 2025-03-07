@@ -3,7 +3,6 @@ package model;
 import java.util.List;
 
 import controller.Controller;
-import utils.Utils;
 
 public abstract class Individuo<T> {
 
@@ -12,6 +11,7 @@ public abstract class Individuo<T> {
     protected List<Integer> tamGenes;
     protected List<Double> minValue;
     protected List<Double> maxValue;
+    protected int nGenes;
 
     public Individuo(Controller controller) {
         this.controller = controller;
@@ -19,12 +19,13 @@ public abstract class Individuo<T> {
 
     public Individuo() {}
 
-    public Individuo(Controller controller, List<T> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
+    public Individuo(Controller controller, List<T> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue, int nGenes) {
         this.controller = controller;
         this.cromosomas = cromosomas;
         this.tamGenes = tamGenes;
         this.minValue = minValue;
         this.maxValue = maxValue;
+        this.nGenes = nGenes;
     }
 
     public abstract double getFitness();
@@ -54,7 +55,7 @@ public abstract class Individuo<T> {
         String s = "";
         String formato = "%." + Math.round(- Math.log10(this.controller.getPrecision())) + "f";
         
-        for (int i = 0; i < this.minValue.size(); i++) {
+        for (int i = 0; i < this.nGenes; i++) {
             s += "Variable X" + (i + 1) + " = " + String.format(formato, this.getFenotipo(i)) + ", ";
         }
         s += "Valor de la funcion = " + String.format(formato, this.getFitness());

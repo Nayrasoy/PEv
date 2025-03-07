@@ -13,6 +13,7 @@ import model.IndividuoFuncion2;
 import model.IndividuoFuncion3;
 import model.IndividuoFuncion4;
 import model.IndividuoFuncion5;
+import model.Rumba;
 
 public class IndividuoFactory {
 
@@ -21,7 +22,8 @@ public class IndividuoFactory {
         new IndividuoFuncion2(),
         new IndividuoFuncion3(),
         new IndividuoFuncion4(),
-        new IndividuoFuncion5()
+        new IndividuoFuncion5(),
+        new Rumba()
 	);
     
     public static Individuo getIndividuo(IndividualType type, Controller controller) throws IndividuoException {

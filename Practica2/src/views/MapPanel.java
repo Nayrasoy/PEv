@@ -2,12 +2,17 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List; 
 import controller.Controller;
+import model.Coords;
+import model.Room;
 
 public class MapPanel extends JPanel {
+
     private static final int SIZE = 15;
     private static final int CELL_SIZE = 40;
     private Controller controller;
+    private List<Room> rooms;
 
     // Mapa con habitaciones (1-20), base (B) y obstáculos (■)
     private String[][] grid = new String[SIZE][SIZE];
@@ -24,30 +29,33 @@ public class MapPanel extends JPanel {
             }
         }
 
+        rooms.add(new Room(new Coords(2, 2), "1"));
+        rooms.add(new Room(new Coords(2, 12), "2"));
+        rooms.add(new Room(new Coords(12, 2), "3"));
+        rooms.add(new Room(new Coords(12, 12), "4"));
+        rooms.add(new Room(new Coords(2, 7), "5"));
+        rooms.add(new Room(new Coords(7, 2), "6"));
+        rooms.add(new Room(new Coords(7, 12), "7"));
+        rooms.add(new Room(new Coords(12, 7), "8"));
+        rooms.add(new Room(new Coords(0, 7), "9"));
+        rooms.add(new Room(new Coords(7, 0), "A"));
+        rooms.add(new Room(new Coords(14, 7), "B"));
+        rooms.add(new Room(new Coords(7, 14), "C"));
+        rooms.add(new Room(new Coords(0, 0), "D"));
+        rooms.add(new Room(new Coords(0, 14), "E"));
+        rooms.add(new Room(new Coords(14, 0), "F"));
+        rooms.add(new Room(new Coords(14, 14), "G"));
+        rooms.add(new Room(new Coords(4, 4), "H"));
+        rooms.add(new Room(new Coords(4, 12), "I"));
+        rooms.add(new Room(new Coords(10, 4), "J"));
+        rooms.add(new Room(new Coords(10, 12), "K"));
+
+        for (Room room: rooms) {
+            grid[room.getCoords().getX()][room.getCoords().getY()] = room.getId();
+        }
+
         // Base
         grid[7][7] = "B";
-
-        // Habitaciones
-        grid[2][2] = "1";
-        grid[2][12] = "2";
-        grid[12][2] = "3";
-        grid[12][12] = "4";
-        grid[2][7] = "5";
-        grid[7][2] = "6";
-        grid[7][12] = "7";
-        grid[12][7] = "8";
-        grid[0][7] = "9";
-        grid[7][0] = "A";
-        grid[14][7] = "B";
-        grid[7][14] = "C";
-        grid[0][0] = "D";
-        grid[0][14] = "E";
-        grid[14][0] = "F";
-        grid[14][14] = "G";
-        grid[4][4] = "H";
-        grid[4][12] = "I";
-        grid[10][4] = "J";
-        grid[10][12] = "K";
 
         // Obstáculos
         int[][] obstaculos = {

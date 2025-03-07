@@ -30,8 +30,8 @@ public class IndividuoFuncion5 extends Individuo<Double> {
         }
     }
 
-    public IndividuoFuncion5(Controller controller, int d, List<Double> cromosomas, List<Double> minValue, List<Double> maxValue) {
-        super(controller, cromosomas, null, minValue, maxValue);
+    public IndividuoFuncion5(Controller controller, int d, List<Double> cromosomas, List<Double> minValue, List<Double> maxValue, int nGenes) {
+        super(controller, cromosomas, null, minValue, maxValue, nGenes);
         this.d = d;
     }
     
@@ -63,7 +63,7 @@ public class IndividuoFuncion5 extends Individuo<Double> {
 
     @Override
     public Individuo copy() {
-        return new IndividuoFuncion5(this.controller, this.d, new ArrayList<>(this.cromosomas), new ArrayList<>(this.minValue), new ArrayList<>(this.maxValue));
+        return new IndividuoFuncion5(this.controller, this.d, new ArrayList<>(this.cromosomas), new ArrayList<>(this.minValue), new ArrayList<>(this.maxValue), this.nGenes);
     }
 
     @Override

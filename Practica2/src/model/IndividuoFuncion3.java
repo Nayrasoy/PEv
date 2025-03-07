@@ -21,8 +21,8 @@ public class IndividuoFuncion3 extends IndividuoBooleano {
         this.init();
     }
 
-    public IndividuoFuncion3(Controller controller, List<Boolean> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
-        super(controller, cromosomas, tamGenes, minValue, maxValue);
+    public IndividuoFuncion3(Controller controller, List<Boolean> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue, int nGenes) {
+        super(controller, cromosomas, tamGenes, minValue, maxValue, nGenes);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class IndividuoFuncion3 extends IndividuoBooleano {
 
     @Override
     public Individuo copy() {
-        return new IndividuoFuncion3(this.controller, new ArrayList<>(this.cromosomas), new ArrayList<>(this.tamGenes), new ArrayList<>(this.minValue), new ArrayList<>(this.maxValue));
+        return new IndividuoFuncion3(this.controller, new ArrayList<>(this.cromosomas), new ArrayList<>(this.tamGenes), new ArrayList<>(this.minValue), new ArrayList<>(this.maxValue), this.nGenes);
     }
 
     @Override

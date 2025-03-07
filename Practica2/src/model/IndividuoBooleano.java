@@ -14,8 +14,8 @@ public abstract class IndividuoBooleano extends Individuo<Boolean> {
         super(controller);
     }
 
-    public IndividuoBooleano(Controller controller, List<Boolean> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue) {
-        super(controller, cromosomas, tamGenes, minValue, maxValue);
+    public IndividuoBooleano(Controller controller, List<Boolean> cromosomas, List<Integer> tamGenes, List<Double> minValue, List<Double> maxValue, int nGenes) {
+        super(controller, cromosomas, tamGenes, minValue, maxValue, nGenes);
     }
 
     protected void init() {
@@ -25,6 +25,7 @@ public abstract class IndividuoBooleano extends Individuo<Boolean> {
             tamGenes.add(this.tamGen(minValue.get(i), maxValue.get(i)));
             tamTotal += tamGenes.get(i);
         }
+        this.nGenes = this.tamGenes.size();
         this.cromosomas = new ArrayList<>();
         for (int i = 0; i < tamTotal; i++) {
             cromosomas.add(Utils.random.nextBoolean());
