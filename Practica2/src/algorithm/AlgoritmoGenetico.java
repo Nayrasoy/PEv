@@ -31,7 +31,7 @@ public class AlgoritmoGenetico {
     private List<Individuo> elitePoblation;
     private IndividualType individualType;
     private List<Double> fitness;
-    private List<Double> fenotipo;
+    private List<Object> fenotipo;
     private double fitnessSum;
     private SelectionType selectionType;
     private CrossType crossType;

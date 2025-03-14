@@ -1,7 +1,5 @@
 package controller;
 
-import java.lang.reflect.Parameter;
-
 import algorithm.AlgoritmoGenetico;
 import algorithm.cross.CrossType;
 import algorithm.mutation.MutationType;
@@ -30,11 +28,6 @@ public class Controller {
     public void refreshPlot(double[][] averageFitness, double[][] actualBest, double[][] overallBest) {
         this.mainWindow.refreshPlot(averageFitness, actualBest, overallBest);
     }
-
-    // {1, 2, 3, 4, 5}
-    // {5 , 4, 3, 2, 1}
-
-    // {1, 4}{2, 7}{3, 28}
 
     public void setMainWindow(MainWindow mainWindow) {
         this.mainWindow = mainWindow;

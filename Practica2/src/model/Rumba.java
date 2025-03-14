@@ -2,45 +2,51 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import config.Parameters;
 import controller.Controller;
 import utils.Utils;
 
-public class Rumba extends Individuo<Double> {
+public class Rumba extends Individuo<String> {
 
-    // Atributo estático con las rutas, de tal manera que se vayan calculando
-    private List<List<List<Coords>>> routes;
+    Casa casa;
 
     public Rumba() {}
     
     public Rumba(Controller controller) {
         super(controller);
 
+        this.casa = Casa.getInstance();
+
         this.cromosomas = new ArrayList<>();
-        List<Double> rooms = new ArrayList<>();
-        for (Double i = 1.0; i <= Parameters.NUM_ROOMS; i++) {
-            rooms.add(i);
+        List<String> roomsAux = new ArrayList<>();
+        Map<String, Coords> rooms = casa.getRooms();
+        for (String id : rooms.keySet()) {
+            roomsAux.add(id);
         } 
         for (int i = 0; i < Parameters.NUM_ROOMS; i++) {
-            int rand = Utils.random.nextInt(rooms.size());
-            this.cromosomas.add(rooms.get(rand));
-            rooms.remove(rand);
+            int rand = Utils.random.nextInt(roomsAux.size());
+            this.cromosomas.add(roomsAux.get(rand));
+            roomsAux.remove(rand);
         }
     }
 
-    public Rumba(Controller controller, List<Double> cromosomas, int nGenes) {
+    public Rumba(Controller controller, List<String> cromosomas, int nGenes) {
         super(controller, cromosomas, null, null, null, nGenes);
     }
     
     @Override
     public double getFitness() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFitness'");
+        double fitness = 0;
+        for (int i = 0; i < this.cromosomas.size() - 1; i++) {
+            fitness += casa.getPath(this.cromosomas.get(i), this.cromosomas.get(i + 1)).size();
+        }
+        return fitness;
     }
     
     @Override
-    public double getFenotipo(int gen) {
+    public String getFenotipo(int gen) {
         return this.cromosomas.get(gen);
     }
     

@@ -52,7 +52,7 @@ public class IndividuoFuncion5 extends Individuo<Double> {
     }
 
     @Override
-    public double getFenotipo(int gen) {
+    public Double getFenotipo(int gen) {
         return this.cromosomas.get(gen);
     }
 

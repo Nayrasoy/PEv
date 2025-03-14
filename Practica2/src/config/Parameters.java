@@ -12,7 +12,7 @@ public class Parameters {
 
     public static final int DEFAULT_TAM_POBLATION = 100;
     public static final int DEFAULT_GENERATIONS_NUMBER = 100;
-    public static final IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_FUNCTION1;
+    public static final IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_RUMBA;
     public static final SelectionType DEFAULT_SELECTION_METHOD = SelectionType.RULETA;
     public static final CrossType DEFAULT_CROSS_METHOD = CrossType.MONO_PUNTO;
     public static final MutationType DEFAULT_MUTATION_METHOD = MutationType.SOBRE_BOOLEANOS;

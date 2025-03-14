@@ -57,6 +57,7 @@ public class ConfigPanel extends JPanel {
                 controller.setIndividual(IndividualType.valueOf((String) selectionFunctionComboBox.getSelectedItem()));
             }
         });
+        selectionFunctionComboBox.setSelectedItem(Parameters.DEFAULT_INDIVIDUAL_TYPE.toString());
         p.add(selectionFunctionComboBox);
         this.add(p);
 

@@ -33,7 +33,7 @@ public abstract class IndividuoBooleano extends Individuo<Boolean> {
     }
 
     @Override
-    public double getFenotipo(int gen) {
+    public Double getFenotipo(int gen) {
         int pos = 0;
         int intValue = 0;
 

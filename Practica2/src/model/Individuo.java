@@ -30,7 +30,7 @@ public abstract class Individuo<T> {
 
     public abstract double getFitness();
 
-    public abstract double getFenotipo(int gen);
+    public abstract Object getFenotipo(int gen);
 
     public abstract Individuo create(Controller controller);
 
