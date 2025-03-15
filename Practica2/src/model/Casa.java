@@ -5,11 +5,60 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import config.Parameters;
+
 public class Casa {
+
+    private class Path {
+
+        private int distance;
+        private Coords from;
+
+        public Path(int distance, Coords from) {
+            this.distance = distance;
+            this.from =  from;
+        }
+
+        public int getDistance() {
+            return this.distance;
+        }
+
+        public Coords getFrom() {
+            return this.from;
+        }
+
+        public boolean betterThan(Path path) {
+            return this.distance < path.getDistance();
+        }
+
+    }
+
+    private enum DirectionType {
+        UP(0, -1),
+        DOWN(0, 1),
+        LEFT(-1, 0),
+        RIGHT(1, 0);
+    
+        private final int dx;
+        private final int dy;
+    
+        DirectionType(int dx, int dy) {
+            this.dx = dx;
+            this.dy = dy;
+        }
+    
+        public int getDx() {
+            return this.dx;
+        }
+    
+        public int getDy() {
+            return this.dy;
+        }
+    }
     
     private Map<String, Coords> rooms;
     private List<Coords> obstacles;
-    private Map<String, Map<String, List<Coords>>> caminimos;
+    private Map<Coords, Map<Coords, Path>> caminimos;
     private static Casa casa = null;
 
     private Casa() {
@@ -25,18 +74,62 @@ public class Casa {
         return casa;
     }
 
-    public List<Coords> getPath(String id1, String id2) {
-        if (this.caminimos.get(id1).get(id2) != null) {
-            return this.caminimos.get(id1).get(id2);
+    public int getDistance(String id1, String id2) {
+        Coords actualCoords = this.rooms.get(id1);
+        Coords destinyCoords = this.rooms.get(id2);
+        if (this.caminimos.get(actualCoords).containsKey(destinyCoords)) {
+            return this.caminimos.get(actualCoords).get(destinyCoords).getDistance();
         }
         else {
-            return null;
+            return this.calculatePath(actualCoords, destinyCoords).getDistance();
         }
+    }
+
+    private Path calculatePath(Coords actual, Coords destiny) {
+        Path path = null;
+    
+        if (!this.caminimos.get(actual).containsKey(destiny)) {
+            if (actual.equals(destiny)) {
+                path = new Path(0, new Coords(actual));
+            }
+            else {
+                for (DirectionType dt: DirectionType.values()) {
+                    Coords c = new Coords(actual.getX() + dt.getDx(), actual.getY() + dt.getDy());
+                    if (this.isInBounds(c) && !this.isObstacle(c)) {
+                        Path p = this.calculatePath(c, destiny);
+                        if (path == null || p.betterThan(path)) {
+                            path = p;
+                        }
+                    }
+                }
+                path = new Path(path.getDistance() + 1, actual);
+            }
+            this.caminimos.get(actual).put(destiny, path);
+        }
+        else {
+            path = this.caminimos.get(actual).get(destiny);
+        }
+
+        return path;
+    }
+
+    private boolean isInBounds(Coords c) {
+        return c.getX() < Parameters.SIZE && c.getX() >= 0 &&
+            c.getY() < Parameters.SIZE && c.getY() >= 0;
+    }
+
+    private boolean isObstacle(Coords c) {
+        for (Coords obs : this.obstacles) {
+            if (obs.equals(c)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void initRooms() {
         this.rooms = new HashMap<>();
-
+        
         this.rooms.put("1", new Coords(2, 2));
         this.rooms.put("2", new Coords(2, 12));
         this.rooms.put("3", new Coords(12, 2));
@@ -92,11 +185,10 @@ public class Casa {
 
     private void initCaminimos() {
         this.caminimos = new HashMap<>();
-        for (String id1 : this.rooms.keySet()) {
-            this.caminimos.put(id1, new HashMap<>());
-            for (String id2 : this.rooms.keySet()) {
-                this.caminimos.get(id1).put(id2, null);
-            }
+        for (int x = 0; x < Parameters.SIZE; x++) {
+            for (int y = 0; y < Parameters.SIZE; y++) {
+                this.caminimos.put(new Coords(x, y), new HashMap<>());
+            }   
         }
     }
 

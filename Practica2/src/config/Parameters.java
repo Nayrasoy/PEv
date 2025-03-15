@@ -28,5 +28,7 @@ public class Parameters {
     public static final double TOURNAMENT_P = 0.5;
 
     public static final double NUM_ROOMS = 20;
+    public static final int SIZE = 15;
+    public static final int CELL_SIZE = 40;
 
 }

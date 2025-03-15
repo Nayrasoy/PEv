@@ -1,6 +1,9 @@
 package views;
 
 import javax.swing.*;
+
+import config.Parameters;
+
 import java.awt.*;
 import java.util.Map;
 
@@ -10,13 +13,11 @@ import model.Coords;
 
 public class MapPanel extends JPanel {
 
-    private static final int SIZE = 15;
-    private static final int CELL_SIZE = 40;
     private Controller controller;
     private Casa casa;
 
     // Mapa con habitaciones (1-20), base (B) y obstáculos (■)
-    private String[][] grid = new String[SIZE][SIZE];
+    private String[][] grid = new String[Parameters.SIZE][Parameters.SIZE];
 
     public MapPanel(Controller controller) {
         this.controller = controller;
@@ -25,8 +26,8 @@ public class MapPanel extends JPanel {
     }
 
     private void initMap() {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
+        for (int i = 0; i < Parameters.SIZE; i++) {
+            for (int j = 0; j < Parameters.SIZE; j++) {
                 grid[i][j] = " ";
             }
         }
@@ -49,16 +50,16 @@ public class MapPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (int row = 0; row < SIZE; row++) {
-            for (int col = 0; col < SIZE; col++) {
-                int x = col * CELL_SIZE;
-                int y = row * CELL_SIZE;
+        for (int row = 0; row < Parameters.SIZE; row++) {
+            for (int col = 0; col < Parameters.SIZE; col++) {
+                int x = col * Parameters.CELL_SIZE;
+                int y = row * Parameters.CELL_SIZE;
 
                 // Dibujar celda
                 g.setColor(Color.WHITE);
-                g.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+                g.fillRect(x, y, Parameters.CELL_SIZE, Parameters.CELL_SIZE);
                 g.setColor(Color.BLACK);
-                g.drawRect(x, y, CELL_SIZE, CELL_SIZE);
+                g.drawRect(x, y, Parameters.CELL_SIZE, Parameters.CELL_SIZE);
 
                 // Dibujar contenido de la celda
                 if (!grid[row][col].equals(" ")) {

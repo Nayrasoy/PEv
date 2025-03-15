@@ -40,7 +40,7 @@ public class Rumba extends Individuo<String> {
     public double getFitness() {
         double fitness = 0;
         for (int i = 0; i < this.cromosomas.size() - 1; i++) {
-            fitness += casa.getPath(this.cromosomas.get(i), this.cromosomas.get(i + 1)).size();
+            fitness += casa.getDistance(this.cromosomas.get(i), this.cromosomas.get(i + 1));
         }
         return fitness;
     }
