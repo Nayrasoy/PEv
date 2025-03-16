@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controller.Controller;
+import model.Individuo;
 
 public class MainWindow extends JFrame {
 
@@ -57,6 +58,10 @@ public class MainWindow extends JFrame {
 
     public void showMap() {
         this.centerPanel.showMap();
+    }
+
+    public void refreshHouse(Individuo bestIndividual) {
+        this.centerPanel.refreshHouse(bestIndividual);
     }
 
 }

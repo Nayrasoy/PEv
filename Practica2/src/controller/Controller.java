@@ -9,6 +9,8 @@ import exceptions.CrossException;
 import exceptions.IndividuoException;
 import exceptions.SelectionException;
 import model.IndividualType;
+import model.Individuo;
+import model.Rumba;
 import views.MainWindow;
 
 public class Controller {
@@ -99,6 +101,12 @@ public class Controller {
 
     public void showMap() {
         this.mainWindow.showMap();
+    }
+
+    public void refreshHouse(Individuo bestIndividual) {
+        if (bestIndividual.getClass() == Rumba.class) {
+            this.mainWindow.refreshHouse(bestIndividual);
+        }
     }
     
 }

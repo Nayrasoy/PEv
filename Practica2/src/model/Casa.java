@@ -60,6 +60,7 @@ public class Casa {
     private List<Coords> obstacles;
     private Map<Coords, Map<Coords, Path>> caminimos;
     private static Casa casa = null;
+    private List<List<Boolean>> visitado;
 
     private Casa() {
         this.initRooms();
@@ -81,28 +82,54 @@ public class Casa {
             return this.caminimos.get(actualCoords).get(destinyCoords).getDistance();
         }
         else {
+            List<Boolean> booleanList = new ArrayList<>();
+            for (int i = 0; i < Parameters.SIZE; i++) {
+                booleanList.add(false);
+            }
+            this.visitado = new ArrayList<>();
+            for (int i = 0; i < Parameters.SIZE; i++) {
+                this.visitado.add(new ArrayList<>(booleanList));
+            }
             return this.calculatePath(actualCoords, destinyCoords).getDistance();
         }
     }
 
+    public List<Coords> getPath(Coords coord1, Coords coord2) {
+        List<Coords> lista = new ArrayList<>();
+
+        Path p = this.caminimos.get(coord1).get(coord2);
+        while (!p.getFrom().equals(coord2)) {
+            lista.add(p.getFrom());
+            p = this.caminimos.get(p.getFrom()).get(coord2);
+        }
+
+        return lista;
+    }
+
     private Path calculatePath(Coords actual, Coords destiny) {
         Path path = null;
+        this.visitado.get(actual.getX()).set(actual.getY(), true);
     
         if (!this.caminimos.get(actual).containsKey(destiny)) {
             if (actual.equals(destiny)) {
                 path = new Path(0, new Coords(actual));
             }
             else {
+                Coords bestPathCoords = null;
                 for (DirectionType dt: DirectionType.values()) {
                     Coords c = new Coords(actual.getX() + dt.getDx(), actual.getY() + dt.getDy());
-                    if (this.isInBounds(c) && !this.isObstacle(c)) {
+                    if (this.isInBounds(c) && !this.isObstacle(c) && !this.visitado.get(c.getX()).get(c.getY())) {
                         Path p = this.calculatePath(c, destiny);
-                        if (path == null || p.betterThan(path)) {
+                        if (p != null && (path == null || p.betterThan(path))) {
                             path = p;
+                            bestPathCoords = c;
                         }
                     }
                 }
-                path = new Path(path.getDistance() + 1, actual);
+                if (path == null) {
+                    return null;
+                }
+                path = new Path(path.getDistance() + 1, bestPathCoords);
             }
             this.caminimos.get(actual).put(destiny, path);
         }
@@ -110,6 +137,7 @@ public class Casa {
             path = this.caminimos.get(actual).get(destiny);
         }
 
+        this.visitado.get(actual.getX()).set(actual.getY(), false);
         return path;
     }
 
@@ -150,6 +178,7 @@ public class Casa {
         this.rooms.put("I", new Coords(4, 12));
         this.rooms.put("J", new Coords(10, 4));
         this.rooms.put("K", new Coords(10, 12));
+        this.rooms.put("Base", new Coords(7, 7));
     }
 
     private void initObstacles() {

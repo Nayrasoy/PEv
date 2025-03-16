@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import controller.Controller;
+import model.Individuo;
 
 public class SolutionPanel extends JPanel {
 
@@ -34,4 +35,5 @@ public class SolutionPanel extends JPanel {
     public void setSolution(String solution) {
         this.solution.setText(solution);
     }
+    
 }

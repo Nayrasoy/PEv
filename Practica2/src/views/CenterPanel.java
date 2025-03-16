@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 import controller.Controller;
+import model.Individuo;
 
 public class CenterPanel extends JPanel {
     
@@ -38,6 +39,11 @@ public class CenterPanel extends JPanel {
 
     public void refreshPlot(double[][] averageFitness, double[][] actualBest, double[][] overallBest) {
         this.plotPanel.refreshPlot(averageFitness, actualBest, overallBest);
+        this.repaint();
+    }
+
+    public void refreshHouse(Individuo bestIndividual) {
+        this.mapPanel.refreshHouse(bestIndividual);
         this.repaint();
     }
 

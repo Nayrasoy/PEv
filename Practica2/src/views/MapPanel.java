@@ -6,10 +6,12 @@ import config.Parameters;
 
 import java.awt.*;
 import java.util.Map;
+import java.util.List;
 
 import controller.Controller;
 import model.Casa;
 import model.Coords;
+import model.Individuo;
 
 public class MapPanel extends JPanel {
 
@@ -39,7 +41,7 @@ public class MapPanel extends JPanel {
         }
 
         // Base
-        grid[7][7] = "B";
+        grid[7][7] = "Base";
 
         // Obstáculos
         for (Coords coord : this.casa.getObstacles()) {
@@ -50,20 +52,31 @@ public class MapPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
+        // Obtener dimensiones del panel
+        int panelWidth = getWidth();
+        int panelHeight = getHeight();
+
+        // Determinar el tamaño de las celdas dinámicamente
+        int cellWidth = panelWidth / Parameters.SIZE;
+        int cellHeight = panelHeight / Parameters.SIZE;
+
         for (int row = 0; row < Parameters.SIZE; row++) {
             for (int col = 0; col < Parameters.SIZE; col++) {
-                int x = col * Parameters.CELL_SIZE;
-                int y = row * Parameters.CELL_SIZE;
+                int x = col * cellWidth;
+                int y = row * cellHeight;
 
                 // Dibujar celda
                 g.setColor(Color.WHITE);
-                g.fillRect(x, y, Parameters.CELL_SIZE, Parameters.CELL_SIZE);
+                g.fillRect(x, y, cellWidth, cellHeight);
                 g.setColor(Color.BLACK);
-                g.drawRect(x, y, Parameters.CELL_SIZE, Parameters.CELL_SIZE);
+                g.drawRect(x, y, cellWidth, cellHeight);
 
                 // Dibujar contenido de la celda
                 if (!grid[row][col].equals(" ")) {
-                    Color color;
+                    Color color = null;
+                    boolean bold = false;
+
                     switch (grid[row][col]) {
                         case "*":
                             color = Color.BLUE;
@@ -71,21 +84,58 @@ public class MapPanel extends JPanel {
                         case "■":
                             color = Color.RED;
                             break;
+                        case "Base":
+                            color = Color.BLACK;
+                            bold = true;
+                            break;
                         default:
                             color = Color.BLACK;
+                            bold = true;
                     }
+
                     g.setColor(color);
-                    g.drawString(grid[row][col], x + 15, y + 25);
+
+                    // Si es el caso default, usar negrita
+                    Font originalFont = g.getFont();
+                    if (bold) {
+                        g.setFont(originalFont.deriveFont(Font.BOLD));
+                    }
+
+                    // Centrar el texto dentro de la celda
+                    FontMetrics fm = g.getFontMetrics();
+                    int textX = x + (cellWidth - fm.stringWidth(grid[row][col])) / 2;
+                    int textY = y + (cellHeight + fm.getAscent()) / 2 - 2;
+
+                    g.drawString(grid[row][col], textX, textY);
+
+                    // Restaurar fuente original
+                    if (bold) {
+                        g.setFont(originalFont);
+                    }
                 }
             }
         }
     }
 
-    // Método para actualizar el mapa con la ruta del robot
-    public void setRuta(int[][] ruta) {
-        for (int[] pos : ruta) {
-            grid[pos[0]][pos[1]] = "*";
+    public void refreshHouse(Individuo bestIndividual) {
+        List<String> cromosoma = bestIndividual.getCromosomas();
+
+        this.printPath(this.casa.getPath(new Coords(7, 7), this.casa.getRooms().get(cromosoma.get(0))));
+        for (int i = 0; i < cromosoma.size() - 1; i++) {
+            List<Coords> path = this.casa.getPath(this.casa.getRooms().get(cromosoma.get(i)), this.casa.getRooms().get(cromosoma.get(i + 1)));
+            this.printPath(path);
         }
-        repaint();
+        this.printPath(this.casa.getPath(this.casa.getRooms().get(cromosoma.get(0)), new Coords(7, 7)));
+
+        this.repaint();
     }
+
+    private void printPath(List<Coords> path) {
+        for (Coords c : path) {
+            if (grid[c.getX()][c.getY()].equals(" ")) {
+                grid[c.getX()][c.getY()] = "*";
+            }
+        }
+    }
+
 }

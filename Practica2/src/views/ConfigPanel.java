@@ -217,6 +217,7 @@ public class ConfigPanel extends JPanel {
                 controller.setSelectionMethod(SelectionType.valueOf((String) selectionMethodComboBox.getSelectedItem()));
             }
         });
+        selectionMethodComboBox.setSelectedItem(Parameters.DEFAULT_SELECTION_METHOD.toString());
         p.add(selectionMethodComboBox);
         this.add(p);
 
@@ -234,6 +235,7 @@ public class ConfigPanel extends JPanel {
                 controller.setCrossMethod(CrossType.valueOf((String) crossMethodComboBox.getSelectedItem()));
             }
         });
+        crossMethodComboBox.setSelectedItem(Parameters.DEFAULT_CROSS_METHOD.toString());
         p.add(crossMethodComboBox);
         this.add(p);
 

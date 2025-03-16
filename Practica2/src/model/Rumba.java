@@ -27,21 +27,26 @@ public class Rumba extends Individuo<String> {
         } 
         for (int i = 0; i < Parameters.NUM_ROOMS; i++) {
             int rand = Utils.random.nextInt(roomsAux.size());
-            this.cromosomas.add(roomsAux.get(rand));
+            if (!roomsAux.get(rand).equals("Base")) {
+                this.cromosomas.add(roomsAux.get(rand));
+            }
             roomsAux.remove(rand);
         }
     }
 
     public Rumba(Controller controller, List<String> cromosomas, int nGenes) {
         super(controller, cromosomas, null, null, null, nGenes);
+        this.casa = Casa.getInstance();
     }
     
     @Override
     public double getFitness() {
-        double fitness = 0;
+        double fitness = casa.getDistance("Base", this.cromosomas.get(0));
         for (int i = 0; i < this.cromosomas.size() - 1; i++) {
             fitness += casa.getDistance(this.cromosomas.get(i), this.cromosomas.get(i + 1));
         }
+        fitness += casa.getDistance(this.cromosomas.get(this.cromosomas.size() - 1), "Base");
+
         return fitness;
     }
     
@@ -73,6 +78,18 @@ public class Rumba extends Individuo<String> {
     @Override
     public int getMinValue() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        String s = "Fitness: " + this.getFitness();
+        s += "\nCamino: Base";
+        for (String habitacion : this.cromosomas) {
+            s += " > " + habitacion;
+        }
+        s += " > Base";
+
+        return s;
     }
     
 }

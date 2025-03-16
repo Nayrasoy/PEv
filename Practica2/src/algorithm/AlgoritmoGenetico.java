@@ -84,6 +84,7 @@ public class AlgoritmoGenetico {
         System.out.println("FINAL\n\nMejor individuo: \n" + this.bestIndividual);
         
         this.controller.refreshPlot(this.averageFitness, this.actualBest, this.overallBest);
+        this.controller.refreshHouse(this.bestIndividual);
     }
 
     private void init() throws IndividuoException {
