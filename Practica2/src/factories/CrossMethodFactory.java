@@ -15,7 +15,8 @@ public class CrossMethodFactory {
         new Aritmetico(),
         new PMX(),
         new OX(),
-        new OXPP()
+        new OXPP(),
+        new CX()
 	);
     
     public static CrossMethod getCrossMethod(CrossType type) throws CrossException {
