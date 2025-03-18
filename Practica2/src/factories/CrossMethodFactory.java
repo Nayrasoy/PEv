@@ -3,12 +3,7 @@ package factories;
 import java.util.Arrays;
 import java.util.List;
 
-import algorithm.cross.Aritmetico;
-import algorithm.cross.BlxAlfa;
-import algorithm.cross.CrossMethod;
-import algorithm.cross.CrossType;
-import algorithm.cross.MonoPunto;
-import algorithm.cross.Uniforme;
+import algorithm.cross.*;
 import exceptions.CrossException;
 
 public class CrossMethodFactory {
@@ -17,7 +12,10 @@ public class CrossMethodFactory {
 		new MonoPunto(),
         new Uniforme(),
         new BlxAlfa(),
-        new Aritmetico()
+        new Aritmetico(),
+        new PMX(),
+        new OX(),
+        new OXPP()
 	);
     
     public static CrossMethod getCrossMethod(CrossType type) throws CrossException {

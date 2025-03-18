@@ -14,7 +14,7 @@ public class Parameters {
     public static final int DEFAULT_GENERATIONS_NUMBER = 100;
     public static final IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_RUMBA;
     public static final SelectionType DEFAULT_SELECTION_METHOD = SelectionType.RULETA;
-    public static final CrossType DEFAULT_CROSS_METHOD = CrossType.MONO_PUNTO;
+    public static final CrossType DEFAULT_CROSS_METHOD = CrossType.PMX;
     public static final MutationType DEFAULT_MUTATION_METHOD = MutationType.SOBRE_BOOLEANOS;
     public static final double DEFAULT_CROSS_PROBABILITY = 0.6;
     public static final double DEFAULT_PRECISION = 0.001;
@@ -30,5 +30,6 @@ public class Parameters {
     public static final double NUM_ROOMS = 20;
     public static final int SIZE = 15;
     public static final int CELL_SIZE = 40;
+    public static final int OXPP_RANDOM_POINTS = 3;
 
 }

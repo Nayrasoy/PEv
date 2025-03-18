@@ -1,5 +1,5 @@
 package algorithm.cross;
 
 public enum CrossType {
-    MONO_PUNTO, UNIFORME, ARITMETICO, BLX_ALFA
+    PMX, OX, OXPP, MONO_PUNTO, UNIFORME, ARITMETICO, BLX_ALFA
 }

@@ -30,6 +30,9 @@ public class Rumba extends Individuo<String> {
             if (!roomsAux.get(rand).equals("Base")) {
                 this.cromosomas.add(roomsAux.get(rand));
             }
+            else {
+                i--;
+            }
             roomsAux.remove(rand);
         }
     }

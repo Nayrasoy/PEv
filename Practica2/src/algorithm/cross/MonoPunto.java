@@ -20,8 +20,8 @@ public class MonoPunto extends CrossMethod {
             cromosomas1.set(i, cromosomas2.get(i));
             cromosomas2.set(i, temp);
         }
-        newPoblation.add(individuo1);
-        newPoblation.add(individuo2);
+        newPoblation.add(individuo1.copy());
+        newPoblation.add(individuo2.copy());
 
         return newPoblation;
     }
