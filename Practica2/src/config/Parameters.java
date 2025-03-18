@@ -15,7 +15,7 @@ public class Parameters {
     public static final IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_RUMBA;
     public static final SelectionType DEFAULT_SELECTION_METHOD = SelectionType.RULETA;
     public static final CrossType DEFAULT_CROSS_METHOD = CrossType.PMX;
-    public static final MutationType DEFAULT_MUTATION_METHOD = MutationType.SOBRE_BOOLEANOS;
+    public static final MutationType DEFAULT_MUTATION_METHOD = MutationType.POR_INVERSION;
     public static final double DEFAULT_CROSS_PROBABILITY = 0.6;
     public static final double DEFAULT_PRECISION = 0.001;
     public static final int DEFAULT_MUTATION_PROBABILITY = 5;

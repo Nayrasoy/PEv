@@ -24,7 +24,7 @@ public class CrossMethodFactory {
                 return method.create();
             }
         }
-        throw new CrossException("Metodo de seleccion " + type + " no encontrado");
+        throw new CrossException("Metodo de cruce " + type + " no encontrado");
     }
 
 }

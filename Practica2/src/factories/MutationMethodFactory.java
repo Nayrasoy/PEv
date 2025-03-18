@@ -3,6 +3,7 @@ package factories;
 import java.util.Arrays;
 import java.util.List;
 
+import algorithm.mutation.MutacionPorInversion;
 import algorithm.mutation.MutacionSobreBooleanos;
 import algorithm.mutation.MutacionSobreReales;
 import algorithm.mutation.MutationMethod;
@@ -14,7 +15,8 @@ public class MutationMethodFactory {
     
     private static final List<MutationMethod> methods = Arrays.asList(
 		new MutacionSobreBooleanos(),
-        new MutacionSobreReales()
+        new MutacionSobreReales(),
+        new MutacionPorInversion()
 	);
     
     public static MutationMethod getSelectionMethod(MutationType type) throws SelectionException {
@@ -23,7 +25,7 @@ public class MutationMethodFactory {
                 return method.create();
             }
         }
-        throw new SelectionException("Metodo de seleccion " + type + " no encontrado");
+        throw new SelectionException("Metodo de mutacion " + type + " no encontrado");
     }
 
 }
