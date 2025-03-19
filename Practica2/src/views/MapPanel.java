@@ -120,12 +120,14 @@ public class MapPanel extends JPanel {
     public void refreshHouse(Individuo bestIndividual) {
         List<String> cromosoma = bestIndividual.getCromosomas();
 
+        this.initMap();
+
         this.printPath(this.casa.getPath(new Coords(7, 7), this.casa.getRooms().get(cromosoma.get(0))));
         for (int i = 0; i < cromosoma.size() - 1; i++) {
             List<Coords> path = this.casa.getPath(this.casa.getRooms().get(cromosoma.get(i)), this.casa.getRooms().get(cromosoma.get(i + 1)));
             this.printPath(path);
         }
-        this.printPath(this.casa.getPath(this.casa.getRooms().get(cromosoma.get(0)), new Coords(7, 7)));
+        this.printPath(this.casa.getPath(this.casa.getRooms().get(cromosoma.getLast()), new Coords(7, 7)));
 
         this.repaint();
     }

@@ -22,7 +22,7 @@ public class SelectionMethodFactory {
     public static SelectionMethod getSelectionMethod(SelectionType type) throws SelectionException {
         for (SelectionMethod method : methods) {
             if (method.getType() == type) {
-                return method.create();
+                return method;
             }
         }
         throw new SelectionException("Metodo de seleccion " + type + " no encontrado");

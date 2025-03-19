@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Individuo;
-import utils.Utils;
 
 public class CX extends CrossMethod {
 

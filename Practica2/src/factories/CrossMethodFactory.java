@@ -16,13 +16,14 @@ public class CrossMethodFactory {
         new PMX(),
         new OX(),
         new OXPP(),
-        new CX()
+        new CX(),
+        new CO()
 	);
     
     public static CrossMethod getCrossMethod(CrossType type) throws CrossException {
         for (CrossMethod method : methods) {
             if (method.getType() == type) {
-                return method.create();
+                return method;
             }
         }
         throw new CrossException("Metodo de cruce " + type + " no encontrado");

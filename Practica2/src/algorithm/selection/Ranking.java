@@ -32,14 +32,9 @@ public class Ranking extends SelectionMethod {
         for (int i = 1; i <= fitness.size(); i++) {
             probability = -2;
             probability *= (Parameters.RANKING_BETA - 1);
-            double aux = (( i - 1) / (fitness.size() - 1));
-            probability *= aux;
+            probability *= (double)(i - 1) / (double)(fitness.size() - 1);
             probability += Parameters.RANKING_BETA;
             probability /= fitness.size();
-
-            /*probability = Parameters.RANKING_BETA;
-            probability -= 2 * (Parameters.RANKING_BETA - 1) * (( i - 1) / (fitness.size() - 1));
-            probability /= fitness.size();*/
             probability += lastProbability;
             probabilities.add(probability);
             lastProbability = probability;

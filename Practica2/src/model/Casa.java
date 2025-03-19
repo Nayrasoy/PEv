@@ -2,8 +2,10 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import config.Parameters;
 
@@ -106,40 +108,72 @@ public class Casa {
         return lista;
     }
 
-    private Path calculatePath(Coords actual, Coords destiny) {
-        Path path = null;
-        this.visitado.get(actual.getX()).set(actual.getY(), true);
+    private Path calculatePath(Coords start, Coords end) {
+        // Si ya calculamos este camino, lo devolvemos directamente
+        if (caminimos.get(start).containsKey(end)) {
+            return caminimos.get(start).get(end);
+        }
     
-        if (!this.caminimos.get(actual).containsKey(destiny)) {
-            if (actual.equals(destiny)) {
-                path = new Path(0, new Coords(actual));
-            }
-            else {
-                Coords bestPathCoords = null;
-                for (DirectionType dt: DirectionType.values()) {
-                    Coords c = new Coords(actual.getX() + dt.getDx(), actual.getY() + dt.getDy());
-                    if (this.isInBounds(c) && !this.isObstacle(c) && !this.visitado.get(c.getX()).get(c.getY())) {
-                        Path p = this.calculatePath(c, destiny);
-                        if (p != null && (path == null || p.betterThan(path))) {
-                            path = p;
-                            bestPathCoords = c;
-                        }
+        if (start.equals(end)) {
+            Path directPath = new Path(0, start);
+            caminimos.get(start).put(end, directPath);
+            return directPath;
+        }
+    
+        Queue<Coords> queue = new LinkedList<>();
+        Map<Coords, Path> paths = new HashMap<>();
+        queue.add(start);
+        paths.put(start, new Path(0, null));
+    
+        while (!queue.isEmpty()) {
+            Coords current = queue.poll();
+            int currentDistance = paths.get(current).getDistance();
+    
+            for (DirectionType dt : DirectionType.values()) {
+                Coords neighbor = new Coords(current.getX() + dt.getDx(), current.getY() + dt.getDy());
+    
+                if (isInBounds(neighbor) && !isObstacle(neighbor) && !paths.containsKey(neighbor)) {
+                    paths.put(neighbor, new Path(currentDistance + 1, current));
+                    queue.add(neighbor);
+    
+                    if (neighbor.equals(end)) { // Si encontramos el destino, terminamos
+                        Path finalPath = reconstructPath(paths, start, end);
+                        caminimos.get(start).put(end, finalPath); // Guardamos en cache
+                        return finalPath;
                     }
                 }
-                if (path == null) {
-                    return null;
-                }
-                path = new Path(path.getDistance() + 1, bestPathCoords);
             }
-            this.caminimos.get(actual).put(destiny, path);
         }
-        else {
-            path = this.caminimos.get(actual).get(destiny);
-        }
-
-        this.visitado.get(actual.getX()).set(actual.getY(), false);
-        return path;
+    
+        return null; // No hay camino disponible
     }
+    
+    // Método para reconstruir el camino desde el mapa de caminos
+    private Path reconstructPath(Map<Coords, Path> paths, Coords start, Coords end) {
+        Coords current = end;
+        Coords previous = null;
+        int distance = 0;
+    
+        while (current != null && !current.equals(start)) {
+            this.caminimos.get(current).put(end, new Path(distance, previous));
+            previous = current;
+            current = paths.get(current).getFrom();
+            distance++;
+        }
+    
+        Path bestPath = new Path(distance, previous);
+        
+        // Guardar el camino en cache para cada nodo intermedio
+        /*current = end;
+        while (!current.equals(start)) {
+            Coords from = paths.get(current).getFrom();
+            caminimos.get(from).put(current, new Path(paths.get(current).getDistance(), from));
+            current = from;
+        }*/
+    
+        return bestPath;
+    }
+    
 
     private boolean isInBounds(Coords c) {
         return c.getX() < Parameters.SIZE && c.getX() >= 0 &&

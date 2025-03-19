@@ -9,15 +9,17 @@ public class MutacionPorIntercambio extends MutationMethod {
 
     @Override
     public Individuo mutate(Individuo individual, double mutationProbability) {
-        List<String> cromosomas = individual.getCromosomas();
-        int num1 = Utils.random.nextInt(cromosomas.size());
-        int num2 = Utils.random.nextInt(cromosomas.size());
+        if (Utils.random.nextDouble() < mutationProbability) {
+            List<String> cromosomas = individual.getCromosomas();
+            int num1 = Utils.random.nextInt(cromosomas.size());
+            int num2 = Utils.random.nextInt(cromosomas.size());
 
-        while (num1 == num2) {
-            num2 = Utils.random.nextInt(cromosomas.size());
+            while (num1 == num2) {
+                num2 = Utils.random.nextInt(cromosomas.size());
+            }
+
+            Collections.swap(cromosomas, num1, num2);
         }
-
-        Collections.swap(cromosomas, num1, num2);
 
         return individual;
     }

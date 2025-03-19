@@ -10,13 +10,15 @@ public class MutacionPorInsercion extends MutationMethod {
 
     @Override
     public Individuo mutate(Individuo individual, double mutationProbability) {
-        List<String> cromosomas = individual.getCromosomas();
-        for (int i = 0; i < Parameters.DESPLAZAMIENTO_INSERCION; i++){
-            int from = Utils.random.nextInt(cromosomas.size());
-            int to = Utils.random.nextInt(cromosomas.size());
+        if (Utils.random.nextDouble() < mutationProbability) {
+            List<String> cromosomas = individual.getCromosomas();
+            for (int i = 0; i < Parameters.DESPLAZAMIENTO_INSERCION; i++){
+                int from = Utils.random.nextInt(cromosomas.size());
+                int to = Utils.random.nextInt(cromosomas.size());
 
-            String val = cromosomas.remove(from);
-            cromosomas.add(to, val);
+                String val = cromosomas.remove(from);
+                cromosomas.add(to, val);
+            }
         }
 
         return individual;

@@ -21,7 +21,7 @@ public class MutationMethodFactory {
     public static MutationMethod getSelectionMethod(MutationType type) throws SelectionException {
         for (MutationMethod method : methods) {
             if (method.getType() == type) {
-                return method.create();
+                return method;
             }
         }
         throw new SelectionException("Metodo de mutacion " + type + " no encontrado");
