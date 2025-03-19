@@ -15,7 +15,8 @@ public class SelectionMethodFactory {
         new TorneoProbabilistico(),
         new EstocasticoUniversal(),
         new Truncamiento(),
-        new Restos()
+        new Restos(),
+        new Ranking()
 	);
     
     public static SelectionMethod getSelectionMethod(SelectionType type) throws SelectionException {

@@ -1,7 +1,5 @@
 package algorithm.mutation;
 
-import algorithm.cross.CrossMethod;
-import algorithm.cross.CrossType;
 import model.Individuo;
 
 public abstract class MutationMethod {

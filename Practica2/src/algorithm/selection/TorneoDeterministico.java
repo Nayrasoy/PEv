@@ -1,7 +1,6 @@
 package algorithm.selection;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import config.Parameters;

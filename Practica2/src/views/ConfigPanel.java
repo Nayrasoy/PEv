@@ -253,6 +253,7 @@ public class ConfigPanel extends JPanel {
                 controller.setMutationMethod(MutationType.valueOf((String) mutationMethodComboBox.getSelectedItem()));
             }
         });
+        mutationMethodComboBox.setSelectedItem(Parameters.DEFAULT_MUTATION_METHOD.toString());
         p.add(mutationMethodComboBox);
         this.add(p);
 

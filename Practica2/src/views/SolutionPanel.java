@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import controller.Controller;
-import model.Individuo;
 
 public class SolutionPanel extends JPanel {
 

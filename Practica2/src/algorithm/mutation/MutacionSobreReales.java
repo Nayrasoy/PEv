@@ -2,8 +2,6 @@ package algorithm.mutation;
 
 import java.util.List;
 
-import algorithm.cross.CrossMethod;
-import algorithm.cross.CrossType;
 import model.Individuo;
 import utils.Utils;
 
