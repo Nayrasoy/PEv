@@ -36,5 +36,6 @@ public class Parameters {
     public static final int CELL_SIZE = 40;
     public static final int OXPP_RANDOM_POINTS = 3;
     public static final double RANKING_BETA = 2;
+    public static final double INVENTED_MUTATION_PROBABILITY = 0.5;
 
 }

@@ -17,7 +17,8 @@ public class CrossMethodFactory {
         new OX(),
         new OXPP(),
         new CX(),
-        new CO()
+        new CO(),
+        new ERX()
 	);
     
     public static CrossMethod getCrossMethod(CrossType type) throws CrossException {
