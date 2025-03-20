@@ -29,6 +29,7 @@ public class Parameters {
 
     public static final int DESPLAZAMIENTO_INSERCION = 2;
     public static final int N_HEURISTICA = 2; // Entre 2 y 3
+    public static final int CROSS_INVENT_RAND = 2;
 
     public static final double NUM_ROOMS = 20;
     public static final int SIZE = 15;
