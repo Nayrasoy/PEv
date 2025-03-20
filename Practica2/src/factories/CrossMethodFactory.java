@@ -18,11 +18,8 @@ public class CrossMethodFactory {
         new OXPP(),
         new CX(),
         new CO(),
-<<<<<<< HEAD
         new Invent(),
-=======
         new ERX()
->>>>>>> d02c90feb15df3f1792d85b7c434ea07fbbe881f
 	);
     
     public static CrossMethod getCrossMethod(CrossType type) throws CrossException {
