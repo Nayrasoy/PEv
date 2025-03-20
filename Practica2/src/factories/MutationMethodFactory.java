@@ -15,7 +15,8 @@ public class MutationMethodFactory {
         new MutacionPorInversion(),
         new MutacionPorInsercion(),
         new MutacionHeuristica(),
-        new MutacionPorIntercambio()
+        new MutacionPorIntercambio(),
+        new MutacionInventada()
 	);
     
     public static MutationMethod getSelectionMethod(MutationType type) throws SelectionException {

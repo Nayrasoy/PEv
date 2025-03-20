@@ -259,7 +259,6 @@ public class AlgoritmoGenetico {
 
     public void setMutationProbability(int mutationProbability) {
         this.mutationProbability = (double) mutationProbability / 100;
-        System.out.println(this.mutationProbability);
     }
 
     public void setSelectionMethod(SelectionType selectionMethod) {
