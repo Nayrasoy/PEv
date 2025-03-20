@@ -162,14 +162,6 @@ public class Casa {
         }
     
         Path bestPath = new Path(distance, previous);
-        
-        // Guardar el camino en cache para cada nodo intermedio
-        /*current = end;
-        while (!current.equals(start)) {
-            Coords from = paths.get(current).getFrom();
-            caminimos.get(from).put(current, new Path(paths.get(current).getDistance(), from));
-            current = from;
-        }*/
     
         return bestPath;
     }
