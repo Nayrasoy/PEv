@@ -11,7 +11,8 @@ public class MutacionInventada extends MutationMethod {
 
     @Override
     public <T> Individuo mutate(Individuo individual, double mutationProbability) {
-        List<T> cromosomas = individual.getCromosomas();
+        Individuo indv = individual.copy();
+        List<T> cromosomas = indv.getCromosomas();
 
         if (Utils.random.nextDouble() < mutationProbability) {
             for (int i = 0; i < cromosomas.size() - 1; i++) {
@@ -21,7 +22,7 @@ public class MutacionInventada extends MutationMethod {
             }
         }
 
-        return individual;
+        return indv;
     }
 
     @Override

@@ -9,9 +9,11 @@ import utils.Utils;
 public class MutacionPorInsercion extends MutationMethod {
 
     @Override
-    public Individuo mutate(Individuo individual, double mutationProbability) {
+    public <T> Individuo mutate(Individuo individual, double mutationProbability) {
+        Individuo indv = individual.copy();
+
         if (Utils.random.nextDouble() < mutationProbability) {
-            List<String> cromosomas = individual.getCromosomas();
+            List<String> cromosomas = indv.getCromosomas();
             for (int i = 0; i < Parameters.DESPLAZAMIENTO_INSERCION; i++){
                 int from = Utils.random.nextInt(cromosomas.size());
                 int to = Utils.random.nextInt(cromosomas.size());
@@ -21,7 +23,7 @@ public class MutacionPorInsercion extends MutationMethod {
             }
         }
 
-        return individual;
+        return indv;
     }
 
     @Override

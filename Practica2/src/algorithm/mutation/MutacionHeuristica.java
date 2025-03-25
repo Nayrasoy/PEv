@@ -9,9 +9,11 @@ import utils.Utils;
 public class MutacionHeuristica extends MutationMethod {
 
     @Override
-    public Individuo mutate(Individuo individual, double mutationProbability) {
+    public <T> Individuo mutate(Individuo individual, double mutationProbability) {
+        Individuo indv = individual.copy();
+
         if (Utils.random.nextDouble() < mutationProbability) {
-            List<String> cromosomas = individual.getCromosomas();
+            List<String> cromosomas = indv.getCromosomas();
             List<Integer> index = new ArrayList();
             List<String> selection = new ArrayList();
             List<List<String>> permutaciones = new ArrayList();
@@ -38,17 +40,17 @@ public class MutacionHeuristica extends MutationMethod {
                 for (int i = 0; i < permutacion.size(); i++) {
                     cromosomas.set(index.get(i), permutacion.get(i));
                 }
-                actualFitness = individual.getFitness();
-                if (mejorIndividuo == null || individual.betterThan(actualFitness, bestFitness) == 1) {
+                actualFitness = indv.getFitness();
+                if (mejorIndividuo == null || indv.betterThan(actualFitness, bestFitness) == 1) {
                     bestFitness = actualFitness;
-                    mejorIndividuo = individual.copy();
+                    mejorIndividuo = indv.copy();
                 }
             }
-            individual = mejorIndividuo;
+            indv = mejorIndividuo;
             // Utils.searchForRepetitions(mejorIndividuo.getCromosomas());
         }
 
-        return individual;
+        return indv;
     }
 
     private void generarPermutaciones(List<String> lista, int index, List<List<String>> resultados) {

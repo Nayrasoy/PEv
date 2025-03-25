@@ -63,6 +63,14 @@ public abstract class Individuo<T> {
         return s;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Individuo indv = (Individuo) obj;
+        return this.cromosomas.equals(indv.getCromosomas());
+    }
+
     public List<T> getCromosomas() {
         return cromosomas;
     }

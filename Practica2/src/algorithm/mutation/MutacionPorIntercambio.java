@@ -8,9 +8,11 @@ import utils.Utils;
 public class MutacionPorIntercambio extends MutationMethod {
 
     @Override
-    public Individuo mutate(Individuo individual, double mutationProbability) {
+    public <T> Individuo mutate(Individuo individual, double mutationProbability) {
+        Individuo indv = individual.copy();
+
         if (Utils.random.nextDouble() < mutationProbability) {
-            List<String> cromosomas = individual.getCromosomas();
+            List<String> cromosomas = indv.getCromosomas();
             int num1 = Utils.random.nextInt(cromosomas.size());
             int num2 = Utils.random.nextInt(cromosomas.size());
 
@@ -21,7 +23,7 @@ public class MutacionPorIntercambio extends MutationMethod {
             Collections.swap(cromosomas, num1, num2);
         }
 
-        return individual;
+        return indv;
     }
 
     @Override

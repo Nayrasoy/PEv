@@ -45,7 +45,10 @@ public class AlgoritmoGenetico {
     private int iteration;
     private double precision;
     private Individuo bestIndividual;
+    private Individuo worstIndividual;
     private int elitism;
+    private int numCruces;
+    private int numMutaciones;
 
     public AlgoritmoGenetico(Controller controller, int tamPoblation, IndividualType individualType, int maxGeneraciones, double crossProbability, double mutationProbability, double precision) {
         this.controller = controller;
@@ -80,8 +83,12 @@ public class AlgoritmoGenetico {
             this.iteration++;
         }
 
-        this.controller.setSolution(this.bestIndividual.toString());
-        System.out.println("FINAL\n\nMejor individuo: \n" + this.bestIndividual);
+        String solution = this.bestIndividual.toString() + 
+            "\nNumero de cruces: " + this.numCruces +
+            "\nNumero de mutaciones: " + this.numMutaciones + 
+            "\nFitness del peor individuo: " + this.worstIndividual.getFitness();
+        this.controller.setSolution(solution);
+        System.out.println("FINAL\n\nSolucion:\n" + solution);
         
         this.controller.refreshPlot(this.averageFitness, this.actualBest, this.overallBest);
         this.controller.refreshHouse(this.bestIndividual);
@@ -120,6 +127,8 @@ public class AlgoritmoGenetico {
             this.averageFitness[i][0] = i;
         }
         this.iteration = 0;
+        this.numCruces = 0;
+        this.numMutaciones = 0;
     }
 
     private void evalue() {
@@ -146,6 +155,9 @@ public class AlgoritmoGenetico {
                     this.bestIndividual = individuo.copy();
                     this.overallBest[this.iteration][1] = fitness;
                 }
+            }
+            if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.worstIndividual.getFitness()) == -1) {
+                this.worstIndividual = individuo.copy();
             }
             first = false;
         }
@@ -183,13 +195,18 @@ public class AlgoritmoGenetico {
             newPoblation = crossMethod.cross(this.poblation.get(list.get(i)), this.poblation.get(list.get(i + 1)));
             this.poblation.set(list.get(i), newPoblation.get(0));
             this.poblation.set(list.get(i + 1), newPoblation.get(1));
+            this.numCruces++;
         }
     }
 
     private void mutation() throws SelectionException {
         MutationMethod mutationMethod = MutationMethodFactory.getSelectionMethod(this.mutationMethod);
-        for (Individuo i: this.poblation) {
-            i = mutationMethod.mutate(i, this.mutationProbability);
+        for (int i = 0; i < this.poblation.size(); i++) {
+            Individuo indv = mutationMethod.mutate(this.poblation.get(i), this.mutationProbability);
+            if (!indv.equals(this.poblation.get(i))) {
+                this.numMutaciones++;
+                this.poblation.set(i, indv);
+            }
         }
     }
 

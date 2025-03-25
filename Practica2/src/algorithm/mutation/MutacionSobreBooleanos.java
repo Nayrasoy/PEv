@@ -8,14 +8,16 @@ import utils.Utils;
 public class MutacionSobreBooleanos extends MutationMethod {
 
     @Override
-    public Individuo mutate(Individuo individual, double mutationProbability) {
-        List<Boolean> cromosomas = individual.getCromosomas();
+    public <T> Individuo mutate(Individuo individual, double mutationProbability) {
+        Individuo indv = individual.copy();
+
+        List<Boolean> cromosomas = indv.getCromosomas();
         for (int i = 0; i < cromosomas.size(); i++) {
             if (Utils.random.nextDouble() < mutationProbability) {
                 cromosomas.set(i, !cromosomas.get(i));
             }
         }
-        return individual;
+        return indv;
     }
 
     @Override
