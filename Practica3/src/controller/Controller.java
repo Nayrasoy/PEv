@@ -2,6 +2,7 @@ package controller;
 
 import algorithm.AlgoritmoGenetico;
 import algorithm.cross.CrossType;
+import algorithm.initialization.InitializationType;
 import algorithm.mutation.MutationType;
 import algorithm.selection.SelectionType;
 import config.Parameters;
@@ -79,6 +80,10 @@ public class Controller {
         this.ag.setMutationMethod(mutationMethod);
     }
 
+    public void setInitializationMethod(InitializationType initializationMethod) {
+        this.ag.setMutationMethod(initializationMethod);
+    }
+
     public void setElitismPercentage(int elitismPercentage) {
         this.ag.setElitismPercentage(elitismPercentage);
     }
@@ -101,6 +106,10 @@ public class Controller {
 
     public void showMap() {
         this.mainWindow.showMap();
+    }
+
+    public void showAnt() {
+        this.mainWindow.showAnt();
     }
 
     public void refreshHouse(Individuo bestIndividual) {

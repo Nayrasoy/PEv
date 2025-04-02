@@ -13,6 +13,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 import algorithm.cross.CrossType;
+import algorithm.initialization.InitializationType;
 import algorithm.mutation.MutationType;
 import algorithm.selection.SelectionType;
 import config.Parameters;
@@ -31,6 +32,7 @@ public class ConfigPanel extends JPanel {
     private JComboBox<String> selectionFunctionComboBox;
     private JComboBox<String> crossMethodComboBox;
     private JComboBox<String> mutationMethodComboBox;
+    private JComboBox<String> initializationMethodComboBox;
     private JSlider elitismPercentageSlider;
     private JTextField functionDimensionComboBox;
 
@@ -257,6 +259,24 @@ public class ConfigPanel extends JPanel {
         p.add(mutationMethodComboBox);
         this.add(p);
 
+        // Método de Inicializacion
+        p = new JPanel();
+        p.add(new JLabel("Método de Inicializacion:"));
+        s = "";
+        for (InitializationType mt : InitializationType.values()) {
+            s += mt.toString() + " ";
+        }
+        initializationMethodComboBox = new JComboBox<>(s.split(" "));
+        initializationMethodComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setInitializationMethod(InitializationType.valueOf((String) initializationMethodComboBox.getSelectedItem()));
+            }
+        });
+        initializationMethodComboBox.setSelectedItem(Parameters.DEFAULT_INITIALIZATION_METHOD.toString());
+        p.add(initializationMethodComboBox);
+        this.add(p);
+
         // Porcentaje de elitismo
         p = new JPanel();
         p.add(new JLabel("Porcentaje de elitismo:"));
@@ -309,7 +329,7 @@ public class ConfigPanel extends JPanel {
             
         });
         p.add(this.functionDimensionComboBox);
-        this.add(p);
+        // this.add(p);
     }
 
     private JSlider createPercentageSlider() {

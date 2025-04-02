@@ -6,6 +6,7 @@ import java.util.List;
 
 import algorithm.cross.CrossMethod;
 import algorithm.cross.CrossType;
+import algorithm.initialization.InitializationType;
 import algorithm.mutation.MutationMethod;
 import algorithm.mutation.MutationType;
 import algorithm.selection.SelectionMethod;
@@ -36,6 +37,7 @@ public class AlgoritmoGenetico {
     private SelectionType selectionType;
     private CrossType crossType;
     private MutationType mutationMethod;
+    private InitializationType initializationMethod;
     private int maxGeneraciones;
     private double crossProbability;
     private double mutationProbability;
@@ -57,6 +59,7 @@ public class AlgoritmoGenetico {
         this.selectionType = Parameters.DEFAULT_SELECTION_METHOD;
         this.crossType = Parameters.DEFAULT_CROSS_METHOD;
         this.mutationMethod = Parameters.DEFAULT_MUTATION_METHOD;
+        this.initializationMethod = Parameters.DEFAULT_INITIALIZATION_METHOD;
         this.maxGeneraciones = maxGeneraciones;
         this.crossProbability = crossProbability;
         this.mutationProbability = mutationProbability / 100;
@@ -288,6 +291,10 @@ public class AlgoritmoGenetico {
 
     public void setMutationMethod(MutationType mutationMethod) {
         this.mutationMethod = mutationMethod;
+    }
+
+    public void setMutationMethod(InitializationType initializationMethod) {
+        this.initializationMethod = initializationMethod;
     }
 
     public void setElitismPercentage(int elitismPercentage) {

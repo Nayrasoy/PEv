@@ -39,6 +39,7 @@ public class ControlPanel extends JPanel {
         runButton.setFocusPainted(false);
 		toolBar.add(runButton);
 
+		// Vista grafica
         JButton graphButton = new JButton("Show graph");
 		graphButton.addActionListener(new ActionListener() {
 
@@ -52,6 +53,21 @@ public class ControlPanel extends JPanel {
         graphButton.setFocusPainted(false);
 		toolBar.add(graphButton);
 
+		// Vista mapa hormiga
+		JButton antButton = new JButton("Show ant map");
+		antButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                System.out.println("Se ha pulsado el boton de ant mapa");
+				controller.showAnt();
+			}
+			
+		});
+        antButton.setFocusPainted(false);
+		toolBar.add(antButton);
+
+		// Vista Mapa rumba
         JButton mapButton = new JButton("Show map");
 		mapButton.addActionListener(new ActionListener() {
 

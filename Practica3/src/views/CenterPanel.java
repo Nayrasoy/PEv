@@ -13,12 +13,14 @@ public class CenterPanel extends JPanel {
     private CardLayout layout;
     private PlotPanel plotPanel;
     private MapPanel mapPanel;
+    private AntPanel antPanel;
     
     public CenterPanel(Controller controller) {
         this.controller = controller;
         this.layout = new CardLayout();
         this.plotPanel = new PlotPanel(controller);
         this.mapPanel = new MapPanel(controller);
+        this.antPanel = new AntPanel(controller);
 		this.initGUI();
     }
 
@@ -26,6 +28,7 @@ public class CenterPanel extends JPanel {
         this.setLayout(layout);
         this.add(plotPanel, "Plot");
         this.add(mapPanel, "Map");
+        this.add(antPanel, "Ant");
         this.setVisible(true);
 	}
 
@@ -35,6 +38,10 @@ public class CenterPanel extends JPanel {
 
     public void showMap() {
         this.layout.show(this, "Map");
+    }
+
+    public void showAnt() {
+        this.layout.show(this, "Ant");
     }
 
     public void refreshPlot(double[][] averageFitness, double[][] actualBest, double[][] overallBest) {

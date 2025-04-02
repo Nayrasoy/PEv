@@ -60,6 +60,10 @@ public class MainWindow extends JFrame {
         this.centerPanel.showMap();
     }
 
+    public void showAnt() {
+        this.centerPanel.showAnt();
+    }
+
     public void refreshHouse(Individuo bestIndividual) {
         this.centerPanel.refreshHouse(bestIndividual);
     }
