@@ -5,14 +5,7 @@ import java.util.List;
 
 import controller.Controller;
 import exceptions.IndividuoException;
-import model.IndividualType;
-import model.Individuo;
-import model.IndividuoFuncion1;
-import model.IndividuoFuncion2;
-import model.IndividuoFuncion3;
-import model.IndividuoFuncion4;
-import model.IndividuoFuncion5;
-import model.Rumba;
+import model.*;
 
 public class IndividuoFactory {
 
@@ -22,7 +15,8 @@ public class IndividuoFactory {
         new IndividuoFuncion3(),
         new IndividuoFuncion4(),
         new IndividuoFuncion5(),
-        new Rumba()
+        new Rumba(),
+        new Ant()
 	);
     
     public static Individuo getIndividuo(IndividualType type, Controller controller) throws IndividuoException {

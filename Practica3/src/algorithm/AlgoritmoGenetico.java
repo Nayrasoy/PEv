@@ -301,4 +301,8 @@ public class AlgoritmoGenetico {
         this.elitism = elitismPercentage > 0 ? Math.round((this.tamPoblation / 100) * elitismPercentage) : 0;
     }
 
+    public InitializationType getInitializationMethod() {
+        return this.initializationMethod;
+    }
+
 }

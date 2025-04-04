@@ -1,10 +1,10 @@
 package algorithm.initialization;
 
-import model.Individuo;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 public abstract class InitializationMethod {
 
-    public abstract <T> Individuo mutate(Individuo individual);
+    public abstract DefaultMutableTreeNode initializate();
 
     public abstract InitializationType getType();
     

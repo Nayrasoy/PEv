@@ -118,4 +118,8 @@ public class Controller {
         }
     }
     
+    public InitializationType getInitializationMethod() {
+        return this.ag.getInitializationMethod();
+    }
+    
 }

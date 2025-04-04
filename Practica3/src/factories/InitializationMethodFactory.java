@@ -14,7 +14,7 @@ public class InitializationMethodFactory {
         new RampedAndHalf()
 	);
     
-    public static InitializationMethod getSelectionMethod(InitializationType type) throws InitializationExeption {
+    public static InitializationMethod getInitializationMethod(InitializationType type) throws InitializationExeption {
         for (InitializationMethod method : methods) {
             if (method.getType() == type) {
                 return method;

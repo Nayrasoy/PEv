@@ -1,13 +1,13 @@
 package algorithm.initialization;
 
-import model.Individuo;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 public class RampedAndHalf extends InitializationMethod{
 
     @Override
-    public <T> Individuo mutate(Individuo individual) {
+    public DefaultMutableTreeNode initializate() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mutate'");
+        throw new UnsupportedOperationException("Unimplemented method 'initializate'");
     }
 
     @Override

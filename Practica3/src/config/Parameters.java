@@ -13,7 +13,7 @@ public class Parameters {
 
     public static final int DEFAULT_TAM_POBLATION = 100;
     public static final int DEFAULT_GENERATIONS_NUMBER = 300;
-    public static final IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_RUMBA;
+    public static final IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_ANT;
     public static final SelectionType DEFAULT_SELECTION_METHOD = SelectionType.RANKING;
     public static final CrossType DEFAULT_CROSS_METHOD = CrossType.PMX;
     public static final MutationType DEFAULT_MUTATION_METHOD = MutationType.POR_INVERSION;
