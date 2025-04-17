@@ -40,5 +40,6 @@ public class Parameters {
     public static final double INVENTED_MUTATION_PROBABILITY = 0.5;
 
     public static final InitializationType DEFAULT_INITIALIZATION_METHOD = InitializationType.COMPLETA;
+    public static final int MAX_ANT_TIME = 400;
 
 }

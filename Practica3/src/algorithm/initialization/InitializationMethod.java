@@ -1,10 +1,10 @@
 package algorithm.initialization;
 
-import javax.swing.tree.DefaultMutableTreeNode;
+import model.Terminal;
 
 public abstract class InitializationMethod {
 
-    public abstract DefaultMutableTreeNode initializate();
+    public abstract Terminal initializate();
 
     public abstract InitializationType getType();
     

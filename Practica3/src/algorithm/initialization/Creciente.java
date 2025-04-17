@@ -1,11 +1,11 @@
 package algorithm.initialization;
 
-import javax.swing.tree.DefaultMutableTreeNode;
+import model.Terminal;
 
 public class Creciente extends InitializationMethod {
 
     @Override
-    public DefaultMutableTreeNode initializate() {
+    public Terminal initializate() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'initializate'");
     }

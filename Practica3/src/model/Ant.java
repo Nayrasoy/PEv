@@ -3,14 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import algorithm.initialization.InitializationMethod;
+import config.Parameters;
 import controller.Controller;
 import exceptions.InitializationExeption;
 import factories.InitializationMethodFactory;
 
-public class Ant extends Individuo<DefaultMutableTreeNode> {
+public class Ant extends Individuo<Terminal> {
 
     Hormiguero hormiguero;
 
@@ -30,15 +29,23 @@ public class Ant extends Individuo<DefaultMutableTreeNode> {
         }
     }
 
-    public Ant(Controller controller, List<DefaultMutableTreeNode> cromosomas) {
+    public Ant(Controller controller, List<Terminal> cromosomas) {
         super(controller, cromosomas, null, null, null, 1);
         this.hormiguero = Hormiguero.getInstance();
     }
 
     @Override
     public double getFitness() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFitness'");
+        int food = 0;
+        Coords coords = new Coords(0, 0);
+        Terminal.direction = Direction.RIGHT;
+        for (int i = 0; i < Parameters.MAX_ANT_TIME; i++) {
+            food += this.cromosomas.get(0).execute(coords);
+            if (food == this.hormiguero.getFood().size()) {
+                break;
+            }
+        }
+        return food;
     }
 
     @Override

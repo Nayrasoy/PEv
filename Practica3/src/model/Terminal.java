@@ -8,6 +8,8 @@ public enum Terminal {
     private Terminal b;
     private Terminal c;
 
+    public static Direction direction;
+
     Terminal() {}
 
     Terminal(Terminal a, Terminal b) {
@@ -21,29 +23,38 @@ public enum Terminal {
         this.c = c;
     }
 
-    public void execute() {
+    public int execute(Coords coords) {
         switch (this) {
             case AVANZA:
-
+                direction.move(coords);
+                if (Hormiguero.getInstance().getFood().contains(coords)) {
+                    return 1;
+                }
             break;
             case DERECHA:
-
+                direction = direction.turnRight();
             break;
             case IZQUIERDA:
-
+                direction = direction.turnLeft();
             break;
             case SICOMIDA:
-                
+                if (Hormiguero.getInstance().getFood().contains(coords)) {
+                    this.a.execute(coords);
+                }
+                else {
+                    this.b.execute(coords);
+                }
             break;
             case PROG1:
-                this.a.execute();
-                this.b.execute();
+                this.a.execute(coords);
+                this.b.execute(coords);
             break;
             case PROG2:
-                this.a.execute();
-                this.b.execute();
-                this.c.execute();
+                this.a.execute(coords);
+                this.b.execute(coords);
+                this.c.execute(coords);
         }
+        return 0;
     }
 
 }
