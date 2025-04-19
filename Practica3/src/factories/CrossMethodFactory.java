@@ -19,7 +19,8 @@ public class CrossMethodFactory {
         new CX(),
         new CO(),
         new Invent(),
-        new ERX()
+        new ERX(),
+        new TreeCross()
 	);
     
     public static CrossMethod getCrossMethod(CrossType type) throws CrossException {

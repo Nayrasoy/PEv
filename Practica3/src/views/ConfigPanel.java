@@ -35,6 +35,7 @@ public class ConfigPanel extends JPanel {
     private JComboBox<String> initializationMethodComboBox;
     private JSlider elitismPercentageSlider;
     private JTextField functionDimensionComboBox;
+    private JTextField minProfArbolComboBox;
 
     public ConfigPanel(Controller controller) {
         this.controller = controller;
@@ -42,7 +43,7 @@ public class ConfigPanel extends JPanel {
     }
 
     private void initGUI() {
-        this.setLayout(new GridLayout(11, 1));
+        this.setLayout(new GridLayout(12, 1));
         JPanel p;
 
         // Seleccion de la funcion
@@ -292,6 +293,43 @@ public class ConfigPanel extends JPanel {
 
         });
         p.add(elitismPercentageSlider);
+        this.add(p);
+
+        // Selección de la profundidad mínima
+        p = new JPanel();
+        p.add(new JLabel("Profundidad minima del arbol:"));
+        minProfArbolComboBox = new JTextField(String.valueOf(Parameters.DEFAULT_MIN_DEPTH));
+        this.minProfArbolComboBox.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    validateIntTextField(minProfArbolComboBox.getText());
+                } catch (Exception ex) {
+                    System.out.println("El tamanyo de la poblacion debe ser un entero superior a 0");
+                    minProfArbolComboBox.setText(String.valueOf(Parameters.DEFAULT_MIN_DEPTH));
+                } finally {
+                    controller.setMinTreeProf(Integer.parseInt(minProfArbolComboBox.getText()));
+                }
+            }
+            
+        });
+        this.minProfArbolComboBox.addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    validateIntTextField(minProfArbolComboBox.getText());
+                } catch (Exception ex) {
+                    System.out.println("El tamanyo de la poblacion debe ser un entero superior a 0");
+                    minProfArbolComboBox.setText(String.valueOf(Parameters.DEFAULT_MIN_DEPTH)); 
+                } finally {
+                    controller.setMinTreeProf(Integer.parseInt(minProfArbolComboBox.getText()));
+                }
+            }
+            
+        });
+        p.add(this.minProfArbolComboBox);
         this.add(p);
 
         // Selección de la dimensión de las funciones 4 y 5

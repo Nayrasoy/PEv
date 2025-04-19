@@ -1,10 +1,10 @@
 package algorithm.initialization;
 
-import model.Terminal;
+import model.Node;
 
 public abstract class InitializationMethod {
 
-    public abstract Terminal initializate();
+    public abstract Node initializate(int minDepth, int maxDepth);
 
     public abstract InitializationType getType();
     

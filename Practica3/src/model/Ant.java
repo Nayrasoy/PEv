@@ -9,7 +9,7 @@ import controller.Controller;
 import exceptions.InitializationExeption;
 import factories.InitializationMethodFactory;
 
-public class Ant extends Individuo<Terminal> {
+public class Ant extends Individuo<Node> {
 
     Hormiguero hormiguero;
 
@@ -23,13 +23,13 @@ public class Ant extends Individuo<Terminal> {
         this.cromosomas = new ArrayList<>();
         try {
             InitializationMethod initializationMethod = InitializationMethodFactory.getInitializationMethod(this.controller.getInitializationMethod());
-            this.cromosomas.add(initializationMethod.initializate());
+            this.cromosomas.add(initializationMethod.initializate(this.controller.getMinTreeProf(), Parameters.DEFAULT_MAX_DEPTH));
         } catch (InitializationExeption e) {
             e.printStackTrace();
         }
     }
 
-    public Ant(Controller controller, List<Terminal> cromosomas) {
+    public Ant(Controller controller, List<Node> cromosomas) {
         super(controller, cromosomas, null, null, null, 1);
         this.hormiguero = Hormiguero.getInstance();
     }
@@ -80,8 +80,9 @@ public class Ant extends Individuo<Terminal> {
 
     @Override
     public String toString() {
-        // TODO: hacer
-        return "";
+        String s = "Comido: " + (int) this.getFitness() + "/" + Hormiguero.getInstance().getFood().size() + "\n";
+        s += "Estrategia: " + this.cromosomas.get(0).toString();
+        return s;
     }
     
 }

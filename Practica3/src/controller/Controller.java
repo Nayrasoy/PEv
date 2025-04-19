@@ -19,6 +19,7 @@ public class Controller {
     AlgoritmoGenetico ag;
     MainWindow mainWindow;
     int dimension = Parameters.DEFAULT_DIMENSION;
+    int minTreeProf = Parameters.DEFAULT_MIN_DEPTH;
 
     public void run() {
         try {
@@ -120,6 +121,13 @@ public class Controller {
     
     public InitializationType getInitializationMethod() {
         return this.ag.getInitializationMethod();
+    }
+
+    public void setMinTreeProf(int minTreeProf) {
+        this.minTreeProf = minTreeProf;
+    }
+    public int getMinTreeProf() {
+        return this.minTreeProf;
     }
     
 }

@@ -15,7 +15,7 @@ public class Parameters {
     public static final int DEFAULT_GENERATIONS_NUMBER = 300;
     public static final IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_ANT;
     public static final SelectionType DEFAULT_SELECTION_METHOD = SelectionType.RANKING;
-    public static final CrossType DEFAULT_CROSS_METHOD = CrossType.PMX;
+    public static final CrossType DEFAULT_CROSS_METHOD = CrossType.TREE_CROSS;
     public static final MutationType DEFAULT_MUTATION_METHOD = MutationType.POR_INVERSION;
     public static final double DEFAULT_CROSS_PROBABILITY = 0.6;
     public static final double DEFAULT_PRECISION = 0.001;
@@ -41,5 +41,7 @@ public class Parameters {
 
     public static final InitializationType DEFAULT_INITIALIZATION_METHOD = InitializationType.COMPLETA;
     public static final int MAX_ANT_TIME = 400;
+    public static final int DEFAULT_MIN_DEPTH = 2;
+    public static final int DEFAULT_MAX_DEPTH = 5;
 
 }
