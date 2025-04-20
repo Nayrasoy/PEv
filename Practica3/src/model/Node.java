@@ -75,6 +75,20 @@ public class Node {
         return c;
     }
 
+    public void setTerminal(Terminal t) {
+        this.tipo = t;
+        this.a = null;
+        this.b = null;
+        this.c  = null;
+    }
+
+    public void deleteNode() {
+        this.tipo = null;
+        this.a = null;
+        this.b = null;
+        this.c  = null;
+    }
+
     public Node copy() {
         switch (tipo) {
             case AVANZA:
@@ -141,6 +155,50 @@ public class Node {
         for (Node child : node.getChildren()) {
             collectNodes(child, nodes);
         }
+    }
+
+    public boolean isTerminal() {
+        return this.tipo == Terminal.AVANZA || this.tipo == Terminal.DERECHA || this.tipo == Terminal.IZQUIERDA;
+    }
+
+    public boolean isFunction() {
+        return this.tipo == Terminal.PROG1 || this.tipo == Terminal.PROG2;
+    }
+
+    public List<Node> getTerminalNodes() {
+        List<Node> nodes = new ArrayList<>();
+        collectTerminalNodes(this, nodes);
+        return nodes;
+    }
+
+    private void collectTerminalNodes(Node node, List<Node> nodes) {
+        if (node.isTerminal()) {
+            nodes.add(node);
+        }
+        for (Node child : node.getChildren()) {
+            collectTerminalNodes(child, nodes);
+        }
+    }
+
+    public List<Node> getFunctionNodes() {
+        List<Node> nodes = new ArrayList<>();
+        collectFunctionNodes(this, nodes);
+        return nodes;
+    }
+
+    private void collectFunctionNodes(Node node, List<Node> nodes) {
+        if (node.isFunction()) {
+            nodes.add(node);
+        }
+        for (Node child : node.getChildren()) {
+            collectFunctionNodes(child, nodes);
+        }
+    }
+
+    public void permutationTerminal() {
+        Node temp = this.a;
+        this.a = this.b;
+        this.b = temp;
     }
 
     public Node replaceSubtree(Node target, Node replacement) {

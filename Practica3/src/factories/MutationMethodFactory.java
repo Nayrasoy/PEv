@@ -17,8 +17,8 @@ public class MutationMethodFactory {
         new MutacionHeuristica(),
         new MutacionPorIntercambio(),
         new MutacionInventada(),
-        new MutacionFuncional(),
-        new MutacionHoist(),
+        new MutacionContraccion(),
+        new MutacionPermutacion(),
         new MutacionSubarbol(),
         new MutacionTerminal()
 	);

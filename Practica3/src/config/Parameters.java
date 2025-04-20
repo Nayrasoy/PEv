@@ -16,7 +16,7 @@ public class Parameters {
     public static final IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_ANT;
     public static final SelectionType DEFAULT_SELECTION_METHOD = SelectionType.RANKING;
     public static final CrossType DEFAULT_CROSS_METHOD = CrossType.TREE_CROSS;
-    public static final MutationType DEFAULT_MUTATION_METHOD = MutationType.POR_INVERSION;
+    public static final MutationType DEFAULT_MUTATION_METHOD = MutationType.TERMINAL;
     public static final double DEFAULT_CROSS_PROBABILITY = 0.6;
     public static final double DEFAULT_PRECISION = 0.001;
     public static final int DEFAULT_MUTATION_PROBABILITY = 25;

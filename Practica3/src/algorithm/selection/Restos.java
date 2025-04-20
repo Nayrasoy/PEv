@@ -49,7 +49,7 @@ public class Restos extends SelectionMethod {
             System.out.println(e);
         }
 
-        return poblation;
+        return newPoblation;
     }
 
     @Override

@@ -3,24 +3,23 @@ package algorithm.mutation;
 import java.util.List;
 
 import model.Individuo;
-import model.Terminal;
 import model.Node;
+import model.Terminal;
 import utils.Utils;
 
-public class MutacionTerminal extends MutationMethod {
-
-
+public class MutacionContraccion extends MutationMethod {
     @Override
     public Individuo mutate(Individuo individual, double mutationProbability) {
         Individuo indv = individual.copy();
 
         if (Utils.random.nextDouble() < mutationProbability) {
             Node padre = (Node) indv.getCromosomas().get(0);
-            List<Node> nodosTerminales = padre.getTerminalNodes();
+            List<Node> nodos = padre.getFunctionNodes();
+            nodos.remove(0);
 
-            if (!nodosTerminales.isEmpty()) {
-                int indexNodo = Utils.random.nextInt(nodosTerminales.size());
-                Node nodoSeleccionado = nodosTerminales.get(indexNodo);
+            if (!nodos.isEmpty()) { 
+                int indexNodo = Utils.random.nextInt(nodos.size());
+                Node nodoSeleccionado = nodos.get(indexNodo);
 
                 Terminal nuevoTerminal = Terminal.getRandomTerminal();
 
@@ -33,11 +32,11 @@ public class MutacionTerminal extends MutationMethod {
 
     @Override
     public MutationType getType() {
-        return MutationType.TERMINAL;
+        return MutationType.CONTRACCION;
     }
 
     @Override
     public MutationMethod create() {
-        return new MutacionTerminal();
+        return new MutacionContraccion();
     }
 }
