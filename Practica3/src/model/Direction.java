@@ -1,23 +1,36 @@
 package model;
 
+import java.lang.reflect.Parameter;
+
+import config.Parameters;
+
 public enum Direction {
     UP, DOWN, LEFT, RIGHT;
 
-    public void move(Coords coords) {
+    public Coords move(Coords coords) {
         switch (this) {
             case UP:
-                coords = new Coords(coords.getX(), coords.getY() + 1);
-            break;
+                if (coords.getY() == 0) {
+                    return new Coords(coords.getX(), Parameters.GRID_HEIGHT - 1);
+                }
+                return new Coords(coords.getX(), coords.getY() - 1);
             case DOWN:
-                coords = new Coords(coords.getX(), coords.getY() - 1);
-            break;
+                if (coords.getY() == Parameters.GRID_HEIGHT - 1) {
+                    return new Coords(coords.getX(), 0);
+                }
+                return new Coords(coords.getX(), coords.getY() + 1);
             case LEFT:
-                coords = new Coords(coords.getX() - 1, coords.getY());
-            break;
+                if (coords.getX() == 0) {
+                    return new Coords(Parameters.GRID_WIDTH - 1, coords.getY());
+                }
+                return new Coords(coords.getX() - 1, coords.getY());
             case RIGHT:
-                coords = new Coords(coords.getX() + 1, coords.getY());
-            break;
+                if (coords.getX() == Parameters.GRID_WIDTH - 1) {
+                    return new Coords(0, coords.getY());
+                }
+                return new Coords(coords.getX() + 1, coords.getY());
         }
+        return null;
     }
 
     public Direction turnRight() {

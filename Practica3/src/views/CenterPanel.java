@@ -54,4 +54,9 @@ public class CenterPanel extends JPanel {
         this.repaint();
     }
 
+    public void refreshAntMap(Individuo bestIndividual) {
+        this.antPanel.refreshAntMap(bestIndividual);
+        this.repaint();
+    }
+
 }

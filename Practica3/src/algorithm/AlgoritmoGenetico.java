@@ -81,6 +81,11 @@ public class AlgoritmoGenetico {
             this.cross();
             this.mutation();
             this.introduceElite();
+
+            if (this.iteration == this.maxGeneraciones) {
+                System.out.println("Heeyyy");
+            }
+
             this.evalue();
             
             this.iteration++;
@@ -95,6 +100,7 @@ public class AlgoritmoGenetico {
         
         this.controller.refreshPlot(this.averageFitness, this.actualBest, this.overallBest);
         this.controller.refreshHouse(this.bestIndividual);
+        this.controller.refreshAntMap(bestIndividual);
     }
 
     private void init() throws IndividuoException {

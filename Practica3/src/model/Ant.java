@@ -37,7 +37,8 @@ public class Ant extends Individuo<Node> {
     @Override
     public double getFitness() {
         int food = 0;
-        Coords coords = new Coords(0, 0);
+        List<Coords> coords = new ArrayList<>();
+        coords.add(new Coords(0, 0));
         Terminal.direction = Direction.RIGHT;
         for (int i = 0; i < Parameters.MAX_ANT_TIME; i++) {
             food += this.cromosomas.get(0).execute(coords);
@@ -45,6 +46,7 @@ public class Ant extends Individuo<Node> {
                 break;
             }
         }
+        Node.food = new ArrayList<>(Hormiguero.getInstance().getFood());
         return food;
     }
 

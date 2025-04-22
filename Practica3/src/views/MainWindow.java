@@ -68,4 +68,8 @@ public class MainWindow extends JFrame {
         this.centerPanel.refreshHouse(bestIndividual);
     }
 
+    public void refreshAntMap(Individuo bestIndividual) {
+        this.centerPanel.refreshAntMap(bestIndividual);
+    }
+
 }

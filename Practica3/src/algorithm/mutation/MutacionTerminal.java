@@ -9,7 +9,6 @@ import utils.Utils;
 
 public class MutacionTerminal extends MutationMethod {
 
-
     @Override
     public Individuo mutate(Individuo individual, double mutationProbability) {
         Individuo indv = individual.copy();

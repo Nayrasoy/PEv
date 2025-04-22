@@ -12,7 +12,7 @@ public class Parameters {
     public static final int SEED = 123;
 
     public static final int DEFAULT_TAM_POBLATION = 100;
-    public static final int DEFAULT_GENERATIONS_NUMBER = 300;
+    public static final int DEFAULT_GENERATIONS_NUMBER = 50;
     public static final IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_ANT;
     public static final SelectionType DEFAULT_SELECTION_METHOD = SelectionType.RANKING;
     public static final CrossType DEFAULT_CROSS_METHOD = CrossType.TREE_CROSS;
@@ -42,6 +42,8 @@ public class Parameters {
     public static final InitializationType DEFAULT_INITIALIZATION_METHOD = InitializationType.COMPLETA;
     public static final int MAX_ANT_TIME = 400;
     public static final int DEFAULT_MIN_DEPTH = 2;
-    public static final int DEFAULT_MAX_DEPTH = 5;
+    public static final int DEFAULT_MAX_DEPTH = 2;
+    public static final int GRID_WIDTH = 32;
+    public static final int GRID_HEIGHT = 32;
 
 }

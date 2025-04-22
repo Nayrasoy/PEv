@@ -9,6 +9,8 @@ public class Node {
     private Node b;
     private Node c;
 
+    public static List<Coords> food = new ArrayList<>(Hormiguero.getInstance().getFood());
+
     public Node(Terminal tipo) {
         this.tipo = tipo;
     }
@@ -26,11 +28,18 @@ public class Node {
         this.c = c;
     }
 
-    public int execute(Coords coords) {
+    public int execute(List<Coords> coords) {
+        Coords coord = new Coords(coords.get(coords.size() - 1));
         switch (tipo) {
             case AVANZA:
-                Terminal.direction.move(coords);
-                return Hormiguero.getInstance().getFood().contains(coords) ? 1 : 0;
+                coord = Terminal.direction.move(coord);
+                coords.add(coord);
+                int indx = Node.food.indexOf(coord);
+                if (indx != -1) {
+                    Node.food.remove(indx);
+                    return 1;
+                }
+                return 0;
 
             case DERECHA:
                 Terminal.direction = Terminal.direction.turnRight();
@@ -41,20 +50,20 @@ public class Node {
                 break;
 
             case SICOMIDA:
-                if (Hormiguero.getInstance().getFood().contains(coords)) {
+                if (Node.food.contains(coord)) {
                     return a.execute(coords);
                 } else {
                     return b.execute(coords);
                 }
 
             case PROG1:
-                a.execute(coords);
-                return b.execute(coords);
+                int food = a.execute(coords);
+                return b.execute(coords) + food;
 
             case PROG2:
-                a.execute(coords);
-                b.execute(coords);
-                return c.execute(coords);
+                int food2 = a.execute(coords);
+                food2 += b.execute(coords);
+                return c.execute(coords) + food2;
         }
         return 0;
     }

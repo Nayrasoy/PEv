@@ -9,6 +9,7 @@ import config.Parameters;
 import exceptions.CrossException;
 import exceptions.IndividuoException;
 import exceptions.SelectionException;
+import model.Ant;
 import model.IndividualType;
 import model.Individuo;
 import model.Rumba;
@@ -116,6 +117,12 @@ public class Controller {
     public void refreshHouse(Individuo bestIndividual) {
         if (bestIndividual.getClass() == Rumba.class) {
             this.mainWindow.refreshHouse(bestIndividual);
+        }
+    }
+
+    public void refreshAntMap(Individuo bestIndividual) {
+        if (bestIndividual.getClass() == Ant.class) {
+            this.mainWindow.refreshAntMap(bestIndividual);
         }
     }
     
