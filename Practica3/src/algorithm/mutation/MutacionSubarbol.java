@@ -26,12 +26,14 @@ public class MutacionSubarbol extends MutationMethod {
                 int indexNodo = Utils.random.nextInt(nodos.size());
                 Node nodoSeleccionado = nodos.get(indexNodo);
 
-                nodoSeleccionado.deleteNode();
-
-                // Inicializar nodo
                 try {
                     InitializationMethod sm = InitializationMethodFactory.getInitializationMethod(Parameters.DEFAULT_INITIALIZATION_METHOD);
-                    // indv.addAll(sm.initializate(indexNodo, indexNodo));
+                    Node nuevoSubarbol = (Node) sm.initializate(1, 3); // Generamos un solo Node
+
+                    // Reemplazamos el subárbol dentro del árbol
+                    Node nuevoArbol = padre.replaceSubtree(nodoSeleccionado, nuevoSubarbol);
+                    indv.getCromosomas().set(0, nuevoArbol); // Actualizamos el árbol principal del individuo
+
                 } catch (InitializationExeption e) {
                     e.printStackTrace();
                 }
