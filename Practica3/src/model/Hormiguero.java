@@ -1,11 +1,13 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Hormiguero {
     
-    private List<Coords> food;
+    private Set<Coords> food = null;
     private static Hormiguero hormiguero = null;
 
     private Hormiguero() {
@@ -20,7 +22,7 @@ public class Hormiguero {
     }
 
     private void initFood() {
-        this.food = new ArrayList<>();
+        this.food = new HashSet<>();
 
         this.food.add(new Coords(0, 0));
         this.food.add(new Coords(1, 0));
@@ -114,7 +116,7 @@ public class Hormiguero {
         this.food.add(new Coords(5, 30));
     }
 
-    public List<Coords> getFood() {
+    public Set<Coords> getFood() {
         return this.food;
     }
 

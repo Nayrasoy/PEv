@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Node {
     private Terminal tipo;
@@ -9,7 +11,7 @@ public class Node {
     private Node b;
     private Node c;
 
-    public static List<Coords> food = new ArrayList<>(Hormiguero.getInstance().getFood());
+    public static Set<Coords> food = new HashSet<>(Hormiguero.getInstance().getFood());
 
     public Node(Terminal tipo) {
         this.tipo = tipo;
@@ -29,14 +31,12 @@ public class Node {
     }
 
     public int execute(List<Coords> coords) {
-        Coords coord = new Coords(coords.get(coords.size() - 1));
+        Coords coord = coords.get(coords.size() - 1);
         switch (tipo) {
             case AVANZA:
                 coord = Terminal.direction.move(coord);
                 coords.add(coord);
-                int indx = Node.food.indexOf(coord);
-                if (indx != -1) {
-                    Node.food.remove(indx);
+                if (Node.food.remove(coord)) {
                     return 1;
                 }
                 return 0;
@@ -50,9 +50,11 @@ public class Node {
                 break;
 
             case SICOMIDA:
-                if (Node.food.contains(coord)) {
+                Coords sigCoord = Terminal.direction.move(coord);
+                if (Node.food.contains(sigCoord)) {
                     return a.execute(coords);
-                } else {
+                } 
+                else {
                     return b.execute(coords);
                 }
 
@@ -161,9 +163,9 @@ public class Node {
 
     private void collectNodes(Node node, List<Node> nodes) {
         nodes.add(node);
-        for (Node child : node.getChildren()) {
-            collectNodes(child, nodes);
-        }
+        if (node.a != null) collectNodes(node.a, nodes);
+        if (node.b != null) collectNodes(node.b, nodes);
+        if (node.c != null) collectNodes(node.c, nodes);
     }
 
     public boolean isTerminal() {

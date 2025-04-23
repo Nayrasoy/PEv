@@ -10,10 +10,9 @@ import utils.Utils;
 public class MutacionPermutacion extends MutationMethod  {
     @Override
     public Individuo mutate(Individuo individual, double mutationProbability) {
-        Individuo indv = individual.copy();
-
         // TODO: Implementar la mutación funcional
         if (Utils.random.nextDouble() < mutationProbability) {
+            Individuo indv = individual.copy();
             Node padre = (Node) indv.getCromosomas().get(0);
             List<Node> nodos = padre.getFunctionNodes(); 
 
@@ -23,9 +22,9 @@ public class MutacionPermutacion extends MutationMethod  {
 
                 nodoSeleccionado.permutationTerminal();
             }
+            return indv;
         }
-
-        return indv;
+        return individual;
     }
 
     @Override

@@ -11,9 +11,9 @@ public class MutacionTerminal extends MutationMethod {
 
     @Override
     public Individuo mutate(Individuo individual, double mutationProbability) {
-        Individuo indv = individual.copy();
 
         if (Utils.random.nextDouble() < mutationProbability) {
+            Individuo indv = individual.copy();
             Node padre = (Node) indv.getCromosomas().get(0);
             List<Node> nodosTerminales = padre.getTerminalNodes();
 
@@ -25,9 +25,9 @@ public class MutacionTerminal extends MutationMethod {
 
                 nodoSeleccionado.setTerminal(nuevoTerminal);
             }
+            return indv;
         }
-
-        return indv;
+        return individual;
     }
 
     @Override

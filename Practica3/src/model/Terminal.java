@@ -10,7 +10,7 @@ public enum Terminal {
 
     public static Terminal getRandomTerminal() {
         Terminal[] ts = {Terminal.AVANZA, Terminal.DERECHA, Terminal.IZQUIERDA};
-        return ts[(int)(Math.random() * ts.length)];
+        return ts[Utils.random.nextInt(ts.length)]; 
     }
 
 }

@@ -6,7 +6,10 @@ import config.Parameters;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import model.Coords;
 import model.Direction;
 import model.Hormiguero;
@@ -50,7 +53,7 @@ public class AntPanel extends JPanel {
     }
 
     private void drawFood(Graphics g) {
-        List<Coords> food = hormiguero.getFood();
+        Set<Coords> food = hormiguero.getFood();
         int tileSize = getTileSize();
         g.setColor(Color.BLUE);
         for (Coords c : food) {
@@ -90,7 +93,7 @@ public class AntPanel extends JPanel {
                 break;
             }
         }
-        Node.food = new ArrayList<>(Hormiguero.getInstance().getFood());
+        Node.food = new HashSet<>(Hormiguero.getInstance().getFood());
         this.repaint();
     }
 }

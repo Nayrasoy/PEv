@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import algorithm.initialization.InitializationMethod;
@@ -46,7 +47,7 @@ public class Ant extends Individuo<Node> {
                 break;
             }
         }
-        Node.food = new ArrayList<>(Hormiguero.getInstance().getFood());
+        Node.food = new HashSet<>(Hormiguero.getInstance().getFood());
         return food;
     }
 
@@ -62,7 +63,9 @@ public class Ant extends Individuo<Node> {
     
     @Override
     public Individuo copy() {
-        return new Ant(this.controller, new ArrayList<>(this.cromosomas));
+        List<Node> cromosomas = new ArrayList<>();
+        cromosomas.add(this.cromosomas.get(0).copy());
+        return new Ant(this.controller, cromosomas);
     }
 
     @Override
