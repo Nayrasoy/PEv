@@ -56,8 +56,8 @@ public class Node {
                     int falseBranch = stack.pop();
                     int trueBranch = stack.pop();
 
-                    Coords coord = coords.get(coords.size() - 1);
-                    if (food.contains(coord)) {
+                    Coords sigCoord = Terminal.direction.move(coord);
+                    if (food.contains(sigCoord)) {
                         stack.push(trueBranch);
                     } else {
                         stack.push(falseBranch);
