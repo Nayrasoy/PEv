@@ -83,16 +83,15 @@ public class AntPanel extends JPanel {
 
     public void refreshAntMap(Individuo bestIndividual) {
         int food = 0;
-        Node node = (Node) bestIndividual.getCromosomas().get(0);
+        int movimientos = 0;
+        Node padre = (Node) bestIndividual.getCromosomas().get(0);
         coords = new ArrayList<>();
         coords.add(new Coords(0, 0));
         Terminal.direction = Direction.RIGHT;
-        for (int i = 0; i < Parameters.MAX_ANT_TIME; i++) {
-            food += node.execute(coords);
-            if (food == this.hormiguero.getFood().size()) {
-                break;
-            }
+        while (!Node.food.isEmpty() && movimientos < Parameters.MAX_ANT_TIME) {
+            movimientos += padre.execute(coords);
         }
+        food = Hormiguero.getInstance().getFood().size() - Node.food.size();
         Node.food = new HashSet<>(Hormiguero.getInstance().getFood());
         this.repaint();
     }

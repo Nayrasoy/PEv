@@ -7,8 +7,8 @@ import utils.Utils;
 public class Creciente extends InitializationMethod {
 
     @Override
-    public Node initializate(int minDepth, int maxDepth) {
-        return generateGrowTree(0, minDepth, maxDepth);
+    public Node initializate(int startingDepth, int minDepth, int maxDepth) {
+        return generateGrowTree(startingDepth, minDepth, maxDepth);
     }
     
     private Node generateGrowTree(int currentDepth, int minDepth, int maxDepth) {
@@ -16,7 +16,7 @@ public class Creciente extends InitializationMethod {
         boolean mustBeFunction = currentDepth < minDepth;
     
         if (isAtMaxDepth) {
-            return randomTerminalNode();
+            return new Node(Terminal.getRandomTerminal(), currentDepth);
         }
     
         if (mustBeFunction) {
@@ -24,42 +24,52 @@ public class Creciente extends InitializationMethod {
         }
     
         if (Utils.random.nextDouble() < 0.5) {
-            return randomTerminalNode();
+            return new Node(Terminal.getRandomTerminal(), currentDepth);
         } else {
             return randomFunctionNode(currentDepth, minDepth, maxDepth);
         }
     }
-    
-    private Node randomTerminalNode() {
-        Terminal[] hojas = {Terminal.AVANZA, Terminal.DERECHA, Terminal.IZQUIERDA};
-        return new Node(hojas[Utils.random.nextInt(hojas.length)]);
-    }
 
     private Node randomFunctionNode(int currentDepth, int minDepth, int maxDepth) {
         int r = Utils.random.nextInt(3);
+        Node node = null;
         switch (r) {
             case 0:
-                return new Node(
+                node = new Node(
                     Terminal.SICOMIDA,
                     generateGrowTree(currentDepth + 1, minDepth, maxDepth),
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth)
+                    generateGrowTree(currentDepth + 1, minDepth, maxDepth),
+                    currentDepth
                 );
+                node.getA().setParent(node);
+                node.getB().setParent(node);
+                break;
             case 1:
-                return new Node(
+                node = new Node(
                     Terminal.PROG1,
                     generateGrowTree(currentDepth + 1, minDepth, maxDepth),
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth)
+                    generateGrowTree(currentDepth + 1, minDepth, maxDepth),
+                    currentDepth
                 );
+                node.getA().setParent(node);
+                node.getB().setParent(node);
+                break;
             case 2:
-                return new Node(
+                node = new Node(
                     Terminal.PROG2,
                     generateGrowTree(currentDepth + 1, minDepth, maxDepth),
                     generateGrowTree(currentDepth + 1, minDepth, maxDepth),
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth)
+                    generateGrowTree(currentDepth + 1, minDepth, maxDepth),
+                    currentDepth
                 );
+                node.getA().setParent(node);
+                node.getB().setParent(node);
+                node.getC().setParent(node);
+                break;
             default:
                 throw new IllegalStateException("Unexpected function index: " + r);
         }
+        return node;
     }
 
     @Override

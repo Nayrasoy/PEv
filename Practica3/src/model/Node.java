@@ -7,23 +7,28 @@ import java.util.Set;
 
 public class Node {
     private Terminal tipo;
+    private int depth;
+    private Node parent = null;
     private Node a;
     private Node b;
     private Node c;
 
     public static Set<Coords> food = new HashSet<>(Hormiguero.getInstance().getFood());
 
-    public Node(Terminal tipo) {
+    public Node(Terminal tipo, int depth) {
+        this.depth = depth;
         this.tipo = tipo;
     }
 
-    public Node(Terminal tipo, Node a, Node b) {
+    public Node(Terminal tipo, Node a, Node b, int depth) {
+        this.depth = depth;
         this.tipo = tipo;
         this.a = a;
         this.b = b;
     }
 
-    public Node(Terminal tipo, Node a, Node b, Node c) {
+    public Node(Terminal tipo, Node a, Node b, Node c, int depth) {
+        this.depth = depth;
         this.tipo = tipo;
         this.a = a;
         this.b = b;
@@ -36,18 +41,16 @@ public class Node {
             case AVANZA:
                 coord = Terminal.direction.move(coord);
                 coords.add(coord);
-                if (Node.food.remove(coord)) {
-                    return 1;
-                }
-                return 0;
+                Node.food.remove(coord);
+                return 1;
 
             case DERECHA:
                 Terminal.direction = Terminal.direction.turnRight();
-                break;
+                return 1;
 
             case IZQUIERDA:
                 Terminal.direction = Terminal.direction.turnLeft();
-                break;
+                return 1;
 
             case SICOMIDA:
                 Coords sigCoord = Terminal.direction.move(coord);
@@ -59,13 +62,13 @@ public class Node {
                 }
 
             case PROG1:
-                int food = a.execute(coords);
-                return b.execute(coords) + food;
+                int movimientos = a.execute(coords);
+                return b.execute(coords) + movimientos;
 
             case PROG2:
-                int food2 = a.execute(coords);
-                food2 += b.execute(coords);
-                return c.execute(coords) + food2;
+                int movimientos2 = a.execute(coords);
+                movimientos2 += b.execute(coords);
+                return c.execute(coords) + movimientos2;
         }
         return 0;
     }
@@ -105,12 +108,19 @@ public class Node {
             case AVANZA:
             case DERECHA:
             case IZQUIERDA:
-                return new Node(tipo);
+                return new Node(tipo, depth);
             case SICOMIDA:
             case PROG1:
-                return new Node(tipo, a.copy(), b.copy());
+                Node node = new Node(tipo, a.copy(), b.copy(), depth);
+                node.a.setParent(node);
+                node.b.setParent(node);
+                return node;
             case PROG2:
-                return new Node(tipo, a.copy(), b.copy(), c.copy());
+                Node node2 = new Node(tipo, a.copy(), b.copy(), c.copy(), depth);
+                node2.a.setParent(node2);
+                node2.b.setParent(node2);
+                node2.c.setParent(node2);
+                return node2;
             default:
                 throw new IllegalStateException("Tipo desconocido: " + tipo);
         }
@@ -168,14 +178,6 @@ public class Node {
         if (node.c != null) collectNodes(node.c, nodes);
     }
 
-    public boolean isTerminal() {
-        return this.tipo == Terminal.AVANZA || this.tipo == Terminal.DERECHA || this.tipo == Terminal.IZQUIERDA;
-    }
-
-    public boolean isFunction() {
-        return this.tipo == Terminal.PROG1 || this.tipo == Terminal.PROG2;
-    }
-
     public List<Node> getTerminalNodes() {
         List<Node> nodes = new ArrayList<>();
         collectTerminalNodes(this, nodes);
@@ -183,7 +185,7 @@ public class Node {
     }
 
     private void collectTerminalNodes(Node node, List<Node> nodes) {
-        if (node.isTerminal()) {
+        if (node.getTipo().isTerminal()) {
             nodes.add(node);
         }
         for (Node child : node.getChildren()) {
@@ -198,7 +200,7 @@ public class Node {
     }
 
     private void collectFunctionNodes(Node node, List<Node> nodes) {
-        if (node.isFunction()) {
+        if (node.getTipo().isFunction()) {
             nodes.add(node);
         }
         for (Node child : node.getChildren()) {
@@ -212,33 +214,19 @@ public class Node {
         this.b = temp;
     }
 
-    public Node replaceSubtree(Node target, Node replacement) {
-        if (this == target) return replacement.copy();
-
-        switch (tipo) {
-            case AVANZA:
-            case DERECHA:
-            case IZQUIERDA:
-                return new Node(tipo);
-
-            case SICOMIDA:
-                return new Node(tipo,
-                        a.replaceSubtree(target, replacement),
-                        b.replaceSubtree(target, replacement));
-
-            case PROG1:
-                return new Node(tipo,
-                        a.replaceSubtree(target, replacement),
-                        b.replaceSubtree(target, replacement));
-
-            case PROG2:
-                return new Node(tipo,
-                        a.replaceSubtree(target, replacement),
-                        b.replaceSubtree(target, replacement),
-                        c.replaceSubtree(target, replacement));
-
-            default:
-                throw new IllegalStateException("Tipo desconocido: " + tipo);
-        }
+    public void replaceSubtree(Node replacement) {
+        this.a = replacement.a;
+        this.b = replacement.b;
+        this.c = replacement.c;
+        this.tipo = replacement.tipo;
     }
+
+    public int getDepth() {
+        return this.depth;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
 }

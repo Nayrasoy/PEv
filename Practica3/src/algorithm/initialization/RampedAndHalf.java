@@ -8,8 +8,8 @@ public class RampedAndHalf extends InitializationMethod{
 
     @Override
     public Node initializate(int minDepth, int maxDepth) {
-        int depth = minDepth + (int) (Math.random() * (maxDepth - minDepth + 1));
-        boolean useFull = Math.random() < 0.5;
+        int depth = minDepth + (int) (Utils.random.nextDouble(maxDepth - minDepth + 1));
+        boolean useFull = Utils.random.nextDouble() < 0.5;
 
         if (useFull) {
             return generateFullTree(0, depth);

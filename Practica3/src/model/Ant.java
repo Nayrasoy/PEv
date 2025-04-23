@@ -24,7 +24,7 @@ public class Ant extends Individuo<Node> {
         this.cromosomas = new ArrayList<>();
         try {
             InitializationMethod initializationMethod = InitializationMethodFactory.getInitializationMethod(this.controller.getInitializationMethod());
-            this.cromosomas.add(initializationMethod.initializate(this.controller.getMinTreeProf(), Parameters.DEFAULT_MAX_DEPTH));
+            this.cromosomas.add(initializationMethod.initializate(1, this.controller.getMinTreeProf(), Parameters.DEFAULT_MAX_DEPTH));
         } catch (InitializationExeption e) {
             e.printStackTrace();
         }
@@ -38,15 +38,14 @@ public class Ant extends Individuo<Node> {
     @Override
     public double getFitness() {
         int food = 0;
+        int movimientos = 0;
         List<Coords> coords = new ArrayList<>();
         coords.add(new Coords(0, 0));
         Terminal.direction = Direction.RIGHT;
-        for (int i = 0; i < Parameters.MAX_ANT_TIME; i++) {
-            food += this.cromosomas.get(0).execute(coords);
-            if (food == this.hormiguero.getFood().size()) {
-                break;
-            }
+        while (!Node.food.isEmpty() && movimientos < Parameters.MAX_ANT_TIME) {
+            movimientos += this.cromosomas.get(0).execute(coords);
         }
+        food = Hormiguero.getInstance().getFood().size() - Node.food.size();
         Node.food = new HashSet<>(Hormiguero.getInstance().getFood());
         return food;
     }

@@ -14,14 +14,14 @@ public class Completa extends InitializationMethod {
     private Node generateFullTree(int currentDepth, int minDepth, int maxDepth) {
         if (currentDepth >= maxDepth) {
             Terminal[] hojas = {Terminal.AVANZA, Terminal.DERECHA, Terminal.IZQUIERDA};
-            return new Node(hojas[(int) (Math.random() * hojas.length)]);
+            return new Node(hojas[(int) (Utils.random.nextDouble() * hojas.length)]);
         }
 
         if (currentDepth < minDepth) {
             return generateFunctionNode(currentDepth, minDepth, maxDepth);
         }
 
-        if (Math.random() < 0.5) {
+        if (Utils.random.nextDouble() < 0.5) {
             Terminal[] hojas = {Terminal.AVANZA, Terminal.DERECHA, Terminal.IZQUIERDA};
             return new Node(hojas[Utils.random.nextInt(hojas.length)]);
         } else {

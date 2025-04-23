@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.Individuo;
 import model.Node;
+import utils.Utils;
 
 public class TreeCross extends CrossMethod {
 
@@ -19,11 +20,12 @@ public class TreeCross extends CrossMethod {
             return List.of(individuo1, individuo2);
         }
 
-        Node sub1 = nodos1.get((int)(Math.random() * nodos1.size()));
-        Node sub2 = nodos2.get((int)(Math.random() * nodos2.size()));
+        Node sub1 = nodos1.get((int)(Utils.random.nextDouble() * nodos1.size()));
+        Node sub2 = nodos2.get((int)(Utils.random.nextDouble() * nodos2.size()));
 
-        padre1 = padre1.replaceSubtree(sub1, sub2.copy());
-        padre2 = padre2.replaceSubtree(sub2, sub1.copy());
+        Node sub1Temp = sub1.copy();
+        sub1.replaceSubtree(sub2.copy());
+        sub2.replaceSubtree(sub1Temp);
 
         return List.of(individuo1.copy(), individuo2.copy());
     }
