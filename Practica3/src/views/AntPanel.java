@@ -6,7 +6,10 @@ import config.Parameters;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import model.Coords;
 import model.Direction;
 import model.Hormiguero;
@@ -50,7 +53,7 @@ public class AntPanel extends JPanel {
     }
 
     private void drawFood(Graphics g) {
-        List<Coords> food = hormiguero.getFood();
+        Set<Coords> food = hormiguero.getFood();
         int tileSize = getTileSize();
         g.setColor(Color.BLUE);
         for (Coords c : food) {
@@ -80,17 +83,15 @@ public class AntPanel extends JPanel {
 
     public void refreshAntMap(Individuo bestIndividual) {
         int food = 0;
-        Node node = (Node) bestIndividual.getCromosomas().get(0);
         coords = new ArrayList<>();
         coords.add(new Coords(0, 0));
         Terminal.direction = Direction.RIGHT;
         for (int i = 0; i < Parameters.MAX_ANT_TIME; i++) {
-            food += node.execute(coords);
+            food += Node.execute(bestIndividual.getCromosomas(), coords, true);
             if (food == this.hormiguero.getFood().size()) {
                 break;
             }
         }
-        Node.food = new ArrayList<>(Hormiguero.getInstance().getFood());
         this.repaint();
     }
 }

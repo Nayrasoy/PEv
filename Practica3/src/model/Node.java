@@ -1,242 +1,93 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Node {
-    private Terminal tipo;
-    private Node a;
-    private Node b;
-    private Node c;
-
-    public static List<Coords> food = new ArrayList<>(Hormiguero.getInstance().getFood());
+    public Terminal tipo;
 
     public Node(Terminal tipo) {
         this.tipo = tipo;
     }
 
-    public Node(Terminal tipo, Node a, Node b) {
-        this.tipo = tipo;
-        this.a = a;
-        this.b = b;
-    }
-
-    public Node(Terminal tipo, Node a, Node b, Node c) {
-        this.tipo = tipo;
-        this.a = a;
-        this.b = b;
-        this.c = c;
-    }
-
-    public int execute(List<Coords> coords) {
-        Coords coord = new Coords(coords.get(coords.size() - 1));
-        switch (tipo) {
-            case AVANZA:
-                coord = Terminal.direction.move(coord);
-                coords.add(coord);
-                int indx = Node.food.indexOf(coord);
-                if (indx != -1) {
-                    Node.food.remove(indx);
-                    return 1;
-                }
-                return 0;
-
-            case DERECHA:
-                Terminal.direction = Terminal.direction.turnRight();
-                break;
-
-            case IZQUIERDA:
-                Terminal.direction = Terminal.direction.turnLeft();
-                break;
-
-            case SICOMIDA:
-                if (Node.food.contains(coord)) {
-                    return a.execute(coords);
-                } else {
-                    return b.execute(coords);
-                }
-
-            case PROG1:
-                int food = a.execute(coords);
-                return b.execute(coords) + food;
-
-            case PROG2:
-                int food2 = a.execute(coords);
-                food2 += b.execute(coords);
-                return c.execute(coords) + food2;
-        }
-        return 0;
-    }
-
-    public Terminal getTipo() {
-        return tipo;
-    }
-
-    public Node getA() {
-        return a;
-    }
-
-    public Node getB() {
-        return b;
-    }
-
-    public Node getC() {
-        return c;
-    }
-
-    public void setTerminal(Terminal t) {
-        this.tipo = t;
-        this.a = null;
-        this.b = null;
-        this.c  = null;
-    }
-
-    public void deleteNode() {
-        this.tipo = null;
-        this.a = null;
-        this.b = null;
-        this.c  = null;
-    }
-
-    public Node copy() {
-        switch (tipo) {
-            case AVANZA:
-            case DERECHA:
-            case IZQUIERDA:
-                return new Node(tipo);
-            case SICOMIDA:
-            case PROG1:
-                return new Node(tipo, a.copy(), b.copy());
-            case PROG2:
-                return new Node(tipo, a.copy(), b.copy(), c.copy());
-            default:
-                throw new IllegalStateException("Tipo desconocido: " + tipo);
-        }
+    public boolean isTerminal() {
+        return tipo == Terminal.AVANZA || tipo == Terminal.DERECHA || tipo == Terminal.IZQUIERDA;
     }
 
     @Override
     public String toString() {
-        return buildString(this);
+        return tipo.name();
     }
 
-    private String buildString(Node node) {
-        if (node.getChildren().isEmpty()) {
-            return node.getTipo().name();
+    // Evaluador en postorden
+    public static int execute(List<Node> nodes, List<Coords> coords, boolean getPath) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        Deque<List<Coords>> states = new ArrayDeque<>();
+        Set<Coords> food = new HashSet<>(Hormiguero.getInstance().getFood());
+
+        for (Node node : nodes) {
+            switch (node.tipo) {
+                case AVANZA: {
+                    Coords coord = new Coords(coords.get(coords.size() - 1));
+                    coord = Terminal.direction.move(coord);
+                    if (getPath) {
+                        coords.add(coord); 
+                    }
+                    else {
+                        coords.set(0, coord);
+                    }
+                    if (food.remove(coord)) {
+                        stack.push(1);
+                    } else {
+                        stack.push(0);
+                    }
+                    break;
+                }
+                case DERECHA:
+                    Terminal.direction = Terminal.direction.turnRight();
+                    stack.push(0);
+                    break;
+
+                case IZQUIERDA:
+                    Terminal.direction = Terminal.direction.turnLeft();
+                    stack.push(0);
+                    break;
+
+                case SICOMIDA: {
+                    int falseBranch = stack.pop();
+                    int trueBranch = stack.pop();
+
+                    Coords coord = coords.get(coords.size() - 1);
+                    if (food.contains(coord)) {
+                        stack.push(trueBranch);
+                    } else {
+                        stack.push(falseBranch);
+                    }
+                    break;
+                }
+                case PROG1: {
+                    int b = stack.pop();
+                    int a = stack.pop();
+                    stack.push(a + b);
+                    break;
+                }
+                case PROG2: {
+                    int c = stack.pop();
+                    int b = stack.pop();
+                    int a = stack.pop();
+                    stack.push(a + b + c);
+                    break;
+                }
+            }
         }
+        return stack.pop();
+    }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("(").append(node.getTipo());
-        for (Node child : node.getChildren()) {
-            sb.append(" ").append(buildString(child));
+    public static List<Node> copy(List<Node> nodes) {   
+        List<Node> copy = new ArrayList<>();
+        for (Node node : nodes) {
+            copy.add(new Node(node.tipo));
         }
-        sb.append(")");
-        return sb.toString();
+        return copy;
     }
 
-    public List<Node> getChildren() {
-        List<Node> list = new ArrayList<>();
-        switch (tipo) {
-            case SICOMIDA:
-            case PROG1:
-                list.add(a);
-                list.add(b);
-                break;
-            case PROG2:
-                list.add(a);
-                list.add(b);
-                list.add(c);
-                break;
-            default:
-                // AVANZA, DERECHA, IZQUIERDA → no tienen hijos
-                break;
-        }
-        return list;
-    }
-
-    public List<Node> getAllNodes() {
-        List<Node> nodes = new ArrayList<>();
-        collectNodes(this, nodes);
-        return nodes;
-    }
-
-    private void collectNodes(Node node, List<Node> nodes) {
-        nodes.add(node);
-        for (Node child : node.getChildren()) {
-            collectNodes(child, nodes);
-        }
-    }
-
-    public boolean isTerminal() {
-        return this.tipo == Terminal.AVANZA || this.tipo == Terminal.DERECHA || this.tipo == Terminal.IZQUIERDA;
-    }
-
-    public boolean isFunction() {
-        return this.tipo == Terminal.PROG1 || this.tipo == Terminal.PROG2;
-    }
-
-    public List<Node> getTerminalNodes() {
-        List<Node> nodes = new ArrayList<>();
-        collectTerminalNodes(this, nodes);
-        return nodes;
-    }
-
-    private void collectTerminalNodes(Node node, List<Node> nodes) {
-        if (node.isTerminal()) {
-            nodes.add(node);
-        }
-        for (Node child : node.getChildren()) {
-            collectTerminalNodes(child, nodes);
-        }
-    }
-
-    public List<Node> getFunctionNodes() {
-        List<Node> nodes = new ArrayList<>();
-        collectFunctionNodes(this, nodes);
-        return nodes;
-    }
-
-    private void collectFunctionNodes(Node node, List<Node> nodes) {
-        if (node.isFunction()) {
-            nodes.add(node);
-        }
-        for (Node child : node.getChildren()) {
-            collectFunctionNodes(child, nodes);
-        }
-    }
-
-    public void permutationTerminal() {
-        Node temp = this.a;
-        this.a = this.b;
-        this.b = temp;
-    }
-
-    public Node replaceSubtree(Node target, Node replacement) {
-        if (this == target) return replacement.copy();
-
-        switch (tipo) {
-            case AVANZA:
-            case DERECHA:
-            case IZQUIERDA:
-                return new Node(tipo);
-
-            case SICOMIDA:
-                return new Node(tipo,
-                        a.replaceSubtree(target, replacement),
-                        b.replaceSubtree(target, replacement));
-
-            case PROG1:
-                return new Node(tipo,
-                        a.replaceSubtree(target, replacement),
-                        b.replaceSubtree(target, replacement));
-
-            case PROG2:
-                return new Node(tipo,
-                        a.replaceSubtree(target, replacement),
-                        b.replaceSubtree(target, replacement),
-                        c.replaceSubtree(target, replacement));
-
-            default:
-                throw new IllegalStateException("Tipo desconocido: " + tipo);
-        }
-    }
 }

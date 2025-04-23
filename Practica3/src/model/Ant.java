@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import algorithm.initialization.InitializationMethod;
@@ -20,10 +21,9 @@ public class Ant extends Individuo<Node> {
 
         this.hormiguero = Hormiguero.getInstance();
 
-        this.cromosomas = new ArrayList<>();
         try {
             InitializationMethod initializationMethod = InitializationMethodFactory.getInitializationMethod(this.controller.getInitializationMethod());
-            this.cromosomas.add(initializationMethod.initializate(this.controller.getMinTreeProf(), Parameters.DEFAULT_MAX_DEPTH));
+            this.cromosomas = initializationMethod.initializate(this.controller.getMinTreeProf(), Parameters.DEFAULT_MAX_DEPTH);
         } catch (InitializationExeption e) {
             e.printStackTrace();
         }
@@ -41,12 +41,11 @@ public class Ant extends Individuo<Node> {
         coords.add(new Coords(0, 0));
         Terminal.direction = Direction.RIGHT;
         for (int i = 0; i < Parameters.MAX_ANT_TIME; i++) {
-            food += this.cromosomas.get(0).execute(coords);
+            food += Node.execute(this.cromosomas, coords, false);
             if (food == this.hormiguero.getFood().size()) {
                 break;
             }
         }
-        Node.food = new ArrayList<>(Hormiguero.getInstance().getFood());
         return food;
     }
 
@@ -62,7 +61,7 @@ public class Ant extends Individuo<Node> {
     
     @Override
     public Individuo copy() {
-        return new Ant(this.controller, new ArrayList<>(this.cromosomas));
+        return new Ant(this.controller, Node.copy(cromosomas));
     }
 
     @Override

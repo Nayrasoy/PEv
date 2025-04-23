@@ -10,9 +10,8 @@ import utils.Utils;
 public class MutacionContraccion extends MutationMethod {
     @Override
     public Individuo mutate(Individuo individual, double mutationProbability) {
-        Individuo indv = individual.copy();
-
-        if (Utils.random.nextDouble() < mutationProbability) {
+        /*if (Utils.random.nextDouble() < mutationProbability) {
+            Individuo indv = individual.copy();
             Node padre = (Node) indv.getCromosomas().get(0);
             List<Node> nodos = padre.getFunctionNodes();
             nodos.remove(0);
@@ -25,9 +24,9 @@ public class MutacionContraccion extends MutationMethod {
 
                 nodoSeleccionado.setTerminal(nuevoTerminal);
             }
-        }
-
-        return indv;
+            return indv;
+        }*/
+        return individual;
     }
 
     @Override

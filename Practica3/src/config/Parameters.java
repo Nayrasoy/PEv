@@ -42,7 +42,7 @@ public class Parameters {
     public static final InitializationType DEFAULT_INITIALIZATION_METHOD = InitializationType.COMPLETA;
     public static final int MAX_ANT_TIME = 400;
     public static final int DEFAULT_MIN_DEPTH = 2;
-    public static final int DEFAULT_MAX_DEPTH = 2;
+    public static final int DEFAULT_MAX_DEPTH = 5;
     public static final int GRID_WIDTH = 32;
     public static final int GRID_HEIGHT = 32;
 

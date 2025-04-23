@@ -3,22 +3,18 @@ package algorithm.mutation;
 import java.util.List;
 
 import algorithm.initialization.InitializationMethod;
-import algorithm.selection.SelectionMethod;
 import config.Parameters;
 import exceptions.InitializationExeption;
 import factories.InitializationMethodFactory;
-import factories.SelectionMethodFactory;
 import model.Individuo;
 import model.Node;
-import model.Terminal;
 import utils.Utils;
 
 public class MutacionSubarbol extends MutationMethod {
     @Override
     public Individuo mutate(Individuo individual, double mutationProbability) {
-        Individuo indv = individual.copy();
-
-        if (Utils.random.nextDouble() < mutationProbability) {
+        /*if (Utils.random.nextDouble() < mutationProbability) {
+            Individuo indv = individual.copy();
             Node padre = (Node) indv.getCromosomas().get(0);
             List<Node> nodos = padre.getFunctionNodes();
 
@@ -38,9 +34,9 @@ public class MutacionSubarbol extends MutationMethod {
                     e.printStackTrace();
                 }
             }
-        }
-
-        return indv;
+            return indv;
+        }*/
+        return individual;
     }
 
     @Override
