@@ -7,53 +7,59 @@ import utils.Utils;
 public class Completa extends InitializationMethod {
 
     @Override
-    public Node initializate(int minDepth, int maxDepth) {
-        return generateFullTree(0, minDepth, maxDepth);
+    public Node initializate(int startingDepth, int minDepth, int maxDepth) {
+        return generateFullTree(startingDepth, minDepth, maxDepth);
     }
 
     private Node generateFullTree(int currentDepth, int minDepth, int maxDepth) {
         if (currentDepth >= maxDepth) {
-            Terminal[] hojas = {Terminal.AVANZA, Terminal.DERECHA, Terminal.IZQUIERDA};
-            return new Node(hojas[(int) (Utils.random.nextDouble() * hojas.length)]);
+            return new Node(Terminal.getRandomTerminal(), currentDepth);
         }
-
-        if (currentDepth < minDepth) {
-            return generateFunctionNode(currentDepth, minDepth, maxDepth);
-        }
-
-        if (Utils.random.nextDouble() < 0.5) {
-            Terminal[] hojas = {Terminal.AVANZA, Terminal.DERECHA, Terminal.IZQUIERDA};
-            return new Node(hojas[Utils.random.nextInt(hojas.length)]);
-        } else {
-            return generateFunctionNode(currentDepth, minDepth, maxDepth);
+        else {
+            return randomFunctionNode(currentDepth, minDepth, maxDepth);
         }
     }
 
-    private Node generateFunctionNode(int currentDepth, int minDepth, int maxDepth) {
+    private Node randomFunctionNode(int currentDepth, int minDepth, int maxDepth) {
         int r = Utils.random.nextInt(3);
+        Node node = null;
         switch (r) {
             case 0:
-                return new Node(
+                node = new Node(
                     Terminal.SICOMIDA,
                     generateFullTree(currentDepth + 1, minDepth, maxDepth),
-                    generateFullTree(currentDepth + 1, minDepth, maxDepth)
+                    generateFullTree(currentDepth + 1, minDepth, maxDepth),
+                    currentDepth
                 );
+                node.getA().setParent(node);
+                node.getB().setParent(node);
+                break;
             case 1:
-                return new Node(
+                node = new Node(
                     Terminal.PROG1,
                     generateFullTree(currentDepth + 1, minDepth, maxDepth),
-                    generateFullTree(currentDepth + 1, minDepth, maxDepth)
+                    generateFullTree(currentDepth + 1, minDepth, maxDepth),
+                    currentDepth
                 );
+                node.getA().setParent(node);
+                node.getB().setParent(node);
+                break;
             case 2:
-                return new Node(
+                node = new Node(
                     Terminal.PROG2,
                     generateFullTree(currentDepth + 1, minDepth, maxDepth),
                     generateFullTree(currentDepth + 1, minDepth, maxDepth),
-                    generateFullTree(currentDepth + 1, minDepth, maxDepth)
+                    generateFullTree(currentDepth + 1, minDepth, maxDepth),
+                    currentDepth
                 );
+                node.getA().setParent(node);
+                node.getB().setParent(node);
+                node.getC().setParent(node);
+                break;
             default:
-                throw new IllegalStateException("Unexpected value: " + r);
+                throw new IllegalStateException("Unexpected function index: " + r);
         }
+        return node;
     }
 
     @Override

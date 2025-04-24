@@ -27,7 +27,7 @@ import utils.Utils;
 public class AlgoritmoGenetico {
 
     private Controller controller;
-    private int tamPoblation;
+    public static int tamPoblation;
     private List<Individuo> poblation;
     private List<Individuo> elitePoblation;
     private IndividualType individualType;

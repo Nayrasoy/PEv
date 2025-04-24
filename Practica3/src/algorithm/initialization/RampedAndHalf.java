@@ -1,80 +1,55 @@
 package algorithm.initialization;
 
-import model.Node;
-import model.Terminal;
-import utils.Utils;
+import java.util.ArrayList;
+import java.util.List;
 
-public class RampedAndHalf extends InitializationMethod{
+import algorithm.AlgoritmoGenetico;
+import config.Parameters;
+import exceptions.InitializationExeption;
+import factories.InitializationMethodFactory;
+import model.Node;
+
+public class RampedAndHalf extends InitializationMethod {
+
+    private static boolean calculate = true;
+    private static List<Integer> numIndv = null;
+    private static int individuosInicializados = 0;
+    private static int capaActual = 0;
 
     @Override
-    public Node initializate(int minDepth, int maxDepth) {
-        int depth = minDepth + (int) (Utils.random.nextDouble(maxDepth - minDepth + 1));
-        boolean useFull = Utils.random.nextDouble() < 0.5;
-
-        if (useFull) {
-            return generateFullTree(0, depth);
-        } else {
-            return generateGrowTree(0, minDepth, depth);
+    public Node initializate(int startingDepth, int minDepth, int maxDepth) {
+        if (calculate) {
+            int capas = Parameters.DEFAULT_MAX_DEPTH - Parameters.DEFAULT_MIN_DEPTH + 1;
+            numIndv = new ArrayList<>();
+            for (int i = 0; i < capas - 1; i++) {
+                numIndv.add(AlgoritmoGenetico.tamPoblation / capas);
+            }
+            numIndv.add(AlgoritmoGenetico.tamPoblation / capas + AlgoritmoGenetico.tamPoblation % capas);
+            individuosInicializados = 0;
+            capaActual = 0;
+            calculate = false;
         }
-    }
-
-    private Node generateFullTree(int currentDepth, int maxDepth) {
-        if (currentDepth == maxDepth) {
-            return randomTerminalNode();
-        } else {
-            return randomFunctionNode(currentDepth, maxDepth, maxDepth); 
+        try {
+            InitializationMethod initializationMethod;
+            if (numIndv.get(capaActual) / 2 < individuosInicializados) {
+                initializationMethod = InitializationMethodFactory.getInitializationMethod(InitializationType.COMPLETA);
+            }
+            else {
+                initializationMethod = InitializationMethodFactory.getInitializationMethod(InitializationType.CRECIENTE);
+            }
+            individuosInicializados++;
+            if (numIndv.get(capaActual) == individuosInicializados) {
+                capaActual++;
+                if (capaActual == numIndv.size()) {
+                    calculate = true;
+                }
+                individuosInicializados = 0;
+            }
+            return initializationMethod.initializate(startingDepth, minDepth, capaActual + Parameters.DEFAULT_MIN_DEPTH);
+        } catch (InitializationExeption e) {
+            e.printStackTrace();
         }
-    }
-
-    private Node randomTerminalNode() {
-        Terminal[] hojas = {Terminal.AVANZA, Terminal.DERECHA, Terminal.IZQUIERDA};
-        return new Node(hojas[Utils.random.nextInt(hojas.length)]);
-    }
-
-    private Node generateGrowTree(int currentDepth, int minDepth, int maxDepth) {
-        boolean isAtMaxDepth = currentDepth >= maxDepth;
-        boolean mustBeFunction = currentDepth < minDepth;
-    
-        if (isAtMaxDepth) {
-            return randomTerminalNode();
-        }
-    
-        if (mustBeFunction) {
-            return randomFunctionNode(currentDepth, minDepth, maxDepth);
-        }
-    
-        if (Utils.random.nextDouble() < 0.5) {
-            return randomTerminalNode();
-        } else {
-            return randomFunctionNode(currentDepth, minDepth, maxDepth);
-        }
-    }
-
-    private Node randomFunctionNode(int currentDepth, int minDepth, int maxDepth) {
-        int r = Utils.random.nextInt(3);
-        switch (r) {
-            case 0:
-                return new Node(
-                    Terminal.SICOMIDA,
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth),
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth)
-                );
-            case 1:
-                return new Node(
-                    Terminal.PROG1,
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth),
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth)
-                );
-            case 2:
-                return new Node(
-                    Terminal.PROG2,
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth),
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth),
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth)
-                );
-            default:
-                throw new IllegalStateException("Unexpected function index: " + r);
-        }
+        return null;
     }
 
     @Override

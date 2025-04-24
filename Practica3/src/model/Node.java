@@ -165,17 +165,17 @@ public class Node {
         return list;
     }
 
-    public List<Node> getAllNodes() {
+    public List<Node> getAllNodes(int minDepth, int maxDepth) {
         List<Node> nodes = new ArrayList<>();
-        collectNodes(this, nodes);
+        collectNodes(this, nodes, minDepth, maxDepth);
         return nodes;
     }
 
-    private void collectNodes(Node node, List<Node> nodes) {
-        nodes.add(node);
-        if (node.a != null) collectNodes(node.a, nodes);
-        if (node.b != null) collectNodes(node.b, nodes);
-        if (node.c != null) collectNodes(node.c, nodes);
+    private void collectNodes(Node node, List<Node> nodes, int minDepth, int maxDepth) {
+        if (node.getDepth() >= minDepth && node.getDepth() <= maxDepth) nodes.add(node);
+        if (node.a != null) collectNodes(node.a, nodes, minDepth, maxDepth);
+        if (node.b != null) collectNodes(node.b, nodes, minDepth, maxDepth);
+        if (node.c != null) collectNodes(node.c, nodes, minDepth, maxDepth);
     }
 
     public List<Node> getTerminalNodes() {

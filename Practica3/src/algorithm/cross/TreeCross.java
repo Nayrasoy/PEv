@@ -2,6 +2,7 @@ package algorithm.cross;
 
 import java.util.List;
 
+import config.Parameters;
 import model.Individuo;
 import model.Node;
 import utils.Utils;
@@ -13,14 +14,14 @@ public class TreeCross extends CrossMethod {
         Node padre1 = (Node) individuo1.getCromosomas().get(0);
         Node padre2 = (Node) individuo2.getCromosomas().get(0);
 
-        List<Node> nodos1 = padre1.getAllNodes();
-        List<Node> nodos2 = padre2.getAllNodes();
+        List<Node> nodos1 = padre1.getAllNodes(Parameters.DEFAULT_MIN_DEPTH, Parameters.DEFAULT_MAX_DEPTH);
+        Node sub1 = nodos1.get((int)(Utils.random.nextDouble() * nodos1.size()));
+        List<Node> nodos2 = padre2.getAllNodes(sub1.getDepth(), sub1.getDepth());
 
         if (nodos1.size() <= 1 || nodos2.size() <= 1) {
             return List.of(individuo1, individuo2);
         }
 
-        Node sub1 = nodos1.get((int)(Utils.random.nextDouble() * nodos1.size()));
         Node sub2 = nodos2.get((int)(Utils.random.nextDouble() * nodos2.size()));
 
         Node sub1Temp = sub1.copy();

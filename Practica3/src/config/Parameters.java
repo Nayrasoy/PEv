@@ -39,7 +39,7 @@ public class Parameters {
     public static final double RANKING_BETA = 2;
     public static final double INVENTED_MUTATION_PROBABILITY = 0.5;
 
-    public static final InitializationType DEFAULT_INITIALIZATION_METHOD = InitializationType.CRECIENTE;
+    public static final InitializationType DEFAULT_INITIALIZATION_METHOD = InitializationType.COMPLETA;
     public static final int MAX_ANT_TIME = 400;
     public static final int DEFAULT_MIN_DEPTH = 2;
     public static final int DEFAULT_MAX_DEPTH = 3;
