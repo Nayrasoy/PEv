@@ -22,6 +22,8 @@ import factories.MutationMethodFactory;
 import factories.SelectionMethodFactory;
 import model.IndividualType;
 import model.Individuo;
+import model.Node;
+import utils.BloatingUtils;
 import utils.Utils;
 
 public class AlgoritmoGenetico {
@@ -81,13 +83,7 @@ public class AlgoritmoGenetico {
             this.cross();
             this.mutation();
             this.introduceElite();
-
-            if (this.iteration == this.maxGeneraciones) {
-                System.out.println("Heeyyy");
-            }
-
             this.evalue();
-            
             this.iteration++;
         }
 
@@ -140,7 +136,77 @@ public class AlgoritmoGenetico {
         this.numMutaciones = 0;
     }
 
+    private void bloating() {
+        double fitness, bestFitness = 0;
+        Individuo individuo;
+        boolean first = true;
+        this.fitnessSum = 0;
+
+        List<Double> lengths = new ArrayList<>();
+        List<Double> rawFitnesses = new ArrayList<>();
+
+        for (int i = 0; i < this.poblation.size(); i++) {
+            Individuo ind = this.poblation.get(i);
+            Node node = (Node) ind.getCromosomas().get(0);
+            lengths.add((double) node.getAllNodes(0, Parameters.DEFAULT_MAX_DEPTH).size());
+            rawFitnesses.add(ind.getFitness());
+        }
+
+        double k = BloatingUtils.calculateK(lengths, rawFitnesses);
+
+        if (this.iteration > 0) {
+            this.overallBest[this.iteration][1] = this.overallBest[this.iteration - 1][1];
+        }
+
+        for (int i = 0; i < this.poblation.size(); i++) {
+            individuo = this.poblation.get(i);
+            
+            double rawFitness = rawFitnesses.get(i);
+            fitness = rawFitness + k * lengths.get(i);
+            this.fitness.set(i, fitness);
+            this.fitnessSum += fitness;
+
+            if (first || individuo.betterThan(fitness, bestFitness) == 1) {
+                bestFitness = fitness;
+                this.actualBest[this.iteration][1] = bestFitness;
+
+                if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.overallBest[this.iteration][1]) == 1) {
+                    this.bestIndividual = individuo.copy();
+                    this.overallBest[this.iteration][1] = fitness;
+                }
+            }
+
+            if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.worstIndividual.getFitness()) == -1) {
+                this.worstIndividual = individuo.copy();
+            }
+
+            first = false;
+        }
+
+        this.averageFitness[this.iteration][1] = this.fitnessSum / this.poblation.size();
+        this.printIteration();
+
+        this.regenerateIndividualsBloating(lengths);
+    }
+
+    private void regenerateIndividualsBloating(List<Double> lengths) {
+        double mean = BloatingUtils.mean(lengths);
+        for (int i = 0; i < this.poblation.size(); i++) {
+            if (lengths.get(i) > mean && Utils.random.nextDouble() < 0.5) {
+                try {
+                    this.poblation.set(i, IndividuoFactory.getIndividuo(individualType, this.controller));
+                } catch (IndividuoException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     private void evalue() {
+        if (Parameters.BLOATING) {
+            this.bloating();
+            return;
+        }
         double fitness, bestFitness = 0;
         Individuo individuo;
         boolean first = true;

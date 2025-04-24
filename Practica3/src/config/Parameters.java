@@ -9,12 +9,12 @@ import model.IndividualType;
 public class Parameters {
     
 
-    public static final int SEED = 123;
+    public static final int SEED = 1234;
 
     public static final int DEFAULT_TAM_POBLATION = 100;
     public static final int DEFAULT_GENERATIONS_NUMBER = 200;
     public static final IndividualType DEFAULT_INDIVIDUAL_TYPE = IndividualType.INDIVIDUAL_ANT;
-    public static final SelectionType DEFAULT_SELECTION_METHOD = SelectionType.RANKING;
+    public static final SelectionType DEFAULT_SELECTION_METHOD = SelectionType.RULETA;
     public static final CrossType DEFAULT_CROSS_METHOD = CrossType.TREE_CROSS;
     public static final MutationType DEFAULT_MUTATION_METHOD = MutationType.TERMINAL;
     public static final double DEFAULT_CROSS_PROBABILITY = 0.6;
@@ -39,11 +39,15 @@ public class Parameters {
     public static final double RANKING_BETA = 2;
     public static final double INVENTED_MUTATION_PROBABILITY = 0.5;
 
-    public static final InitializationType DEFAULT_INITIALIZATION_METHOD = InitializationType.COMPLETA;
-    public static final int MAX_ANT_TIME = 400;
-    public static final int DEFAULT_MIN_DEPTH = 2;
-    public static final int DEFAULT_MAX_DEPTH = 3;
+    public static final InitializationType DEFAULT_INITIALIZATION_METHOD = InitializationType.CRECIENTE;
+    public static final int MAX_ANT_TIME = 500;
+    public static int DEFAULT_MIN_DEPTH = 3;
+    public static int DEFAULT_MAX_DEPTH = 6;
     public static final int GRID_WIDTH = 32;
     public static final int GRID_HEIGHT = 32;
+
+    public static final boolean BLOATING = true;
+
+    public static final int N = 2;
 
 }

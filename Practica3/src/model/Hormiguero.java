@@ -24,7 +24,7 @@ public class Hormiguero {
     private void initFood() {
         this.food = new HashSet<>();
 
-        this.food.add(new Coords(0, 0));
+        //this.food.add(new Coords(0, 0));
         this.food.add(new Coords(1, 0));
         this.food.add(new Coords(2, 0));
         this.food.add(new Coords(3, 0));

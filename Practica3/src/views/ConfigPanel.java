@@ -24,6 +24,8 @@ public class ConfigPanel extends JPanel {
 
     private Controller controller;
     private JTextField populationSizeField;
+    private JTextField minDepthField;
+    private JTextField maxDepthField;
     private JTextField generationsField;
     private JSlider crossPercentageSlider;
     private JSlider mutationPercentageSlider;
@@ -43,7 +45,7 @@ public class ConfigPanel extends JPanel {
     }
 
     private void initGUI() {
-        this.setLayout(new GridLayout(12, 1));
+        this.setLayout(new GridLayout(14, 1));
         JPanel p;
 
         // Seleccion de la funcion
@@ -99,6 +101,80 @@ public class ConfigPanel extends JPanel {
             
         });
         p.add(populationSizeField);
+        this.add(p);
+
+        // Profundidad minima del arbol
+        p = new JPanel();
+        p.add(new JLabel("Profundidad minima del arbol:"));
+        minDepthField = new JTextField(String.valueOf(Parameters.DEFAULT_MIN_DEPTH));
+        this.minDepthField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    validateIntTextField(minDepthField.getText());
+                } catch (Exception ex) {
+                    System.out.println("La profundidad minima debe ser un entero superior a 0");
+                    minDepthField.setText(String.valueOf(Parameters.DEFAULT_MIN_DEPTH));
+                } finally {
+                    Parameters.DEFAULT_MIN_DEPTH = Integer.parseInt(minDepthField.getText());
+                }
+            }
+            
+        });
+        this.minDepthField.addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    validateIntTextField(minDepthField.getText());
+                } catch (Exception ex) {
+                    System.out.println("La profundidad minima debe ser un entero superior a 0");
+                    minDepthField.setText(String.valueOf(Parameters.DEFAULT_MIN_DEPTH));
+                } finally {
+                    Parameters.DEFAULT_MIN_DEPTH = Integer.parseInt(minDepthField.getText());
+                }
+            }
+            
+        });
+        p.add(minDepthField);
+        this.add(p);
+
+        // Profundidad maxima del arbol
+        p = new JPanel();
+        p.add(new JLabel("Profundidad maxima del arbol:"));
+        maxDepthField = new JTextField(String.valueOf(Parameters.DEFAULT_MAX_DEPTH));
+        this.maxDepthField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    validateIntTextField(maxDepthField.getText());
+                } catch (Exception ex) {
+                    System.out.println("La profundidad maxima debe ser un entero superior a 0");
+                    maxDepthField.setText(String.valueOf(Parameters.DEFAULT_MAX_DEPTH));
+                } finally {
+                    Parameters.DEFAULT_MAX_DEPTH = Integer.parseInt(maxDepthField.getText());
+                }
+            }
+            
+        });
+        this.maxDepthField.addFocusListener(new FocusAdapter() {
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    validateIntTextField(maxDepthField.getText());
+                } catch (Exception ex) {
+                    System.out.println("La profundidad maxima debe ser un entero superior a 0");
+                    maxDepthField.setText(String.valueOf(Parameters.DEFAULT_MAX_DEPTH));
+                } finally {
+                    Parameters.DEFAULT_MAX_DEPTH = Integer.parseInt(maxDepthField.getText());
+                }
+            }
+            
+        });
+        p.add(maxDepthField);
         this.add(p);
 
         // Número de generaciones

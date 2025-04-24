@@ -40,8 +40,12 @@ public class Node {
         switch (tipo) {
             case AVANZA:
                 coord = Terminal.direction.move(coord);
-                coords.add(coord);
                 Node.food.remove(coord);
+                if (coords.contains(coord)) {
+                    coords.add(coord);
+                    return 50;
+                }
+                coords.add(coord);
                 return 1;
 
             case DERECHA:
@@ -193,18 +197,18 @@ public class Node {
         }
     }
 
-    public List<Node> getFunctionNodes() {
+    public List<Node> getFunctionNodes(int minDepth, int maxDepth) {
         List<Node> nodes = new ArrayList<>();
-        collectFunctionNodes(this, nodes);
+        collectFunctionNodes(this, nodes, minDepth, maxDepth);
         return nodes;
     }
 
-    private void collectFunctionNodes(Node node, List<Node> nodes) {
-        if (node.getTipo().isFunction()) {
+    private void collectFunctionNodes(Node node, List<Node> nodes, int minDepth, int maxDepth) {
+        if (node.getTipo().isFunction() && node.getDepth() >= minDepth && node.getDepth() <= maxDepth) {
             nodes.add(node);
         }
         for (Node child : node.getChildren()) {
-            collectFunctionNodes(child, nodes);
+            collectFunctionNodes(child, nodes, maxDepth, maxDepth);
         }
     }
 

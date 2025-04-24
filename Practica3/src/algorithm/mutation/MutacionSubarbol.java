@@ -16,7 +16,7 @@ public class MutacionSubarbol extends MutationMethod {
         if (Utils.random.nextDouble() < mutationProbability) {
             Individuo indv = individual.copy();
             Node padre = (Node) indv.getCromosomas().get(0);
-            List<Node> nodos = padre.getFunctionNodes();
+            List<Node> nodos = padre.getFunctionNodes(0, Parameters.DEFAULT_MAX_DEPTH); // Obtenemos todos los nodos del árbol
 
             if (!nodos.isEmpty()) {
                 int indexNodo = Utils.random.nextInt(nodos.size());
@@ -24,8 +24,7 @@ public class MutacionSubarbol extends MutationMethod {
 
                 try {
                     InitializationMethod sm = InitializationMethodFactory.getInitializationMethod(Parameters.DEFAULT_INITIALIZATION_METHOD);
-                    int maxDepth = Parameters.DEFAULT_MAX_DEPTH - nodoSeleccionado.getDepth() + 1;
-                    Node nuevoSubarbol = (Node) sm.initializate(nodoSeleccionado.getDepth(), 1, maxDepth); // Generamos un solo Node
+                    Node nuevoSubarbol = (Node) sm.initializate(nodoSeleccionado.getDepth(), Parameters.DEFAULT_MIN_DEPTH, Parameters.DEFAULT_MAX_DEPTH); // Generamos un solo Node
 
                     // Reemplazamos el subárbol dentro del árbol
                     nodoSeleccionado.replaceSubtree(nuevoSubarbol);
