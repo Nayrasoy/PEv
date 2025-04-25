@@ -44,6 +44,7 @@ public class AlgoritmoGenetico {
     private double crossProbability;
     private double mutationProbability;
     private double[][] overallBest;
+    private double mostFood;
     private double[][] actualBest;
     private double[][] averageFitness;
     private int iteration;
@@ -73,7 +74,7 @@ public class AlgoritmoGenetico {
         this.elitePoblation = new ArrayList<>();
     }
 
-    public void run() throws IndividuoException, SelectionException, CrossException {
+    public double run() throws IndividuoException, SelectionException, CrossException {
         this.init();
         this.evalue();
         this.iteration++;
@@ -97,6 +98,7 @@ public class AlgoritmoGenetico {
         this.controller.refreshPlot(this.averageFitness, this.actualBest, this.overallBest);
         this.controller.refreshHouse(this.bestIndividual);
         this.controller.refreshAntMap(bestIndividual);
+        return mostFood;
     }
 
     private void init() throws IndividuoException {
@@ -121,6 +123,7 @@ public class AlgoritmoGenetico {
         }
         
         this.overallBest = new double[this.maxGeneraciones + 1][2];
+        mostFood = 0;
         this.actualBest = new double[this.maxGeneraciones + 1][2];
         this.averageFitness = new double[this.maxGeneraciones + 1][2];
         for (int i = 0; i <= this.maxGeneraciones; i++) {
@@ -173,6 +176,7 @@ public class AlgoritmoGenetico {
                 if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.overallBest[this.iteration][1]) == 1) {
                     this.bestIndividual = individuo.copy();
                     this.overallBest[this.iteration][1] = fitness;
+                    mostFood = rawFitness;
                 }
             }
 

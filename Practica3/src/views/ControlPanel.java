@@ -3,6 +3,8 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import controller.Controller;
+import utils.BloatingUtils;
 
 public class ControlPanel extends JPanel {
 
@@ -32,7 +35,24 @@ public class ControlPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
                 System.out.println("Se ha pulsado el boton de run");
-				controller.run();
+				List<Double> twoElitism = new ArrayList<>();
+				List<Double> threeElitism = new ArrayList<>();
+				List<Double> fourElitism = new ArrayList<>();
+				for (int i = 0; i < 60; i++) {
+					controller.setElitismPercentage(i % 3 + 2);
+					if (i % 3 == 0) {
+						twoElitism.add(controller.run());
+					}
+					else if (i % 3 == 1) {
+						threeElitism.add(controller.run());
+					}
+					else {
+						fourElitism.add(controller.run());
+					}
+				}
+				System.out.println("\nResultados:\n\t- 2%: " + BloatingUtils.mean(twoElitism));
+				System.out.println("\t- 3%: " + BloatingUtils.mean(threeElitism));
+				System.out.println("\t- 4%: " + BloatingUtils.mean(fourElitism));
 			}
 			
 		});

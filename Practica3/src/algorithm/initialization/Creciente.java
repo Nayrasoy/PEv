@@ -37,7 +37,8 @@ public class Creciente extends InitializationMethod {
             case 0:
                 node = new Node(
                     Terminal.SICOMIDA,
-                    generateGrowTree(currentDepth + 1, minDepth, maxDepth),
+                    //currentDepth < minDepth ? generateGrowTree(currentDepth, minDepth, maxDepth) : new Node(Terminal.AVANZA, currentDepth + 1),
+                    new Node(Terminal.AVANZA, currentDepth + 1),
                     generateGrowTree(currentDepth + 1, minDepth, maxDepth),
                     currentDepth
                 );

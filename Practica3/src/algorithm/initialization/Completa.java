@@ -27,7 +27,8 @@ public class Completa extends InitializationMethod {
             case 0:
                 node = new Node(
                     Terminal.SICOMIDA,
-                    generateFullTree(currentDepth + 1, minDepth, maxDepth),
+                    //currentDepth < minDepth ? generateGrowTree(currentDepth, minDepth, maxDepth) : new Node(Terminal.AVANZA, currentDepth + 1),
+                    new Node(Terminal.AVANZA, currentDepth + 1),
                     generateFullTree(currentDepth + 1, minDepth, maxDepth),
                     currentDepth
                 );

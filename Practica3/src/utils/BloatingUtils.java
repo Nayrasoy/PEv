@@ -10,6 +10,7 @@ public class BloatingUtils {
             sum += v;
         }
         return sum / values.size();
+        //return 17;
     }
 
     public static double variance(List<Double> values) {
@@ -36,6 +37,8 @@ public class BloatingUtils {
     public static double calculateK(List<Double> lengths, List<Double> fitnesses) {
         double cov = covariance(lengths, fitnesses);
         double var = variance(lengths);
-        return var == 0 ? 0 : cov / var;
+        double k = var == 0 ? 0 : cov / var;
+        System.out.println("K: " + k);
+        return k;
     }
 }

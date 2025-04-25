@@ -22,12 +22,13 @@ public class Controller {
     int dimension = Parameters.DEFAULT_DIMENSION;
     int minTreeProf = Parameters.DEFAULT_MIN_DEPTH;
 
-    public void run() {
+    public Double run() {
         try {
-            this.ag.run();
+            return this.ag.run();
         } catch (IndividuoException | SelectionException | CrossException e) {
             System.out.println(e);
         }
+        return 0.0;
     }
 
     public void refreshPlot(double[][] averageFitness, double[][] actualBest, double[][] overallBest) {
