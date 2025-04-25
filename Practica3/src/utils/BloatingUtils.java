@@ -38,7 +38,7 @@ public class BloatingUtils {
         double cov = covariance(lengths, fitnesses);
         double var = variance(lengths);
         double k = var == 0 ? 0 : cov / var;
-        System.out.println("K: " + k);
+        //System.out.println("K: " + k);
         return k;
     }
 }

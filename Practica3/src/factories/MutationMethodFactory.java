@@ -10,13 +10,6 @@ import exceptions.SelectionException;
 public class MutationMethodFactory {
     
     private static final List<MutationMethod> methods = Arrays.asList(
-		new MutacionSobreBooleanos(),
-        new MutacionSobreReales(),
-        new MutacionPorInversion(),
-        new MutacionPorInsercion(),
-        new MutacionHeuristica(),
-        new MutacionPorIntercambio(),
-        new MutacionInventada(),
         new MutacionContraccion(),
         new MutacionPermutacion(),
         new MutacionSubarbol(),

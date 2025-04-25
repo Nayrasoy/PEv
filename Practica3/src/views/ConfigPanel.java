@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -45,7 +46,7 @@ public class ConfigPanel extends JPanel {
     }
 
     private void initGUI() {
-        this.setLayout(new GridLayout(14, 1));
+        this.setLayout(new GridLayout(15, 1));
         JPanel p;
 
         // Seleccion de la funcion
@@ -371,43 +372,6 @@ public class ConfigPanel extends JPanel {
         p.add(elitismPercentageSlider);
         this.add(p);
 
-        // Selección de la profundidad mínima
-        p = new JPanel();
-        p.add(new JLabel("Profundidad minima del arbol:"));
-        minProfArbolComboBox = new JTextField(String.valueOf(Parameters.DEFAULT_MIN_DEPTH));
-        this.minProfArbolComboBox.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    validateIntTextField(minProfArbolComboBox.getText());
-                } catch (Exception ex) {
-                    System.out.println("El tamanyo de la poblacion debe ser un entero superior a 0");
-                    minProfArbolComboBox.setText(String.valueOf(Parameters.DEFAULT_MIN_DEPTH));
-                } finally {
-                    controller.setMinTreeProf(Integer.parseInt(minProfArbolComboBox.getText()));
-                }
-            }
-            
-        });
-        this.minProfArbolComboBox.addFocusListener(new FocusAdapter() {
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                try {
-                    validateIntTextField(minProfArbolComboBox.getText());
-                } catch (Exception ex) {
-                    System.out.println("El tamanyo de la poblacion debe ser un entero superior a 0");
-                    minProfArbolComboBox.setText(String.valueOf(Parameters.DEFAULT_MIN_DEPTH)); 
-                } finally {
-                    controller.setMinTreeProf(Integer.parseInt(minProfArbolComboBox.getText()));
-                }
-            }
-            
-        });
-        p.add(this.minProfArbolComboBox);
-        this.add(p);
-
         // Selección de la dimensión de las funciones 4 y 5
         p = new JPanel();
         p.add(new JLabel("Dimensión de funciones 4 y 5:"));
@@ -444,6 +408,37 @@ public class ConfigPanel extends JPanel {
         });
         p.add(this.functionDimensionComboBox);
         // this.add(p);
+
+        p = new JPanel();
+        JCheckBox penalizacionCheckBox = new JCheckBox();
+        penalizacionCheckBox.setSelected(Parameters.WELL_FUMENTED_BLOATING);
+        JLabel penalizacionLabel = new JLabel("Penalización bien fundamentada");
+        penalizacionCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean selected = penalizacionCheckBox.isSelected();
+                Parameters.WELL_FUMENTED_BLOATING = selected;
+            }
+        });
+        p.add(penalizacionCheckBox);
+        p.add(penalizacionLabel);
+        this.add(p);
+
+        p = new JPanel();
+        JCheckBox tarpeianCheckBox = new JCheckBox();
+        tarpeianCheckBox.setSelected(Parameters.TARPEIAN_BLOATING);
+        JLabel tarpeianLabel = new JLabel("Tarpeian bloating");
+        tarpeianCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean selected = tarpeianCheckBox.isSelected();
+                Parameters.TARPEIAN_BLOATING = selected;
+            }
+        });
+        p.add(tarpeianCheckBox);
+        p.add(tarpeianLabel);
+        this.add(p);
+
     }
 
     private JSlider createPercentageSlider() {

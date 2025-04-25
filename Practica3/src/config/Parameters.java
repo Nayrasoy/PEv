@@ -23,7 +23,7 @@ public class Parameters {
     public static final int DEFAULT_TAM_TOURNAMENT = 3;
     public static final int DEFAULT_DIMENSION = 5;
     public static final double DEFAULT_UNIFORM_CROSS_PROBABILITY = 0.5;
-    public static final int DEFAULT_ELITISM = 2;
+    public static final int DEFAULT_ELITISM = 3;
     public static final double PROPORSION_TRUNCAMIENTO = 0.1;
     public static final int TOURNAMENT_K = 3;
     public static final double TOURNAMENT_P = 0.5;
@@ -45,7 +45,8 @@ public class Parameters {
     public static int DEFAULT_MAX_DEPTH = 6;
     public static final int GRID_WIDTH = 32;
     public static final int GRID_HEIGHT = 32;
-    public static final boolean BLOATING = true;
+    public static boolean TARPEIAN_BLOATING = true;
+    public static boolean WELL_FUMENTED_BLOATING = true;
     public static final int N = 2;
 
 }

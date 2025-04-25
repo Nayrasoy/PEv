@@ -11,6 +11,7 @@ public class Completa extends InitializationMethod {
         return generateFullTree(startingDepth, minDepth, maxDepth);
     }
 
+    // Método que crea un subárbol dependiendo de la profundidad actual del nodo
     private Node generateFullTree(int currentDepth, int minDepth, int maxDepth) {
         if (currentDepth >= maxDepth) {
             return new Node(Terminal.getRandomTerminal(), currentDepth);
@@ -20,6 +21,7 @@ public class Completa extends InitializationMethod {
         }
     }
 
+    // Método que genera un nodo de función
     private Node randomFunctionNode(int currentDepth, int minDepth, int maxDepth) {
         int r = Utils.random.nextInt(3);
         Node node = null;
@@ -27,8 +29,8 @@ public class Completa extends InitializationMethod {
             case 0:
                 node = new Node(
                     Terminal.SICOMIDA,
-                    //currentDepth < minDepth ? generateGrowTree(currentDepth, minDepth, maxDepth) : new Node(Terminal.AVANZA, currentDepth + 1),
-                    new Node(Terminal.AVANZA, currentDepth + 1),
+                    generateFullTree(currentDepth, minDepth, maxDepth),
+                    //new Node(Terminal.AVANZA, currentDepth + 1),
                     generateFullTree(currentDepth + 1, minDepth, maxDepth),
                     currentDepth
                 );

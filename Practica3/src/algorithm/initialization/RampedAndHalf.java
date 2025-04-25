@@ -18,6 +18,7 @@ public class RampedAndHalf extends InitializationMethod {
 
     @Override
     public Node initializate(int startingDepth, int minDepth, int maxDepth) {
+        // Si es el primer individuo, calculamos cuántos individuos se van a inicializar con qué métodos y con cuánta profundidad
         if (calculate) {
             int capas = Parameters.DEFAULT_MAX_DEPTH - Parameters.DEFAULT_MIN_DEPTH + 1;
             numIndv = new ArrayList<>();
@@ -30,6 +31,7 @@ public class RampedAndHalf extends InitializationMethod {
             calculate = false;
         }
         try {
+            // 
             InitializationMethod initializationMethod;
             if (numIndv.get(capaActual) / 2 < individuosInicializados) {
                 initializationMethod = InitializationMethodFactory.getInitializationMethod(InitializationType.COMPLETA);

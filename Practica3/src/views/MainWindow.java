@@ -49,7 +49,8 @@ public class MainWindow extends JFrame {
     }
 
     public void setSolution(String solution) {
-        this.solutionPanel.setSolution(solution);;
+        this.solutionPanel.setSolution(solution);
+        this.repaint();
     }
 
     public void showPlot() {

@@ -54,6 +54,7 @@ public class AlgoritmoGenetico {
     private int elitism;
     private int numCruces;
     private int numMutaciones;
+    private boolean printIteration = true;
 
     public AlgoritmoGenetico(Controller controller, int tamPoblation, IndividualType individualType, int maxGeneraciones, double crossProbability, double mutationProbability, double precision) {
         this.controller = controller;
@@ -74,7 +75,8 @@ public class AlgoritmoGenetico {
         this.elitePoblation = new ArrayList<>();
     }
 
-    public double run() throws IndividuoException, SelectionException, CrossException {
+    public double run(boolean printIteration) throws IndividuoException, SelectionException, CrossException {
+        this.printIteration = printIteration;
         this.init();
         this.evalue();
         this.iteration++;
@@ -189,25 +191,32 @@ public class AlgoritmoGenetico {
 
         this.averageFitness[this.iteration][1] = this.fitnessSum / this.poblation.size();
         this.printIteration();
-
-        this.regenerateIndividualsBloating(lengths);
     }
 
-    private void regenerateIndividualsBloating(List<Double> lengths) {
-        double mean = BloatingUtils.mean(lengths);
-        for (int i = 0; i < this.poblation.size(); i++) {
-            if (lengths.get(i) > mean && Utils.random.nextDouble() < 0.5) {
-                try {
-                    this.poblation.set(i, IndividuoFactory.getIndividuo(individualType, this.controller));
-                } catch (IndividuoException e) {
-                    e.printStackTrace();
+    private void tarpeianBloating() {
+        if (Parameters.TARPEIAN_BLOATING) {
+            List<Double> lengths = new ArrayList<>();
+            for (int i = 0; i < this.poblation.size(); i++) {
+                Individuo ind = this.poblation.get(i);
+                Node node = (Node) ind.getCromosomas().get(0);
+                lengths.add((double) node.getAllNodes(0, Parameters.DEFAULT_MAX_DEPTH).size());
+            }
+
+            double mean = BloatingUtils.mean(lengths);
+            for (int i = 0; i < this.poblation.size(); i++) {
+                if (lengths.get(i) > mean && Utils.random.nextDouble() < 0.5) {
+                    try {
+                        this.poblation.set(i, IndividuoFactory.getIndividuo(individualType, this.controller));
+                    } catch (IndividuoException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
     }
 
     private void evalue() {
-        if (Parameters.BLOATING) {
+        if (Parameters.WELL_FUMENTED_BLOATING) {
             this.bloating();
             return;
         }
@@ -242,6 +251,7 @@ public class AlgoritmoGenetico {
         }
         this.averageFitness[this.iteration][1] = this.fitnessSum / this.poblation.size();
         this.printIteration();
+        this.tarpeianBloating();
     }
 
     private void generateElite() {
@@ -309,11 +319,13 @@ public class AlgoritmoGenetico {
     }
     
     private void printIteration() {
-        String formato = "%." + Math.round(- Math.log10(this.precision)) + "f";
-        System.out.println("Iteracion " + this.iteration + ":\n" +
-            "- Fitness promedio: " + String.format(formato, this.averageFitness[this.iteration][1]) + "\n" +
-            "- Fitness del mejor individuo de la iteracion: " + String.format(formato, this.actualBest[this.iteration][1]) + "\n" +
-            "- Fitness del mejor individuo: " + String.format(formato, this.overallBest[this.iteration][1]));
+        if (printIteration) {
+            String formato = "%." + Math.round(- Math.log10(this.precision)) + "f";
+            System.out.println("Iteracion " + this.iteration + ":\n" +
+                "- Fitness promedio: " + String.format(formato, this.averageFitness[this.iteration][1]) + "\n" +
+                "- Fitness del mejor individuo de la iteracion: " + String.format(formato, this.actualBest[this.iteration][1]) + "\n" +
+                "- Fitness del mejor individuo: " + String.format(formato, this.overallBest[this.iteration][1]));  
+        }
     }
 
     private void refreshFitness() {

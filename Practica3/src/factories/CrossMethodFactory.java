@@ -9,17 +9,6 @@ import exceptions.CrossException;
 public class CrossMethodFactory {
     
     private static final List<CrossMethod> methods = Arrays.asList(
-		new MonoPunto(),
-        new Uniforme(),
-        new BlxAlfa(),
-        new Aritmetico(),
-        new PMX(),
-        new OX(),
-        new OXPP(),
-        new CX(),
-        new CO(),
-        new Invent(),
-        new ERX(),
         new TreeCross()
 	);
     

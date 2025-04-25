@@ -36,6 +36,7 @@ public class SolutionPanel extends JPanel {
 
     public void setSolution(String solution) {
         this.solution.setText(solution);
+        this.repaint();
     }
     
 }

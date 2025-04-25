@@ -22,9 +22,9 @@ public class Controller {
     int dimension = Parameters.DEFAULT_DIMENSION;
     int minTreeProf = Parameters.DEFAULT_MIN_DEPTH;
 
-    public Double run() {
+    public Double run(boolean printIteration) {
         try {
-            return this.ag.run();
+            return this.ag.run(printIteration);
         } catch (IndividuoException | SelectionException | CrossException e) {
             System.out.println(e);
         }

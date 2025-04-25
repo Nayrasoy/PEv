@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
+import algorithm.mutation.MutationType;
 import controller.Controller;
 import utils.BloatingUtils;
 
@@ -35,24 +36,7 @@ public class ControlPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
                 System.out.println("Se ha pulsado el boton de run");
-				List<Double> twoElitism = new ArrayList<>();
-				List<Double> threeElitism = new ArrayList<>();
-				List<Double> fourElitism = new ArrayList<>();
-				for (int i = 0; i < 60; i++) {
-					controller.setElitismPercentage(i % 3 + 2);
-					if (i % 3 == 0) {
-						twoElitism.add(controller.run());
-					}
-					else if (i % 3 == 1) {
-						threeElitism.add(controller.run());
-					}
-					else {
-						fourElitism.add(controller.run());
-					}
-				}
-				System.out.println("\nResultados:\n\t- 2%: " + BloatingUtils.mean(twoElitism));
-				System.out.println("\t- 3%: " + BloatingUtils.mean(threeElitism));
-				System.out.println("\t- 4%: " + BloatingUtils.mean(fourElitism));
+				controller.run(true);
 			}
 			
 		});
@@ -99,7 +83,46 @@ public class ControlPanel extends JPanel {
 			
 		});
         mapButton.setFocusPainted(false);
-		toolBar.add(mapButton);
+		//toolBar.add(mapButton);
+
+		JButton testMutationsButton = new JButton("Test mutations");
+		testMutationsButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                System.out.println("Se ha pulsado el boton de testeo de mutaciones");
+				List<Double> mut1 = new ArrayList<>();
+				List<Double> mut2 = new ArrayList<>();
+				List<Double> mut3 = new ArrayList<>();
+				List<Double> mut4 = new ArrayList<>();
+				for (int i = 0; i < 80; i++) {
+					if (i % 4 == 0) {
+						controller.setMutationMethod(MutationType.TERMINAL);
+						mut1.add(controller.run(false));
+					}
+					else if (i % 4 == 1) {
+						controller.setMutationMethod(MutationType.PERMUTACION);
+						mut2.add(controller.run(false));
+					}
+					else if (i % 4 == 2) {
+						controller.setMutationMethod(MutationType.SUBARBOL);
+						mut3.add(controller.run(false));
+					}
+					else {
+						controller.setMutationMethod(MutationType.CONTRACCION);
+						mut4.add(controller.run(false));
+					}
+					String s = "Ejecuciones completadas: " + (i + 1) + "/80";
+					System.out.println(s);
+				}
+				String s = "\nResultados:\n" + "\t- Terminal: " + BloatingUtils.mean(mut1) + "\n\t- Permutacion: " + BloatingUtils.mean(mut2) + "\n\t- Subarbol: " + BloatingUtils.mean(mut3) + "\n\t- Contraccion: " + BloatingUtils.mean(mut4);
+				System.out.println(s);
+				controller.setSolution(s);
+			}
+			
+		});
+        testMutationsButton.setFocusPainted(false);
+		toolBar.add(testMutationsButton);
 	}
 
 }
