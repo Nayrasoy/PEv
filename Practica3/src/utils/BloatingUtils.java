@@ -10,7 +10,6 @@ public class BloatingUtils {
             sum += v;
         }
         return sum / values.size();
-        //return 17;
     }
 
     public static double variance(List<Double> values) {

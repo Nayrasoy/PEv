@@ -46,7 +46,7 @@ public class ConfigPanel extends JPanel {
     }
 
     private void initGUI() {
-        this.setLayout(new GridLayout(15, 1));
+        this.setLayout(new GridLayout(16, 1));
         JPanel p;
 
         // Seleccion de la funcion
@@ -437,6 +437,21 @@ public class ConfigPanel extends JPanel {
         });
         p.add(tarpeianCheckBox);
         p.add(tarpeianLabel);
+        this.add(p);
+
+        p = new JPanel();
+        JCheckBox foodStrategyCheckBox = new JCheckBox();
+        foodStrategyCheckBox.setSelected(Parameters.IF_FOOD_STRATEGY);
+        JLabel foodStrategyLabel = new JLabel("Estrategia de obligar un AVANZA en un SICOMIDA");
+        foodStrategyCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean selected = foodStrategyCheckBox.isSelected();
+                Parameters.IF_FOOD_STRATEGY = selected;
+            }
+        });
+        p.add(foodStrategyCheckBox);
+        p.add(foodStrategyLabel);
         this.add(p);
 
     }

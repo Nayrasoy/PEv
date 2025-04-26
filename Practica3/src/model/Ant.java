@@ -79,7 +79,7 @@ public class Ant extends Individuo<Node> {
 
     @Override
     public int getMinValue() {
-        return 0;
+        return -1000;
     }
 
     @Override

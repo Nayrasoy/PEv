@@ -242,6 +242,7 @@ public class AlgoritmoGenetico {
                 if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.overallBest[this.iteration][1]) == 1) {
                     this.bestIndividual = individuo.copy();
                     this.overallBest[this.iteration][1] = fitness;
+                    mostFood = fitness;
                 }
             }
             if ((first && this.iteration == 0) || individuo.betterThan(fitness, this.worstIndividual.getFitness()) == -1) {

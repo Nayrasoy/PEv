@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import algorithm.mutation.MutationType;
+import config.Parameters;
 import controller.Controller;
 import utils.BloatingUtils;
 
@@ -44,7 +45,7 @@ public class ControlPanel extends JPanel {
 		toolBar.add(runButton);
 
 		// Vista grafica
-        JButton graphButton = new JButton("Show graph");
+        JButton graphButton = new JButton("Grafíca");
 		graphButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -58,7 +59,7 @@ public class ControlPanel extends JPanel {
 		toolBar.add(graphButton);
 
 		// Vista mapa hormiga
-		JButton antButton = new JButton("Show ant map");
+		JButton antButton = new JButton("Mapa Hormiga");
 		antButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -85,7 +86,28 @@ public class ControlPanel extends JPanel {
         mapButton.setFocusPainted(false);
 		//toolBar.add(mapButton);
 
-		JButton testMutationsButton = new JButton("Test mutations");
+		JButton testExecutionsButton = new JButton("Test 20");
+		testExecutionsButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                System.out.println("Se ha pulsado el boton de testeo de 20 ejecuciones");
+				List<Double> list = new ArrayList<>();
+				for (int i = 0; i < 20; i++) {
+					list.add(controller.run(false));
+					String s = "Ejecuciones completadas: " + (i + 1) + "/20";
+					System.out.println(s);
+				}
+				String s = "\nResultados: " + BloatingUtils.mean(list) + "/89 comidas";
+				System.out.println(s);
+				controller.setSolution(s);
+			}
+			
+		});
+        testExecutionsButton.setFocusPainted(false);
+		toolBar.add(testExecutionsButton);
+
+		JButton testMutationsButton = new JButton("Test Mutaciones");
 		testMutationsButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -123,6 +145,37 @@ public class ControlPanel extends JPanel {
 		});
         testMutationsButton.setFocusPainted(false);
 		toolBar.add(testMutationsButton);
+
+		JButton testBloatingButton = new JButton("Test Bloating");
+		testBloatingButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+                System.out.println("Se ha pulsado el boton de testeo de bloating");
+				List<Double> funmented = new ArrayList<>();
+				List<Double> tarpeian = new ArrayList<>();
+				for (int i = 0; i < 40; i++) {
+					if (i % 2 == 0) {
+						Parameters.TARPEIAN_BLOATING = false;
+						Parameters.WELL_FUMENTED_BLOATING = true;
+						funmented.add(controller.run(false));
+					}
+					else {
+						Parameters.TARPEIAN_BLOATING = true;
+						Parameters.WELL_FUMENTED_BLOATING = false;
+						tarpeian.add(controller.run(false));
+					}
+					String s = "Ejecuciones completadas: " + (i + 1) + "/40";
+					System.out.println(s);
+				}
+				String s = "\nResultados:\n" + "\t- Penalizacion bien fundamentada: " + BloatingUtils.mean(funmented) + "\n\t- Tarpeian bloating: " + BloatingUtils.mean(tarpeian);
+				System.out.println(s);
+				controller.setSolution(s);
+			}
+			
+		});
+        testBloatingButton.setFocusPainted(false);
+		toolBar.add(testBloatingButton);
 	}
 
 }

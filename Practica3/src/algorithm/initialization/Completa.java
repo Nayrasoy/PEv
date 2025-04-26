@@ -1,5 +1,6 @@
 package algorithm.initialization;
 
+import config.Parameters;
 import model.Node;
 import model.Terminal;
 import utils.Utils;
@@ -29,8 +30,7 @@ public class Completa extends InitializationMethod {
             case 0:
                 node = new Node(
                     Terminal.SICOMIDA,
-                    generateFullTree(currentDepth, minDepth, maxDepth),
-                    //new Node(Terminal.AVANZA, currentDepth + 1),
+                    !Parameters.IF_FOOD_STRATEGY ? generateFullTree(currentDepth, minDepth, maxDepth) : new Node(Terminal.AVANZA, currentDepth + 1),
                     generateFullTree(currentDepth + 1, minDepth, maxDepth),
                     currentDepth
                 );

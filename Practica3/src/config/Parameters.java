@@ -46,7 +46,8 @@ public class Parameters {
     public static final int GRID_WIDTH = 32;
     public static final int GRID_HEIGHT = 32;
     public static boolean TARPEIAN_BLOATING = true;
-    public static boolean WELL_FUMENTED_BLOATING = true;
+    public static boolean WELL_FUMENTED_BLOATING = false;
     public static final int N = 2;
+    public static boolean IF_FOOD_STRATEGY = false;
 
 }
